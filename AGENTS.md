@@ -6,18 +6,7 @@
 
 ## 1. 先理解这个工作区
 
-这是一个从 0 到 1 逐步展开的项目目录，当前已经从早期方案探索进入“国内自托管主线 + PostgreSQL / Aliyun OSS + V2.x 协作开发”的阶段。
-
-当前已知核心文件：
-
-- `AGENTS.md`：协作约定
-- `docs/README.md`：文档入口和推荐阅读顺序
-- `docs/架构规范/2026-04-28-current-architecture.md`：当前系统架构总说明，覆盖咨询台、脚本制作 agent、app、worker、FireRed/OpenStoryline、COS、预览修订
-- `docs/progress/2026-05-20-main-domestic-infra-merge.md`：国内化主线合入事实和验证记录
-- `docs/progress/2026-05-21-voice-fix-main-release.md`：服务器 release 后 health check，当前运行口径为 PostgreSQL / Aliyun OSS
-- `app/`：当前 Next.js 商家端、平台管理端、API routes、PostgreSQL schema/migrations 的主应用
-- `.codex/agents/`：项目级 Codex sub-agent 定义
-- `.codex/skills/`：项目级 Codex skills
+咱们项目目标是做一个个人网站，目前的想法（2026-5-28 暂定为展示简历当中的内容，通过真实的agent项目在网站上运行、以及文字描述等方式展示过往项目内容）
 
 当前目录分层：
 
@@ -29,7 +18,6 @@
 - `docs/架构规范/`：接口约束、状态机、发布链路规则、Prompt 规范
 - `docs/designs/`：历史 UI 原型和视觉参考，不是当前实现入口
 - `references/`：本地外部参考项目副本，已在 `.gitignore` 中忽略，不提交远端
-- `app/`：主应用，包含商家端、平台管理端、API、PostgreSQL schema/migrations
 
 如果实际目录和这里不完全一致，以项目当前真实落地目录为准，但协作分层思路尽量保持一致。
 
@@ -52,12 +40,9 @@
 1. 先读本文件 `AGENTS.md`
 2. 读 `docs/README.md`
 3. 如果任务涉及产品判断，按 `docs/README.md` 指向读取当前产品真相源，不默认沿用历史 PRD
-4. 如果任务涉及 AI 视频、图文数据落点、worker、FireRed/OpenStoryline、PostgreSQL、Aliyun OSS 或部署，读 `docs/架构规范/2026-04-28-current-architecture.md`、`docs/progress/2026-05-20-main-domestic-infra-merge.md`、`docs/progress/2026-05-21-voice-fix-main-release.md`
-5. 如果任务是接续某个未完成事项，再读相关 `docs/handoff/` 和 `docs/progress/`
+4. 如果任务是接续某个未完成事项，再读相关 `docs/handoff/` 和 `docs/progress/`
 
 旧 `docs/探索/`、旧 `docs/handoff/`、旧 `docs/progress/` 只作为历史资料，不再作为默认真相源。只有当用户明确要求追溯历史、参考旧方案或排查历史部署时再读。
-
-旧 Supabase Cloud / Vercel / COS / staging 文档默认是历史口径。当前主线以 `docs/README.md` 中的国内自托管、PostgreSQL、Aliyun OSS 说明为准。
 
 如果某些目录还没建立，跳过即可，不要因为文档里写了就假设它已经存在。
 
@@ -100,9 +85,7 @@
 
 - PRD
 - 信息架构
-- 页面清单
-- 角色权限规则
-- 商家、门店、账号相关业务规则
+- 页面清单等
 
 当前产品真相源以 `docs/README.md` 的索引为准。旧 PRD 和早期导入/改写设想只作历史资料，除非任务明确要求追溯，否则不要默认采用。
 
@@ -116,21 +99,9 @@
 - Prompt 规范
 - AI 工作流约束
 
-当前阶段最重要的架构规范是 `docs/架构规范/2026-04-28-current-architecture.md`。旧的分阶段工作计划、增长 Agent 文档、过渡性 FireRed 接入方案不再作为当前真相源。
+当前阶段最重要的架构规范暂无，待建立。
 
-### 4.6 `docs/协作/`
-
-这里放：
-
-- 给产品 / 开发 / 各自 AI 看的协作说明
-- 技术变更的非工程化解释
-- 需要对方确认的问题清单
-
-如果某个能力已经形成稳定规则，不要长期只放在 `docs/探索/`。
-
-探索稿先放 `docs/探索/`，一旦形成稳定共识，再搬到 `docs/架构规范/` 或 `docs/产品文档/`。
-
-### 4.7 代码目录
+### 4.6 代码目录
 
 代码事实以仓库本身为准，不要让文档替代代码。
 
@@ -422,18 +393,18 @@ feedback 是另一类东西，只记录“AI 行为和流程应该如何改进�
 3. 不要碰的文件
 4. 是否需要 worktree
 5. 是否需要 sub-agent：
-   - 不需要
-   - `implementer`
-   - `code-reviewer`
-   - `implementer + code-reviewer`
+  - 不需要
+  - `implementer`
+  - `code-reviewer`
+  - `implementer + code-reviewer`
 6. 是否是长任务，是否启用 `long-task-gate`
 7. 验证命令和验收口径
 8. 是否需要写 handoff / progress
 9. 交付形式：
-   - 只出探索文档
-   - 代码 + handoff
-   - 代码 + 验证 + 待合并
-   - 直接合并
+  - 只出探索文档
+  - 代码 + handoff
+  - 代码 + 验证 + 待合并
+  - 直接合并
 
 如果用户没说清，默认按：
 
