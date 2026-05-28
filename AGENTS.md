@@ -10,6 +10,7 @@
 
 当前目录分层：
 
+- `apps/`：正式应用目录。当前包含 `apps/portfolio/` 静态作品集主页和 `apps/content-growth-platform/` 小红书 / 内容获客平台。
 - `docs/handoff/`：交接文档、冻结说明、任务书
 - `docs/progress/`：执行日志、验证记录、阶段结论
 - `docs/探索/`：方案探索、竞品拆解、外部项目研究
@@ -17,7 +18,7 @@
 - `docs/产品文档/`：PRD、信息架构、页面清单、业务规则
 - `docs/架构规范/`：接口约束、状态机、发布链路规则、Prompt 规范
 - `docs/designs/`：历史 UI 原型和视觉参考，不是当前实现入口
-- `references/`：本地外部参考项目副本，已在 `.gitignore` 中忽略，不提交远端
+- `refrences/` / `references/`：本地外部参考项目副本，已在 `.gitignore` 中忽略，不提交远端。注意历史目录真实拼写是 `refrences`。
 
 如果实际目录和这里不完全一致，以项目当前真实落地目录为准，但协作分层思路尽量保持一致。
 

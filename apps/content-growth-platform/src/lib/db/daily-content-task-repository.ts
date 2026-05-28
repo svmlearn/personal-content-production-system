@@ -1,0 +1,357 @@
+import "server-only";
+
+import type {
+  DailyArticleContentPackageDto,
+  DailyContentTaskDto,
+  DailyContentTaskItemDto,
+  DailyTaskStatus,
+  DailyVideoScriptPackageDto,
+  DailyVideoScriptSceneDto,
+} from "@/contracts/daily-task";
+import { queryAppDb } from "@/lib/server-db/postgres";
+import { ApiError } from "@/server/api/errors";
+
+type Timestamp = string | Date;
+
+type DailyContentTaskRow = {
+  id: string;
+  merchant_id: string;
+  user_id: string;
+  task_date: string;
+  theme: string;
+  team_calendar_source: unknown;
+  article_task: unknown;
+  video_task: unknown;
+  knowledge_refs: unknown;
+  material_refs: unknown;
+  status: DailyTaskStatus;
+  created_at: Timestamp;
+  updated_at: Timestamp;
+};
+
+const dailyContentTaskSelect = [
+  "id",
+  "merchant_id",
+  "user_id",
+  "task_date",
+  "theme",
+  "team_calendar_source",
+  "article_task",
+  "video_task",
+  "knowledge_refs",
+  "material_refs",
+  "status",
+  "created_at",
+  "updated_at",
+].join(", ");
+
+export async function getDailyContentTask(input: {
+  merchantId: string;
+  userId: string;
+  taskDate: string;
+}): Promise<DailyContentTaskDto | null> {
+  const result = await queryAppDb<DailyContentTaskRow>(
+    `
+    select ${dailyContentTaskSelect}
+    from public.daily_content_tasks
+    where merchant_id = $1 and user_id = $2 and task_date = $3::date
+    limit 1
+    `,
+    [input.merchantId, input.userId, input.taskDate],
+  );
+
+  return result.rows[0] ? mapDailyContentTask(result.rows[0]) : null;
+}
+
+export async function upsertDailyContentTask(input: {
+  merchantId: string;
+  userId: string;
+  taskDate: string;
+  theme: string;
+  teamCalendarSource: Record<string, unknown>;
+  articleTask: DailyContentTaskItemDto;
+  videoTask: DailyContentTaskItemDto;
+  knowledgeRefs?: Array<Record<string, unknown>>;
+  materialRefs?: Array<Record<string, unknown>>;
+  status?: DailyTaskStatus;
+}): Promise<DailyContentTaskDto> {
+  const result = await queryAppDb<DailyContentTaskRow>(
+    `
+    insert into public.daily_content_tasks (
+      merchant_id,
+      user_id,
+      task_date,
+      theme,
+      team_calendar_source,
+      article_task,
+      video_task,
+      knowledge_refs,
+      material_refs,
+      status
+    ) values ($1, $2, $3::date, $4, $5::jsonb, $6::jsonb, $7::jsonb, $8::jsonb, $9::jsonb, $10)
+    on conflict (merchant_id, user_id, task_date) do update set
+      theme = excluded.theme,
+      team_calendar_source = excluded.team_calendar_source,
+      article_task = excluded.article_task,
+      video_task = excluded.video_task,
+      knowledge_refs = excluded.knowledge_refs,
+      material_refs = excluded.material_refs,
+      status = excluded.status,
+      updated_at = timezone('utc', now())
+    returning ${dailyContentTaskSelect}
+    `,
+    [
+      input.merchantId,
+      input.userId,
+      input.taskDate,
+      input.theme,
+      JSON.stringify(input.teamCalendarSource),
+      JSON.stringify(input.articleTask),
+      JSON.stringify(input.videoTask),
+      JSON.stringify(input.knowledgeRefs ?? []),
+      JSON.stringify(input.materialRefs ?? []),
+      input.status ?? "generated",
+    ],
+  );
+
+  return mapDailyContentTask(result.rows[0]);
+}
+
+export async function getDailyContentTaskById(input: {
+  merchantId: string;
+  userId: string;
+  taskId: string;
+}): Promise<DailyContentTaskDto> {
+  const result = await queryAppDb<DailyContentTaskRow>(
+    `
+    select ${dailyContentTaskSelect}
+    from public.daily_content_tasks
+    where id = $1 and merchant_id = $2 and user_id = $3
+    limit 1
+    `,
+    [input.taskId, input.merchantId, input.userId],
+  );
+
+  if (!result.rows[0]) {
+    throw new ApiError(404, "DAILY_CONTENT_TASK_NOT_FOUND", "今日任务不存在或无权访问。");
+  }
+
+  return mapDailyContentTask(result.rows[0]);
+}
+
+export async function updateDailyContentTaskGeneratedContent(input: {
+  merchantId: string;
+  userId: string;
+  taskId: string;
+  articleTaskPatch?: Partial<DailyContentTaskItemDto>;
+  videoTaskPatch?: Partial<DailyContentTaskItemDto>;
+  status?: DailyTaskStatus;
+}): Promise<DailyContentTaskDto> {
+  const current = await getDailyContentTaskById({
+    merchantId: input.merchantId,
+    userId: input.userId,
+    taskId: input.taskId,
+  });
+  const nextArticleTask = {
+    ...current.articleTask,
+    ...input.articleTaskPatch,
+  };
+  const nextVideoTask = {
+    ...current.videoTask,
+    ...input.videoTaskPatch,
+  };
+
+  const result = await queryAppDb<DailyContentTaskRow>(
+    `
+    update public.daily_content_tasks
+    set article_task = $4::jsonb,
+        video_task = $5::jsonb,
+        status = $6,
+        updated_at = timezone('utc', now())
+    where id = $1 and merchant_id = $2 and user_id = $3
+    returning ${dailyContentTaskSelect}
+    `,
+    [
+      input.taskId,
+      input.merchantId,
+      input.userId,
+      JSON.stringify(nextArticleTask),
+      JSON.stringify(nextVideoTask),
+      input.status ?? current.status,
+    ],
+  );
+
+  if (!result.rows[0]) {
+    throw new ApiError(500, "DAILY_CONTENT_TASK_UPDATE_FAILED", "Update failed.");
+  }
+
+  return mapDailyContentTask(result.rows[0]);
+}
+
+function mapDailyContentTask(row: DailyContentTaskRow): DailyContentTaskDto {
+  return {
+    id: row.id,
+    merchantId: row.merchant_id,
+    userId: row.user_id,
+    taskDate: row.task_date,
+    theme: row.theme,
+    teamCalendarSource: toRecord(row.team_calendar_source),
+    articleTask: toTaskItem(row.article_task, "article"),
+    videoTask: toTaskItem(row.video_task, "video"),
+    knowledgeRefs: toRecordArray(row.knowledge_refs),
+    materialRefs: toRecordArray(row.material_refs),
+    status: row.status,
+    createdAt: toIsoString(row.created_at),
+    updatedAt: toIsoString(row.updated_at),
+  };
+}
+
+function toTaskItem(value: unknown, fallbackKind: "article" | "video"): DailyContentTaskItemDto {
+  const record = toRecord(value);
+  return {
+    kind: record.kind === "video" ? "video" : record.kind === "article" ? "article" : fallbackKind,
+    title: readString(record.title, fallbackKind === "article" ? "今日图文任务" : "今日视频任务"),
+    summary: readString(record.summary, "围绕今日主题生成内容。"),
+    strategyTag: readNullableString(record.strategyTag),
+    contentGoal: readNullableString(record.contentGoal),
+    suggestedPlatform:
+      record.suggestedPlatform === "douyin" ? "douyin" : "xiaohongshu",
+    materialHints: Array.isArray(record.materialHints)
+      ? record.materialHints.filter((item): item is string => typeof item === "string")
+      : [],
+    generatedArticle: toArticlePackage(record.generatedArticle),
+    generatedVideoScript: toVideoScriptPackage(record.generatedVideoScript),
+    generationStatus: toGenerationStatus(record.generationStatus),
+    generationJobId: readNullableString(record.generationJobId),
+    contentDraftId: readNullableString(record.contentDraftId),
+    contentVariantId: readNullableString(record.contentVariantId),
+    recommendedProductionConfig: toNullableRecord(record.recommendedProductionConfig),
+    memberUploadPolicy: readNullableString(record.memberUploadPolicy),
+  };
+}
+
+function toArticlePackage(value: unknown): DailyArticleContentPackageDto | null {
+  const record = toRecord(value);
+  const title = readNullableString(record.title);
+  const body = readNullableString(record.body);
+
+  if (!title || !body) {
+    return null;
+  }
+
+  return {
+    title,
+    body,
+    hashtags: toStringArray(record.hashtags),
+    cta: readString(record.cta, "欢迎私信咨询项目细节。"),
+    coverText: readString(record.coverText, title),
+    imageAssets: toRecordArray(record.imageAssets).map((item, index) => ({
+      id: readString(item.id, `image-${index + 1}`),
+      title: readString(item.title, `配图 ${index + 1}`),
+      description: readNullableString(item.description),
+      url: readNullableString(item.url),
+      source: readNullableString(item.source),
+    })),
+    imageBriefs: toStringArray(record.imageBriefs),
+    generatedAt: readString(record.generatedAt, new Date(0).toISOString()),
+  };
+}
+
+function toVideoScriptPackage(value: unknown): DailyVideoScriptPackageDto | null {
+  const record = toRecord(value);
+  const title = readNullableString(record.title);
+  const storyOutline = readNullableString(record.storyOutline);
+  const scenes = toRecordArray(record.scenes)
+    .map(toVideoScriptScene)
+    .filter((scene): scene is DailyVideoScriptSceneDto => Boolean(scene));
+
+  if (!title || !storyOutline || scenes.length === 0) {
+    return null;
+  }
+
+  return {
+    title,
+    hook: readString(record.hook, title),
+    storyOutline,
+    targetDurationSeconds: readNumber(record.targetDurationSeconds, 45),
+    scenes,
+    cta: readString(record.cta, "想了解项目，评论区或私信我。"),
+    materialChecklist: toStringArray(record.materialChecklist),
+    generatedAt: readString(record.generatedAt, new Date(0).toISOString()),
+  };
+}
+
+function toVideoScriptScene(value: Record<string, unknown>, index: number): DailyVideoScriptSceneDto | null {
+  const title = readNullableString(value.title);
+  const spokenText = readNullableString(value.spokenText);
+
+  if (!title || !spokenText) {
+    return null;
+  }
+
+  return {
+    id: readString(value.id, `scene-${index + 1}`),
+    order: readNumber(value.order, index + 1),
+    title,
+    durationSeconds: readNumber(value.durationSeconds, 8),
+    camera: readString(value.camera, "手机竖屏，人物半身或项目实拍。"),
+    spokenText,
+    subtitle: readString(value.subtitle, spokenText),
+    shootingGuide: readString(value.shootingGuide, "按口播内容拍摄 1 段清晰素材。"),
+    materialSlot: readString(value.materialSlot, `镜头 ${index + 1} 素材`),
+    required: value.required === false ? false : true,
+  };
+}
+
+function toRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
+function toNullableRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function toRecordArray(value: unknown): Array<Record<string, unknown>> {
+  return Array.isArray(value)
+    ? value.filter(
+        (item): item is Record<string, unknown> =>
+          Boolean(item) && typeof item === "object" && !Array.isArray(item),
+      )
+    : [];
+}
+
+function readString(value: unknown, fallback: string) {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function readNullableString(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function readNumber(value: unknown, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+}
+
+function toStringArray(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string" && Boolean(item.trim()))
+    : [];
+}
+
+function toIsoString(value: Timestamp) {
+  return value instanceof Date ? value.toISOString() : value;
+}
+
+function toGenerationStatus(value: unknown): DailyContentTaskItemDto["generationStatus"] {
+  return value === "not_started" ||
+    value === "pending" ||
+    value === "running" ||
+    value === "succeeded" ||
+    value === "failed"
+    ? value
+    : null;
+}

@@ -1,0 +1,1015 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  VideoJobPayloadValidationError,
+  buildVideoEditJobInputPayload,
+} from "./video-job-payload.ts";
+
+const approvedVariant = {
+  contentVariantId: "variant-1",
+  draftId: "draft-1",
+  scriptText: "Scene 1\n台词：先看真实门店细节。",
+  reviewStatus: "approved",
+};
+
+test("buildVideoEditJobInputPayload creates the worker contract from an approved script", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [
+      {
+        id: "reference-1",
+        materialItemId: "material-1",
+      },
+    ],
+    assets: [
+      {
+        id: "asset-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jj-content-staging-1341668543",
+        storageKey: "draft-inputs/merchant-1/draft-1/talking-head.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+    now: "2026-04-27T00:00:00.000Z",
+  });
+
+  assert.equal(payload.source, "video_workbench");
+  assert.equal(payload.executionMode, "staging_worker");
+  assert.deepEqual(payload.script, {
+    text: approvedVariant.scriptText,
+    locked: true,
+    variantId: approvedVariant.contentVariantId,
+  });
+  assert.deepEqual(payload.productionDirective, {
+    targetPlatform: "douyin",
+    aspectRatio: "9:16",
+    desiredOutputs: ["final_video", "cover", "subtitles"],
+    lockedFields: ["script", "cta", "target_user", "claims"],
+  });
+  assert.deepEqual(payload.productionConfig, {
+    voiceover: { enabled: true, mode: "system", provider: "aliyun_cosyvoice", volume: 2 },
+    bgm: { enabled: true, userRequest: "", include: {}, exclude: {}, volume: 0.25 },
+    subtitles: { enabled: true, style: "platform_default", talkingHeadSource: "script" },
+    lipSync: {
+      enabled: false,
+      provider: "aliyun_videoretalk",
+      scope: "talking_head_segments",
+      subtitleSource: "script",
+      requireVoiceProfile: true,
+      inputRequirements: {
+        audio: {
+          allowedExtensions: ["wav", "mp3", "aac"],
+          maxFileSizeBytes: 31457280,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          requiresCleanSpeech: true,
+        },
+        video: {
+          allowedExtensions: ["mp4", "avi", "mov"],
+          maxFileSizeBytes: 314572800,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          minFps: 15,
+          maxFps: 60,
+          allowedCodecs: ["h264", "h265"],
+          minSidePixels: 640,
+          maxSidePixels: 2048,
+          requiresClearFrontalFace: true,
+        },
+      },
+    },
+    render: { aspectRatio: "9:16", includeOriginalAudio: false },
+  });
+  assert.deepEqual(payload.materialContext, {
+    retrievalTarget: "video_edit_asset",
+    dailyTaskId: null,
+    memberUserId: null,
+    assetPlanId: null,
+    assetMatchReportId: null,
+    scriptBindingId: "variant-1",
+    excludedAssetIds: [],
+    userTalkingHeadAssetIds: [],
+    missingVideoAssetHints: [],
+    sceneAssetQueries: [],
+  });
+  assert.deepEqual(payload.input_assets, [
+    {
+      asset_id: "asset-1",
+      asset_type: "video",
+      storage_provider: "aliyun_oss",
+      bucket_name: "jj-content-staging-1341668543",
+      storage_key: "draft-inputs/merchant-1/draft-1/talking-head.mp4",
+      mime_type: "video/mp4",
+      file_size_bytes: 123456,
+      etag: "etag",
+      sort_order: 0,
+    },
+  ]);
+});
+
+test("buildVideoEditJobInputPayload deduplicates repeated uploaded videos by content etag", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [
+      {
+        id: "asset-old",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/merchant-1/draft-1/old-copy.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 670717,
+        etag: "\"SAME-CONTENT\"",
+        sortOrder: 0,
+        createdAt: "2026-05-22T23:32:19.000Z",
+      },
+      {
+        id: "asset-new",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/merchant-1/draft-1/new-copy.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 670717,
+        etag: "same-content",
+        sortOrder: 1,
+        createdAt: "2026-05-23T02:12:45.000Z",
+      },
+      {
+        id: "asset-other",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/merchant-1/draft-1/other.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 1055943,
+        etag: "other-content",
+        sortOrder: 2,
+        createdAt: "2026-05-23T02:12:46.000Z",
+      },
+    ],
+    now: "2026-05-23T00:00:00.000Z",
+  });
+
+  assert.deepEqual(
+    payload.input_assets.map((asset) => asset.asset_id),
+    ["asset-new", "asset-other"],
+  );
+});
+
+test("buildVideoEditJobInputPayload adds default production config", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [],
+    now: "2026-04-27T00:00:00.000Z",
+  });
+
+  assert.deepEqual(payload.productionConfig, {
+    voiceover: { enabled: true, mode: "system", provider: "aliyun_cosyvoice", volume: 2 },
+    bgm: { enabled: true, userRequest: "", include: {}, exclude: {}, volume: 0.25 },
+    subtitles: { enabled: true, style: "platform_default", talkingHeadSource: "script" },
+    lipSync: {
+      enabled: false,
+      provider: "aliyun_videoretalk",
+      scope: "talking_head_segments",
+      subtitleSource: "script",
+      requireVoiceProfile: true,
+      inputRequirements: {
+        audio: {
+          allowedExtensions: ["wav", "mp3", "aac"],
+          maxFileSizeBytes: 31457280,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          requiresCleanSpeech: true,
+        },
+        video: {
+          allowedExtensions: ["mp4", "avi", "mov"],
+          maxFileSizeBytes: 314572800,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          minFps: 15,
+          maxFps: 60,
+          allowedCodecs: ["h264", "h265"],
+          minSidePixels: 640,
+          maxSidePixels: 2048,
+          requiresClearFrontalFace: true,
+        },
+      },
+    },
+    render: { aspectRatio: "9:16", includeOriginalAudio: false },
+  });
+});
+
+test("buildVideoEditJobInputPayload keeps non-talking-head jobs on script subtitles", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      productionScenes: [
+        {
+          sceneNo: 1,
+          shotRequirement: "Project entrance with nearby shops",
+          visual: "Show entrance and shops",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [],
+  });
+
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "script");
+  assert.equal(payload.productionConfig.render.preserveTalkingHeadOriginalAudio, undefined);
+  assert.equal(payload.productionConfig.render.includeOriginalAudio, false);
+});
+
+test("buildVideoEditJobInputPayload requires at least one user talking-head draft video when enabled", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: approvedVariant,
+        materialReferences: [],
+        assets: [],
+        requireUserTalkingHead: true,
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_USER_TALKING_HEAD_ASSET_REQUIRED" &&
+      error.status === 409,
+  );
+});
+
+test("buildVideoEditJobInputPayload keeps user uploads without preselected merchant clips", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      productionScenes: [
+        {
+          sceneNo: 2,
+          timeRange: "00:05-00:12",
+          shotRequirement: "Project entrance with nearby shops",
+          visual: "Show entrance and shops",
+          materials: ["entrance", "shops"],
+          fallbackShot: "Use lobby if entrance unavailable",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [
+      {
+        id: "user-head-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jj-content-staging-1341668543",
+        storageKey: "draft-inputs/merchant-1/draft-1/opening-talking-head.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+    requireUserTalkingHead: true,
+  });
+
+  assert.deepEqual(payload.input_assets.map((asset) => asset.asset_id), ["user-head-1"]);
+  assert.deepEqual(payload.materialContext.userTalkingHeadAssetIds, ["user-head-1"]);
+  assert.equal(payload.input_assets[0]?.role, "talking_head");
+  assert.deepEqual(payload.productionConfig.subtitles, {
+    enabled: true,
+    style: "platform_default",
+    talkingHeadSource: "script_audio_alignment",
+  });
+  assert.equal(payload.productionConfig.lipSync.enabled, true);
+  assert.equal(payload.productionConfig.lipSync.subtitleSource, "script_audio_alignment");
+  assert.deepEqual(payload.productionConfig.render, {
+    aspectRatio: "9:16",
+    includeOriginalAudio: false,
+  });
+  assert.deepEqual(payload.materialContext.sceneAssetQueries, [
+    {
+      sceneNo: 2,
+      timeRange: "00:05-00:12",
+      query: "entrance shops Use lobby if entrance unavailable",
+      visualRequirement: "Project entrance with nearby shops",
+      fallbackShot: "Use lobby if entrance unavailable",
+      sourceRole: "merchant_broll",
+    },
+  ]);
+  assert.equal(Object.hasOwn(payload.materialContext, "merchantMediaMatches"), false);
+  assert.equal(Object.hasOwn(payload.materialContext, "assetMatchPlan"), false);
+  const rawPayload = payload as Record<string, unknown>;
+  assert.equal(rawPayload.difyFinalJson, undefined);
+  assert.equal(rawPayload.difyRawOutputs, undefined);
+});
+
+test("buildVideoEditJobInputPayload marks intro/outro scenes as user talking head", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      productionScenes: [
+        {
+          sceneNo: 1,
+          timeRange: "00:00-00:05",
+          requiresUserUpload: true,
+          sceneType: "intro_talking_head",
+          shotRequirement: "真人口播开场",
+          visual: "经纪人出镜口播",
+          materials: ["user upload"],
+          fallbackShot: "Use uploaded phone clip",
+        },
+        {
+          sceneNo: 2,
+          timeRange: "00:05-00:12",
+          shotRequirement: "Project entrance with nearby shops",
+          visual: "Show entrance and shops",
+          materials: ["entrance", "shops"],
+          fallbackShot: "Use lobby if entrance unavailable",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [
+      {
+        id: "user-head-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jj-content-staging-1341668543",
+        storageKey: "draft-inputs/merchant-1/draft-1/opening-talking-head.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+    requireUserTalkingHead: true,
+  });
+
+  assert.deepEqual(
+    payload.materialContext.sceneAssetQueries.map((query) => ({
+      sceneNo: query.sceneNo,
+      sourceRole: query.sourceRole,
+    })),
+    [
+      { sceneNo: 1, sourceRole: "user_talking_head" },
+      { sceneNo: 2, sourceRole: "merchant_broll" },
+    ],
+  );
+  assert.equal(Object.hasOwn(payload.materialContext, "merchantMediaMatches"), false);
+});
+
+test("buildVideoEditJobInputPayload treats requiresUserUpload as member talking-head even without talking-head words", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      productionScenes: [
+        {
+          sceneNo: 1,
+          timeRange: "00:00-00:05",
+          requiresUserUpload: true,
+          shotRequirement: "Please record this assigned scene",
+          visual: "Member records a clear vertical clip",
+          materials: ["member_upload"],
+          fallbackShot: "Use uploaded member clip",
+        },
+        {
+          sceneNo: 2,
+          timeRange: "00:05-00:12",
+          shotRequirement: "Project entrance with nearby shops",
+          visual: "Show entrance and shops",
+          materials: ["entrance", "shops"],
+          fallbackShot: "Use lobby if entrance unavailable",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [
+      {
+        id: "member-upload-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/merchant-1/draft-1/member-upload.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+  });
+
+  assert.deepEqual(payload.materialContext.userTalkingHeadAssetIds, ["member-upload-1"]);
+  assert.equal(payload.input_assets[0]?.role, "talking_head");
+  assert.equal(payload.materialContext.sceneAssetQueries[0]?.sourceRole, "user_talking_head");
+  assert.equal(payload.materialContext.sceneAssetQueries[1]?.sourceRole, "merchant_broll");
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "script_audio_alignment");
+  assert.equal(payload.productionConfig.lipSync.enabled, true);
+});
+
+test("buildVideoEditJobInputPayload accepts Aliyun OSS input assets", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [
+      {
+        id: "reference-1",
+        materialItemId: "material-1",
+      },
+    ],
+    assets: [
+      {
+        id: "asset-aliyun-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/demo.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+    now: "2026-05-18T00:00:00.000Z",
+  });
+
+  assert.equal(payload.input_assets[0]?.storage_provider, "aliyun_oss");
+  assert.equal(payload.input_assets[0]?.bucket_name, "jingjing-domestic-phase1-hz");
+  assert.equal(payload.render_mode, "asset_driven");
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "script");
+  assert.equal(payload.productionConfig.render.includeOriginalAudio, false);
+});
+
+test("buildVideoEditJobInputPayload accepts Aliyun OSS user talking-head assets", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [
+      {
+        id: "asset-aliyun-head-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "draft-inputs/merchant-1/draft-1/opening-talking-head.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+    requireUserTalkingHead: true,
+    now: "2026-05-18T00:00:00.000Z",
+  });
+
+  assert.deepEqual(payload.materialContext.userTalkingHeadAssetIds, ["asset-aliyun-head-1"]);
+  assert.equal(payload.input_assets[0]?.storage_provider, "aliyun_oss");
+  assert.equal(payload.input_assets[0]?.role, "talking_head");
+  assert.deepEqual(payload.input_assets[0]?.metadata, {
+    content_type: "talking_head",
+    audio_source: "clone_voiceover",
+    subtitle_source: "script_audio_alignment",
+    lip_sync_provider: "aliyun_videoretalk",
+    lip_sync_video_requirements: {
+      allowedExtensions: ["mp4", "avi", "mov"],
+      maxFileSizeBytes: 314572800,
+      minDurationSecondsExclusive: 2,
+      maxDurationSecondsExclusive: 120,
+      minFps: 15,
+      maxFps: 60,
+      allowedCodecs: ["h264", "h265"],
+      minSidePixels: 640,
+      maxSidePixels: 2048,
+      requiresClearFrontalFace: true,
+    },
+  });
+  assert.deepEqual(payload.productionConfig.subtitles, {
+    enabled: true,
+    style: "platform_default",
+    talkingHeadSource: "script_audio_alignment",
+  });
+  assert.equal(payload.productionConfig.lipSync.enabled, true);
+  assert.equal(payload.productionConfig.lipSync.subtitleSource, "script_audio_alignment");
+  assert.deepEqual(payload.productionConfig.lipSync.inputRequirements.audio, {
+    allowedExtensions: ["wav", "mp3", "aac"],
+    maxFileSizeBytes: 31457280,
+    minDurationSecondsExclusive: 2,
+    maxDurationSecondsExclusive: 120,
+    requiresCleanSpeech: true,
+  });
+  assert.deepEqual(payload.productionConfig.render, {
+    aspectRatio: "9:16",
+    includeOriginalAudio: false,
+  });
+});
+
+test("buildVideoEditJobInputPayload defaults structured talking-head assets to script-aligned lip sync", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [
+      {
+        id: "asset-structured-head-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jingjing-domestic-phase1-hz",
+        storageKey: "source-assets/merchant-1/asset-structured-head-1/source.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123456,
+        etag: "etag",
+        sortOrder: 0,
+        role: "talking_head",
+      },
+    ],
+    now: "2026-05-18T00:00:00.000Z",
+  });
+
+  assert.deepEqual(payload.materialContext.userTalkingHeadAssetIds, ["asset-structured-head-1"]);
+  assert.equal(payload.input_assets[0]?.role, "talking_head");
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "script_audio_alignment");
+  assert.equal(payload.productionConfig.lipSync.enabled, true);
+  assert.equal(payload.productionConfig.render.preserveTalkingHeadOriginalAudio, undefined);
+  assert.equal(payload.productionConfig.render.includeOriginalAudio, false);
+});
+
+test("buildVideoEditJobInputPayload normalizes production config overrides", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [],
+    productionConfig: {
+      voiceover: {
+        provider: "minimax",
+        voiceStyle: "warm_consultant",
+        speed: 1.1,
+      },
+      bgm: {
+        userRequest: "轻一点，不要压过人声",
+        include: { mood: ["warm"], id: ["light_01"] },
+        volume: 0.18,
+      },
+      render: {
+        maxDurationSeconds: 45,
+        includeOriginalAudio: true,
+      },
+    },
+  });
+
+  assert.deepEqual(payload.productionConfig, {
+    voiceover: {
+      enabled: true,
+      mode: "system",
+      provider: "minimax",
+      voiceStyle: "warm_consultant",
+      speed: 1.1,
+      volume: 2,
+    },
+    bgm: {
+      enabled: true,
+      userRequest: "轻一点，不要压过人声",
+      include: { mood: ["warm"], id: ["light_01"] },
+      exclude: {},
+      volume: 0.18,
+    },
+    subtitles: { enabled: true, style: "platform_default", talkingHeadSource: "script" },
+    lipSync: {
+      enabled: false,
+      provider: "aliyun_videoretalk",
+      scope: "talking_head_segments",
+      subtitleSource: "script",
+      requireVoiceProfile: true,
+      inputRequirements: {
+        audio: {
+          allowedExtensions: ["wav", "mp3", "aac"],
+          maxFileSizeBytes: 31457280,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          requiresCleanSpeech: true,
+        },
+        video: {
+          allowedExtensions: ["mp4", "avi", "mov"],
+          maxFileSizeBytes: 314572800,
+          minDurationSecondsExclusive: 2,
+          maxDurationSecondsExclusive: 120,
+          minFps: 15,
+          maxFps: 60,
+          allowedCodecs: ["h264", "h265"],
+          minSidePixels: 640,
+          maxSidePixels: 2048,
+          requiresClearFrontalFace: true,
+        },
+      },
+    },
+    render: {
+      aspectRatio: "9:16",
+      maxDurationSeconds: 45,
+      includeOriginalAudio: true,
+    },
+  });
+  assert.equal(payload.productionConfig.render.maxDurationSeconds, 45);
+});
+
+test("buildVideoEditJobInputPayload passes render max duration to worker contract", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [],
+    productionConfig: {
+      render: {
+        maxDurationSeconds: 45,
+      },
+    },
+  });
+
+  assert.deepEqual(payload.productionConfig.render, {
+    aspectRatio: "9:16",
+    maxDurationSeconds: 45,
+    includeOriginalAudio: false,
+  });
+});
+
+test("buildVideoEditJobInputPayload strips display-only duration lines from backend script text", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      scriptText:
+        "标题：找厂房，先看这三个点\n预计时长：52秒\n完整口播：\n找厂房别只看价格。\n目标时长：52秒\n画面：厂房空间。",
+    },
+    materialReferences: [],
+    assets: [],
+  });
+
+  assert.equal(payload.script.text.includes("预计时长"), false);
+  assert.equal(payload.script.text.includes("目标时长"), false);
+  assert.equal(payload.script.text.includes("找厂房别只看价格。"), true);
+  assert.equal(payload.script.text.includes("画面：厂房空间。"), true);
+});
+
+test("buildVideoEditJobInputPayload accepts voice profile production config", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [],
+    productionConfig: {
+      voiceover: {
+        enabled: true,
+        mode: "voice_profile",
+        voiceProfileId: "11111111-1111-4111-8111-111111111111",
+        refAudioAssetId: "22222222-2222-4222-8222-222222222222",
+        includeOriginalAudio: false,
+      },
+      render: {
+        includeOriginalAudio: true,
+      },
+      subtitles: {
+        talkingHeadSource: "asr_original_audio",
+      },
+    },
+  });
+
+  assert.deepEqual(payload.productionConfig.voiceover, {
+    enabled: true,
+    mode: "voice_profile",
+    voiceProfileId: "11111111-1111-4111-8111-111111111111",
+    refAudioAssetId: "22222222-2222-4222-8222-222222222222",
+    volume: 2,
+  });
+  assert.equal(payload.productionConfig.render.includeOriginalAudio, true);
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "asr_original_audio");
+  assert.equal(payload.productionConfig.lipSync.enabled, false);
+});
+
+test("buildVideoEditJobInputPayload defaults voice profile talking-head config to script-aligned lip sync", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [],
+    assets: [],
+    productionConfig: {
+      voiceover: {
+        enabled: true,
+        mode: "voice_profile",
+        voiceProfileId: "11111111-1111-4111-8111-111111111111",
+        refAudioAssetId: "22222222-2222-4222-8222-222222222222",
+      },
+      subtitles: {
+        talkingHeadSource: "script_audio_alignment",
+      },
+    },
+  });
+
+  assert.equal(payload.productionConfig.subtitles.talkingHeadSource, "script_audio_alignment");
+  assert.equal(payload.productionConfig.lipSync.enabled, true);
+  assert.equal(payload.productionConfig.lipSync.provider, "aliyun_videoretalk");
+  assert.equal(payload.productionConfig.lipSync.scope, "talking_head_segments");
+  assert.equal(payload.productionConfig.lipSync.requireVoiceProfile, true);
+});
+
+test("buildVideoEditJobInputPayload rejects invalid production config provider", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: approvedVariant,
+        materialReferences: [],
+        assets: [],
+        productionConfig: {
+          voiceover: {
+            provider: "azure",
+          },
+        } as never,
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_PRODUCTION_CONFIG_INVALID" &&
+      error.status === 400,
+  );
+});
+
+test("buildVideoEditJobInputPayload rejects unapproved scripts", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: {
+          ...approvedVariant,
+          reviewStatus: "review_pending",
+        },
+        materialReferences: [],
+        assets: [],
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_SCRIPT_NOT_APPROVED" &&
+      error.status === 409,
+  );
+});
+
+test("buildVideoEditJobInputPayload rejects empty script text", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: {
+          ...approvedVariant,
+          scriptText: "   ",
+        },
+        materialReferences: [],
+        assets: [],
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_SCRIPT_TEXT_REQUIRED",
+  );
+});
+
+test("buildVideoEditJobInputPayload rejects bad object storage input assets", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: approvedVariant,
+        materialReferences: [],
+        assets: [
+          {
+            id: "asset-bad",
+            assetType: "video",
+            storageProvider: "aliyun_oss",
+            bucketName: null,
+            storageKey: "draft-inputs/bad.mp4",
+            mimeType: "video/mp4",
+            fileSizeBytes: 1,
+            etag: null,
+            sortOrder: 0,
+          },
+        ],
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_INPUT_ASSET_BUCKET_REQUIRED",
+  );
+});
+
+test("buildVideoEditJobInputPayload rejects unsupported input asset providers", () => {
+  assert.throws(
+    () =>
+      buildVideoEditJobInputPayload({
+        draftId: "draft-1",
+        variant: approvedVariant,
+        materialReferences: [],
+        assets: [
+          {
+            id: "asset-unsupported",
+            assetType: "video",
+            storageProvider: "legacy_unknown" as never,
+            bucketName: null,
+            storageKey: "draft-inputs/legacy-unknown.mp4",
+            mimeType: "video/mp4",
+            fileSizeBytes: 1,
+            etag: null,
+            sortOrder: 0,
+          },
+        ],
+      }),
+    (error) =>
+      error instanceof VideoJobPayloadValidationError &&
+      error.code === "VIDEO_INPUT_ASSET_PROVIDER_UNSUPPORTED" &&
+      error.status === 409,
+  );
+});
+
+test("buildVideoEditJobInputPayload ignores legacy material references without input assets", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [
+      {
+        id: "reference-1",
+        materialItemId: "material-1",
+      },
+    ],
+    assets: [],
+  });
+
+  assert.deepEqual(payload.input_assets, []);
+  assert.equal(Object.hasOwn(payload.materialContext, "materialReferenceIds"), false);
+  assert.equal(Object.hasOwn(payload.materialContext, "materialIds"), false);
+});
+
+test("buildVideoEditJobInputPayload exposes missing video hints from scene asset queries", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      scriptText: "Scene 1\n画面：项目外立面远景\n台词：先看真实细节。",
+    },
+    materialReferences: [],
+    assets: [],
+  });
+
+  assert.deepEqual(payload.materialContext.sceneAssetQueries, [
+    {
+      sceneNo: 1,
+      timeRange: null,
+      query: "项目外立面远景",
+      visualRequirement: "项目外立面远景",
+      fallbackShot: null,
+      sourceRole: "merchant_broll",
+    },
+  ]);
+  assert.equal(Object.hasOwn(payload.materialContext, "assetMatchPlan"), false);
+  assert.deepEqual(payload.materialContext.missingVideoAssetHints, []);
+});
+
+test("buildVideoEditJobInputPayload sends structured visual descriptions to backend scene queries", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      scriptText:
+        "1\n00:00-00:05\n场景：厂房空间介绍\n画面：呈现厂房主体空间和层高感。\n台词/字幕：这个园区一楼有约 2000 平厂房。",
+      productionScenes: [
+        {
+          sceneNo: 1,
+          timeRange: "00:00-00:05",
+          shotRequirement: "",
+          visual: "呈现厂房主体空间和层高感。",
+          materials: [],
+          fallbackShot: "",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [],
+  });
+
+  assert.deepEqual(payload.materialContext.sceneAssetQueries, [
+    {
+      sceneNo: 1,
+      timeRange: "00:00-00:05",
+      query: "呈现厂房主体空间和层高感。",
+      visualRequirement: "呈现厂房主体空间和层高感。",
+      fallbackShot: null,
+      sourceRole: "merchant_broll",
+    },
+  ]);
+  assert.equal(Object.hasOwn(payload.materialContext, "assetMatchPlan"), false);
+  assert.deepEqual(payload.materialContext.missingVideoAssetHints, []);
+});
+
+test("buildVideoEditJobInputPayload only sends video assets to worker and orders input assets", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: approvedVariant,
+    materialReferences: [
+      {
+        id: "reference-1",
+        materialItemId: "material-1",
+      },
+    ],
+    assets: [
+      {
+        id: "asset-2",
+        assetType: "image",
+        storageProvider: "aliyun_oss",
+        bucketName: " jj-content-staging-1341668543 ",
+        storageKey: " draft-inputs/merchant-1/draft-1/cover.jpg ",
+        mimeType: "image/jpeg",
+        fileSizeBytes: 456,
+        etag: "etag-2",
+        sortOrder: 2,
+      },
+      {
+        id: "asset-1",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jj-content-staging-1341668543",
+        storageKey: "draft-inputs/merchant-1/draft-1/demo.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123,
+        etag: "etag-1",
+        sortOrder: 1,
+      },
+    ],
+    now: "2026-04-27T00:00:00.000Z",
+  });
+
+  assert.deepEqual(
+    payload.input_assets.map((asset) => ({
+      asset_id: asset.asset_id,
+      bucket_name: asset.bucket_name,
+      storage_key: asset.storage_key,
+      sort_order: asset.sort_order,
+    })),
+    [
+      {
+        asset_id: "asset-1",
+        bucket_name: "jj-content-staging-1341668543",
+        storage_key: "draft-inputs/merchant-1/draft-1/demo.mp4",
+        sort_order: 1,
+      },
+    ],
+  );
+  assert.deepEqual(payload.materialContext.excludedAssetIds, ["asset-2"]);
+});
+
+test("buildVideoEditJobInputPayload builds scene asset queries from production scenes", () => {
+  const payload = buildVideoEditJobInputPayload({
+    draftId: "draft-1",
+    variant: {
+      ...approvedVariant,
+      productionScenes: [
+        {
+          sceneNo: 2,
+          timeRange: "00:05-00:10",
+          shotRequirement: "样板间客厅横移",
+          visual: "客厅空间感和采光",
+          materials: ["样板间", "客厅"],
+          fallbackShot: "用同户型空间细节替代",
+        },
+      ],
+    },
+    materialReferences: [],
+    assets: [
+      {
+        id: "asset-living-room",
+        assetType: "video",
+        storageProvider: "aliyun_oss",
+        bucketName: "jj-content-staging-1341668543",
+        storageKey: "draft-inputs/merchant-1/draft-1/样板间-客厅.mp4",
+        mimeType: "video/mp4",
+        fileSizeBytes: 123,
+        etag: "etag",
+        sortOrder: 0,
+      },
+    ],
+  });
+
+  assert.deepEqual(payload.materialContext.sceneAssetQueries, [
+    {
+      sceneNo: 2,
+      timeRange: "00:05-00:10",
+      query: "样板间 客厅 用同户型空间细节替代",
+      visualRequirement: "样板间客厅横移",
+      fallbackShot: "用同户型空间细节替代",
+      sourceRole: "merchant_broll",
+    },
+  ]);
+  assert.equal(Object.hasOwn(payload.materialContext, "assetMatchPlan"), false);
+});
