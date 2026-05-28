@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>洋 | AI 产品作品集</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="site" aria-label="洋的 AI 产品作品集">
+      <header class="site-nav" aria-label="作品集导航">
+        <a class="wordmark" href="#top" aria-label="回到首页">
+          <span>洋</span>
+          <strong>portfolio.</strong>
+        </a>
+        <nav class="nav-links" aria-label="页面章节">
+          <a href="#projects">PROJECTS</a>
+          <a href="#method">METHOD</a>
+        </nav>
+        <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
+          BGM OFF
+        </button>
+      </header>
+
+      <section class="cover" id="top" aria-label="作品集首页封面">
+        <p class="cover-label">AI PRODUCT MANAGER / PROJECT BUILDER</p>
+        <h1>
+          <span>the portfolio</span>
+          <span>for AI product</span>
+          <span>builders</span>
+        </h1>
+        <div class="cover-sticker sticker-work">recent work + self-built assets</div>
+        <div class="cover-sticker sticker-proof">项目制证明</div>
+        <p class="cover-copy">
+          这里把 KeploreAI、智蛙面试、AI 智能学习伴侣、小红书抖音矩阵获客平台和 Harness Engineering 收成五条主轴。重点不是堆经历，而是展示我怎么把 AI 产品从问题、流程、系统、指标一路推到可验证资产。
+        </p>
+        <div class="cover-actions">
+          <a href="#projects">查看主轴</a>
+        </div>
+      </section>
+
+      <section class="ticker" aria-label="能力关键词">
+        <div>
+          <span>PMF 验证</span>
+          <span>AI 教育产品</span>
+          <span>智能学习伴侣</span>
+          <span>矩阵获客平台</span>
+          <span>Harness Engineering</span>
+          <span>AI 工作流编排</span>
+          <span>数据指标体系</span>
+          <span>PMF 验证</span>
+          <span>AI 教育产品</span>
+          <span>智能学习伴侣</span>
+          <span>矩阵获客平台</span>
+          <span>Harness Engineering</span>
+          <span>AI 工作流编排</span>
+          <span>数据指标体系</span>
+        </div>
+      </section>
+
+      <section class="proof-lab" id="projects" aria-label="主项目选择与详情">
+        <div class="proof-picker">
+          <div class="round-title">
+            <span>CHOOSE YOUR PROOF</span>
+            <strong>主线选择</strong>
+          </div>
+          <div class="hex-roster" id="hexRoster" aria-label="经历与项目快速选择"></div>
+          <div class="roster-legend" aria-hidden="true">
+            <span>工作经历</span>
+            <span>自建项目 / 能力资产</span>
+          </div>
+        </div>
+
+        <article class="featured-proof" aria-label="当前选中项目详情">
+          <div class="feature-heading">
+            <span class="case-type" id="caseType">WORK EXPERIENCE</span>
+            <strong id="roleCode">KEPLORE-21</strong>
+          </div>
+          <h2 id="caseTitle">KeploreAI PMF 增长验证</h2>
+          <p id="caseSummary">
+            面向 AI 算法工程师的 Agent 产品，从用户访谈和内测运营中定义 Aha Moment，并围绕激活行为设计增长机制。
+          </p>
+          <p class="feature-tagline" id="roleTagline">在 AI Agent 产品里找到付费触发点，再把增长机制挂到激活行为上。</p>
+          <div class="combo-list" id="comboList"></div>
+        </article>
+
+        <aside class="proof-note" aria-label="作品集主张">
+          <div class="mockup-stack" id="portraitStage" aria-hidden="true">
+            <div class="signal-card signal-card-main"><span>AI</span></div>
+            <div class="signal-card signal-card-left"><span>PMF</span></div>
+            <div class="signal-card signal-card-right"><span>OPS</span></div>
+            <i class="signal-node node-one"></i>
+            <i class="signal-node node-two"></i>
+            <i class="signal-node node-three"></i>
+          </div>
+          <span class="case-type">CURRENT NOTE</span>
+          <h2 id="roleTitle">KeploreAI PMF 增长验证</h2>
+          <p id="terminalLine">读取主轴：KeploreAI / 智蛙面试 / AI学习伴侣 / 矩阵获客平台 / Harness Engineering。</p>
+          <div class="quote-box">
+            <span>FINISHER</span>
+            <p id="finisher">“增长不是拉人头，是把奖励挂在真正的激活行为上。”</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="select-grid-wrap" id="method" aria-label="主轴项目卡片">
+        <div class="grid-header">
+          <p>RECENT WORK / SELF-BUILT ASSETS / METHOD</p>
+          <h2>work + projects</h2>
+        </div>
+        <div class="select-grid" id="selectGrid"></div>
+      </section>
+
+      <footer class="site-footer" aria-label="作品集底部">
+        <span>PROFILE</span>
+        <p>能力不是口号，项目会说话。</p>
+        <strong>READY</strong>
+      </footer>
+    </main>
+
+    <audio id="bgm" src="./assets/audio/daoxiang.mp3" preload="none" loop></audio>
+    <script src="./script.js"></script>
+  </body>
+</html>
