@@ -557,6 +557,56 @@ button {
   padding: 6px 10px;
 }
 
+.detail-actions {
+  display: grid;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.detail-actions[hidden] {
+  display: none;
+}
+
+.detail-launch {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  border: 1px solid color-mix(in srgb, var(--detail-accent) 76%, var(--detail-line));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--detail-accent) 82%, #fff), color-mix(in srgb, var(--detail-accent-2) 58%, #fff)),
+    var(--detail-accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-decoration: none;
+  padding: 15px 17px;
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--detail-accent) 28%, transparent);
+}
+
+.detail-launch strong {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+}
+
+.detail-launch:hover {
+  transform: translateY(-1px);
+}
+
+.detail-actions small {
+  color: var(--detail-muted);
+  font-size: 12px;
+  font-weight: 760;
+}
+
 .detail-main {
   display: grid;
   gap: 16px;

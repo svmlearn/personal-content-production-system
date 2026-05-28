@@ -124,6 +124,12 @@ const projects = [
         "这是一个面向商家的 AI 营销内容生产系统。它不是单纯的“发小红书工具”，而是从品牌定位、爆款内容检索、营销日历，到图文生成和视频任务执行的内容作战台。",
       proof: ["咨询 Agent", "策略快照", "营销内容日历", "图文 / 视频工作台", "素材切分与标签"],
       flow: ["商家资料", "知识库与素材检索", "AI 咨询诊断", "营销日历", "图文与视频生产"],
+      launch: {
+        label: "进入该项目",
+        port: 3001,
+        path: "/login?demo=1&next=%2Fdashboard",
+        note: "本地预览服务：3001",
+      },
       sections: [
         {
           title: "咨询 Agent 平台",
@@ -192,6 +198,7 @@ const detailTitle = document.querySelector("#detailTitle");
 const detailCode = document.querySelector("#detailCode");
 const detailIntro = document.querySelector("#detailIntro");
 const detailProof = document.querySelector("#detailProof");
+const detailActions = document.querySelector("#detailActions");
 const detailFlow = document.querySelector("#detailFlow");
 const detailSections = document.querySelector("#detailSections");
 const detailSwitches = document.querySelector("#detailSwitches");
@@ -299,6 +306,17 @@ function renderDetail(scrollIntoView = false) {
   detailCode.textContent = `${project.type} / ${project.code}`;
   detailIntro.textContent = detail.intro;
   detailProof.innerHTML = detail.proof.map((item) => `<span>${item}</span>`).join("");
+  const launchHref = detail.launch ? resolveLaunchHref(detail.launch) : "";
+  detailActions.hidden = !detail.launch;
+  detailActions.innerHTML = detail.launch
+    ? `
+      <a class="detail-launch" href="${launchHref}" target="_blank" rel="noreferrer" aria-label="${detail.launch.label}：${project.title}">
+        <span>${detail.launch.label}</span>
+        <strong aria-hidden="true">↗</strong>
+      </a>
+      <small>${detail.launch.note}</small>
+    `
+    : "";
   detailFlow.innerHTML = detail.flow.map((item, index) => `<span data-step="${String(index + 1).padStart(2, "0")}">${item}</span>`).join("");
   detailSections.innerHTML = detail.sections
     .map(
@@ -316,6 +334,14 @@ function renderDetail(scrollIntoView = false) {
   if (scrollIntoView) {
     detailSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+}
+
+function resolveLaunchHref(launch) {
+  if (launch.href) return launch.href;
+  const currentHost = window.location.hostname || "127.0.0.1";
+  const host = currentHost === "127.0.0.1" ? "localhost" : currentHost;
+  const protocol = window.location.protocol === "https:" ? "https:" : "http:";
+  return `${protocol}//${host}:${launch.port}${launch.path || "/"}`;
 }
 
 function move(delta) {
