@@ -4,8 +4,11 @@
   "scripts": {
     "dev:portfolio": "python3 -m http.server 8080 -d apps/portfolio",
     "dev:content-growth": "pnpm --dir apps/content-growth-platform dev --port 3001",
+    "dev:ai-learning": "pnpm --dir apps/ai-learning-companion dev --port 3003",
     "lint:content-growth": "pnpm --dir apps/content-growth-platform lint",
+    "lint:ai-learning": "pnpm --dir apps/ai-learning-companion lint",
     "typecheck:content-growth": "pnpm --dir apps/content-growth-platform typecheck",
-    "build:content-growth": "pnpm --dir apps/content-growth-platform build"
+    "build:content-growth": "pnpm --dir apps/content-growth-platform build",
+    "build:ai-learning": "pnpm --dir apps/ai-learning-companion build"
   }
 }
