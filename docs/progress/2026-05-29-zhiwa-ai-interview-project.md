@@ -3,6 +3,7 @@
 日期：2026-05-29
 分支：`work/zhiwa-ai-interview-project`
 worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/zhiwa-ai-interview-project`
+实现 commit：`026f7a5b47d4aae0af277b6a8282d3a99148b7fc`
 状态：实现完成，待用户验收 / 待合并决策
 
 ## 1. 问题原貌

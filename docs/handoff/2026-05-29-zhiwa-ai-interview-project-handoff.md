@@ -14,6 +14,8 @@
 - worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/zhiwa-ai-interview-project`
 - branch：`work/zhiwa-ai-interview-project`
 - base：`main`
+- 实现 commit：`026f7a5b47d4aae0af277b6a8282d3a99148b7fc`
+- 收口文档 commit：本文件所在提交
 - long-task-gate：disabled
 - push：未 push
 - merge：未 merge
