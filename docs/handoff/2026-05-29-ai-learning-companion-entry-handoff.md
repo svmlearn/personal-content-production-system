@@ -1,9 +1,10 @@
 # AI 智能学习伴侣真实入口 Handoff
 
 日期：2026-05-29
-分支：`work/ai-learning-companion-entry`
-worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/ai-learning-companion-entry`
-状态：已实现，待验收 / 待合并
+实现分支：`work/ai-learning-companion-entry`
+实现 worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/ai-learning-companion-entry`
+合并目标：`main`
+状态：已实现，已合并 `main`
 
 ## 当前目标
 
@@ -82,6 +83,6 @@ pnpm build:ai-learning
 
 ## 提交 / 合并状态
 
-当前尚未合并到 `main`。
+实现提交：`ad4b45d Add AI learning companion app entry`
 
-建议验收后再 fast-forward 或 cherry-pick 合并。
+已通过 merge commit 合并到 `main`。后续如需继续迭代，可直接从当前 `main` 新开分支。

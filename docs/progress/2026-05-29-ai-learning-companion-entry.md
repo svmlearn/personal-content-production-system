@@ -1,9 +1,10 @@
 # AI 智能学习伴侣作品集真实入口进度记录
 
 日期：2026-05-29
-分支：`work/ai-learning-companion-entry`
-worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/ai-learning-companion-entry`
-状态：已实现，待合并决策
+实现分支：`work/ai-learning-companion-entry`
+实现 worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/ai-learning-companion-entry`
+合并目标：`main`
+状态：已实现，已合并 `main`
 
 ## 1. 本轮目标
 
