@@ -109,18 +109,18 @@ export function HistoryHub() {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
+      <div className="flex h-16 items-center justify-between border-b border-[#eadfd7] px-6">
         <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">我的内容</h1>
       </div>
 
       {error ? (
-        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-200">
+        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
 
-      <div className="flex min-h-0 flex-1">
-        <div className="w-[360px] shrink-0 border-r border-white/10 bg-[#0a0a0a] p-5">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        <div className="w-full shrink-0 border-b border-[#eadfd7] bg-[#fffaf6] p-5 lg:w-[360px] lg:border-b-0 lg:border-r">
           <div className="mb-4 flex flex-wrap gap-2">
             {[
               ["all", "全部"],
@@ -134,8 +134,8 @@ export function HistoryHub() {
                 className={cn(
                   "rounded-full border px-3 py-1.5 text-xs",
                   filterType === value
-                    ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                    : "border-white/10 bg-white/5 text-white/60",
+                    ? "border-[#f2556b]/40 bg-[#fff0ef] text-[#f2556b]"
+                    : "border-[#eadfd7] bg-[#fffaf7] text-[#6f625d]",
                 )}
               >
                 {label}
@@ -143,17 +143,17 @@ export function HistoryHub() {
             ))}
           </div>
           <div className="relative mb-4">
-            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9b8d84]" />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="搜索标题、脚本或状态..."
-              className="h-10 w-full rounded-xl border border-white/10 bg-[#050505] pl-11 pr-4 text-xs text-white outline-none placeholder:text-white/25 focus:border-amber-500/50"
+              className="h-10 w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] pl-11 pr-4 text-xs text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
             />
           </div>
 
           {loading ? (
-            <div className="flex h-full items-center justify-center text-sm text-white/40">正在读取历史记录...</div>
+            <div className="flex h-full items-center justify-center text-sm text-[#9b8d84]">正在读取历史记录...</div>
           ) : (
             <div className="space-y-3 overflow-y-auto">
               {filteredRecords.map((record) => (
@@ -164,12 +164,12 @@ export function HistoryHub() {
                   className={cn(
                     "w-full rounded-2xl border p-4 text-left transition-colors",
                     selectedRecord?.id === record.id
-                      ? "border-amber-500/40 bg-amber-500/10"
-                      : "border-white/10 bg-white/5 hover:bg-white/10",
+                      ? "border-[#f2556b]/40 bg-[#fff0ef]"
+                      : "border-[#eadfd7] bg-[#fffaf7] hover:bg-[#fff0ef]",
                   )}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="rounded-xl bg-white/10 p-3 text-white/60">
+                    <div className="rounded-xl bg-[#fff0ef] p-3 text-[#6f625d]">
                       {record.type === "article" ? (
                         <FileText className="h-4 w-4" />
                       ) : (
@@ -177,11 +177,11 @@ export function HistoryHub() {
                       )}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="line-clamp-2 text-sm leading-6 text-white">{record.title}</p>
-                      <p className="mt-1 text-[11px] leading-5 text-white/55">
+                      <p className="line-clamp-2 text-sm leading-6 text-[#1f2328]">{record.title}</p>
+                      <p className="mt-1 text-[11px] leading-5 text-[#7f7067]">
                         {formatDateLabel(record.createdAt)}
                       </p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/35">
+                      <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[#9b8d84]">
                         {record.statusLabel}
                       </p>
                     </div>
@@ -192,32 +192,32 @@ export function HistoryHub() {
           )}
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-8 lg:px-12">
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-6 lg:px-12 lg:py-8">
           {selectedRecord ? (
             <div className="mx-auto max-w-4xl space-y-6">
-              <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">
+              <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
                   {selectedRecord.type === "article" ? "图文内容" : "视频内容"}
                 </p>
-                <h2 className="mt-3 text-3xl text-white [font-family:var(--font-cormorant)]">
+                <h2 className="mt-3 text-3xl text-[#1f2328] [font-family:var(--font-cormorant)]">
                   {selectedRecord.title}
                 </h2>
-                <p className="mt-3 text-sm leading-7 text-white/55">
+                <p className="mt-3 text-sm leading-7 text-[#7f7067]">
                   {selectedRecord.summary}
                 </p>
-                <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-white/45">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+                <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-[#8b7b72]">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5">
                     <CalendarClock className="h-3.5 w-3.5" />
                     {formatDateTime(selectedRecord.createdAt)}
                   </span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+                  <span className="rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5">
                     {selectedRecord.statusLabel}
                   </span>
                 </div>
                 {selectedRecord.type === "video" ? (
                   <Link
                     href={buildVideoWorkbenchHref(selectedRecord)}
-                    className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-white/65 transition-colors hover:bg-white/10 hover:text-white"
+                    className="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-[#6f625d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328]"
                   >
                     回到视频工作台
                     <ArrowUpRight className="h-3.5 w-3.5" />
@@ -226,7 +226,7 @@ export function HistoryHub() {
               </section>
 
               {selectedRecord.type === "article" ? (
-                <section className="rounded-3xl border border-white/10 bg-[#111111] p-8 text-sm leading-7 text-white/80 whitespace-pre-wrap">
+                <section className="rounded-3xl border border-[#eadfd7] bg-white p-8 text-sm leading-7 text-[#3d332f] whitespace-pre-wrap">
                   {selectedRecord.draftBundle.selectedVariant?.bodyText ??
                     selectedRecord.draftBundle.draft.workingTitle ??
                     "暂无详细内容。"}
@@ -236,7 +236,7 @@ export function HistoryHub() {
               )}
             </div>
           ) : (
-            <div className="flex h-full items-center justify-center text-sm text-white/40">
+            <div className="flex h-full items-center justify-center text-sm text-[#9b8d84]">
               暂无历史记录。
             </div>
           )}
@@ -255,59 +255,59 @@ function VideoHistoryDetail({ record }: { record: VideoHistoryRecord }) {
   return (
     <>
       {scriptText ? (
-        <section className="rounded-3xl border border-white/10 bg-[#111111] p-8">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">脚本内容</p>
-          <div className="mt-4 whitespace-pre-wrap text-sm leading-8 text-white/80">
+        <section className="rounded-3xl border border-[#eadfd7] bg-white p-8">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">脚本内容</p>
+          <div className="mt-4 whitespace-pre-wrap text-sm leading-8 text-[#3d332f]">
             {scriptText}
           </div>
         </section>
       ) : null}
 
       {record.latestJob ? (
-        <section className="rounded-3xl border border-white/10 bg-[#111111] p-8">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">当前视频进度</p>
-          <div className="mt-4 space-y-4 text-sm leading-7 text-white/80">
+        <section className="rounded-3xl border border-[#eadfd7] bg-white p-8">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">当前视频进度</p>
+          <div className="mt-4 space-y-4 text-sm leading-7 text-[#3d332f]">
             <p>
-              <span className="text-white/45">当前状态：</span>
+              <span className="text-[#8b7b72]">当前状态：</span>
               {getVideoJobStatusLabel(record.latestJob.status)}
             </p>
             <p>
-              <span className="text-white/45">当前步骤：</span>
+              <span className="text-[#8b7b72]">当前步骤：</span>
               {getVideoJobStageLabel(record.latestJob.currentStage, record.latestJob.status)}
             </p>
             <p>
-              <span className="text-white/45">当前进度：</span>
+              <span className="text-[#8b7b72]">当前进度：</span>
               {record.latestJob.progressPct}%
             </p>
             <p>
-              <span className="text-white/45">给你的解释：</span>
+              <span className="text-[#8b7b72]">给你的解释：</span>
               {getVideoJobAudienceSummary(record.latestJob)}
             </p>
             {record.latestJob.failureReason ? (
               <p>
-                <span className="text-white/45">失败原因：</span>
+                <span className="text-[#8b7b72]">失败原因：</span>
                 {record.latestJob.failureReason}
               </p>
             ) : null}
           </div>
         </section>
       ) : (
-        <section className="rounded-3xl border border-white/10 bg-[#111111] p-8 text-sm leading-7 text-white/75">
+        <section className="rounded-3xl border border-[#eadfd7] bg-white p-8 text-sm leading-7 text-[#4f433d]">
           当前已经有视频脚本，但还没有发起正式剪辑任务。
         </section>
       )}
 
       {record.jobs.length > 1 ? (
-        <section className="rounded-3xl border border-white/10 bg-[#111111] p-8">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">任务记录</p>
+        <section className="rounded-3xl border border-[#eadfd7] bg-white p-8">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">任务记录</p>
           <div className="mt-4 space-y-3">
             {record.jobs.map((job) => (
               <div
                 key={job.id}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/75"
+                className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 text-sm text-[#4f433d]"
               >
                 <p>{formatDateTime(job.createdAt)}</p>
-                <p className="mt-1 text-white/45">{getVideoJobStatusLabel(job.status)}</p>
+                <p className="mt-1 text-[#8b7b72]">{getVideoJobStatusLabel(job.status)}</p>
               </div>
             ))}
           </div>

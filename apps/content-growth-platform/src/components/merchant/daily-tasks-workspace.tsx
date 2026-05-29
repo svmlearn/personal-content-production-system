@@ -94,7 +94,7 @@ export function DailyTasksWorkspace() {
 
   if (loading) {
     return (
-      <div className="flex h-full items-center justify-center text-sm text-white/40">
+      <div className="flex h-full items-center justify-center text-sm text-[#9b8d84]">
         正在准备今日任务...
       </div>
     );
@@ -104,8 +104,8 @@ export function DailyTasksWorkspace() {
     return (
       <div className="flex h-full items-center justify-center px-6">
         <div className="max-w-md rounded-3xl border border-rose-500/20 bg-rose-500/10 p-6 text-center">
-          <p className="text-lg text-rose-100">今日任务暂时不可用</p>
-          <p className="mt-3 text-sm leading-7 text-rose-100/70">
+          <p className="text-lg text-rose-700">今日任务暂时不可用</p>
+          <p className="mt-3 text-sm leading-7 text-rose-700/75">
             {error ?? "项目内容素材正在补充中，可稍后重试。"}
           </p>
           <button
@@ -113,7 +113,7 @@ export function DailyTasksWorkspace() {
             onClick={() => {
               void loadWorkspace();
             }}
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs text-white/80"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fff0ef] px-4 py-2 text-xs text-[#3d332f]"
           >
             <RefreshCw className="h-3.5 w-3.5" />
             重新加载
@@ -135,10 +135,10 @@ export function DailyTasksWorkspace() {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
+      <div className="flex h-16 items-center justify-between border-b border-[#eadfd7] px-6">
         <div>
           <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">今日任务</h1>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
             Team content calendar
           </p>
         </div>
@@ -146,7 +146,7 @@ export function DailyTasksWorkspace() {
           {workspace.role === "owner" ? (
             <Link
               href="/dashboard/consultation"
-              className="rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-amber-400"
+              className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#f2556b]"
             >
               团队选题
             </Link>
@@ -157,7 +157,7 @@ export function DailyTasksWorkspace() {
               void startDifyWeekGeneration();
             }}
             disabled={generationBusy}
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-emerald-300 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#0f766e] disabled:opacity-50"
           >
             {generationBusy ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -171,7 +171,7 @@ export function DailyTasksWorkspace() {
             onClick={() => {
               void loadWorkspace();
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-white/55"
+            className="inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#7f7067]"
           >
             <RefreshCw className="h-3.5 w-3.5" />
             刷新
@@ -181,25 +181,25 @@ export function DailyTasksWorkspace() {
 
       <div className="min-h-0 flex-1 overflow-y-auto p-6 lg:p-8">
         {generationNotice ? (
-          <div className="mb-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100/80">
+          <div className="mb-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-[#0f766e]">
             {generationNotice}
           </div>
         ) : null}
-        <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
+        <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs text-amber-300">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-3 py-1 text-xs text-[#c46a00]">
                 <Sparkles className="h-3.5 w-3.5" />
                 {today.taskDate}
               </div>
-              <h2 className="mt-4 text-3xl tracking-tight text-white [font-family:var(--font-cormorant)]">
+              <h2 className="mt-4 text-3xl tracking-tight text-[#1f2328] [font-family:var(--font-cormorant)]">
                 {today.theme}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-7 text-white/55">
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-[#7f7067]">
                 今天给你准备了 1 条图文内容和 1 条视频脚本。它们来自团队内容日历，但标题、表达角度和素材组合会按账号稳定分配，成员端只需要照着拍、上传素材并一键剪辑。
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/55">
+            <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 text-sm text-[#7f7067]">
               来源：{readSourceLabel(today.teamCalendarSource)}
             </div>
           </div>
@@ -228,21 +228,21 @@ export function DailyTasksWorkspace() {
           />
         </div>
 
-        <section className="mt-6 rounded-3xl border border-white/10 bg-[#111111]">
-          <div className="flex items-center gap-3 border-b border-white/10 px-6 py-4">
-            <CalendarDays className="h-4 w-4 text-white/35" />
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">未来 7 天</p>
+        <section className="mt-6 rounded-3xl border border-[#eadfd7] bg-white">
+          <div className="flex items-center gap-3 border-b border-[#eadfd7] px-6 py-4">
+            <CalendarDays className="h-4 w-4 text-[#9b8d84]" />
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">未来 7 天</p>
           </div>
           <div className="grid gap-3 p-5 md:grid-cols-2 xl:grid-cols-4">
             {workspace.upcoming.map((task) => (
-              <div key={task.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+              <div key={task.id} className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4">
+                <p className="text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                   {task.taskDate}
                 </p>
-                <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-white/80">
+                <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-[#3d332f]">
                   {task.theme}
                 </p>
-                <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/40">
+                <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#9b8d84]">
                   {task.articleTask.title}
                 </p>
                 <GenerationStatusBadge status={task.articleTask.generationStatus} />
@@ -275,28 +275,28 @@ function TaskCard({
   actionLabel: string;
 }) {
   return (
-    <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
+    <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-amber-500/20 bg-amber-500/10 text-amber-300">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#f2556b]/25 bg-[#fff0ef] text-[#c46a00]">
             {icon}
           </div>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">{eyebrow}</p>
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">{eyebrow}</p>
         </div>
         <Link
           href={href}
-          className="rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-amber-400"
+          className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#f2556b]"
         >
           {actionLabel}
         </Link>
       </div>
-      <h3 className="mt-5 text-xl leading-7 text-white">{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-white/55">{summary}</p>
+      <h3 className="mt-5 text-xl leading-7 text-[#1f2328]">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-[#7f7067]">{summary}</p>
       <GenerationStatusBadge status={generationStatus} />
       {materialHints.length ? (
         <div className="mt-5 flex flex-wrap gap-2">
           {materialHints.slice(0, 4).map((item) => (
-            <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/45">
+            <span key={item} className="rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1 text-xs text-[#8b7b72]">
               {item}
             </span>
           ))}
@@ -323,7 +323,7 @@ function GenerationStatusBadge({
   };
 
   return (
-    <span className="mt-4 inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/45">
+    <span className="mt-4 inline-flex rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1 text-xs text-[#8b7b72]">
       {labels[status]}
     </span>
   );

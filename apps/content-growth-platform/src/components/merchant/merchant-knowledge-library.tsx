@@ -33,23 +33,23 @@ const statusMeta: Record<
 > = {
   uploaded: {
     label: "已上传，待处理",
-    className: "border-sky-400/20 bg-sky-400/10 text-sky-200",
+    className: "border-sky-400/20 bg-sky-400/10 text-sky-700",
   },
   queued: {
     label: "队列中",
-    className: "border-violet-400/20 bg-violet-400/10 text-violet-200",
+    className: "border-violet-400/20 bg-violet-400/10 text-violet-700",
   },
   processing: {
     label: "处理中",
-    className: "border-amber-400/20 bg-amber-400/10 text-amber-200",
+    className: "border-[#c46a00]/25 bg-[#fff7ed] text-[#c46a00]",
   },
   indexed: {
     label: "可用于咨询",
-    className: "border-emerald-400/20 bg-emerald-400/10 text-emerald-200",
+    className: "border-emerald-400/20 bg-emerald-400/10 text-[#0f766e]",
   },
   failed: {
     label: "处理失败",
-    className: "border-rose-400/20 bg-rose-400/10 text-rose-200",
+    className: "border-rose-400/20 bg-rose-400/10 text-rose-700",
   },
 };
 
@@ -394,12 +394,12 @@ export function MerchantKnowledgeLibrary() {
   return (
     <div className="space-y-6">
       <section className="grid gap-4 xl:grid-cols-3">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+        <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-5">
           <div className="mb-4 flex items-center gap-3">
-            <Upload className="h-4 w-4 text-amber-400" />
+            <Upload className="h-4 w-4 text-[#f2556b]" />
             <div>
-              <h2 className="text-sm font-medium text-white">知识库上传</h2>
-              <p className="mt-1 text-xs text-white/45">仅支持 txt / md，单文件最大 10MB。</p>
+              <h2 className="text-sm font-medium text-[#1f2328]">知识库上传</h2>
+              <p className="mt-1 text-xs text-[#8b7b72]">仅支持 txt / md，单文件最大 10MB。</p>
             </div>
           </div>
           <div className="space-y-3">
@@ -407,14 +407,14 @@ export function MerchantKnowledgeLibrary() {
               value={documentTitle}
               onChange={(event) => setDocumentTitle(event.target.value)}
               placeholder="资料名称"
-              className="w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none placeholder:text-white/25"
+              className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
             />
             <input
               key={fileInputKey}
               type="file"
               accept=".txt,.md,text/plain,text/markdown"
               onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
-              className="block w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-xs text-white/65 file:mr-3 file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white"
+              className="block w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-xs text-[#6f625d] file:mr-3 file:rounded-lg file:border-0 file:bg-[#fff0ef] file:px-3 file:py-1.5 file:text-xs file:text-[#1f2328]"
             />
             <button
               type="button"
@@ -422,7 +422,7 @@ export function MerchantKnowledgeLibrary() {
                 void createDocument();
               }}
               disabled={submitting !== null}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-2 text-sm font-medium text-black disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f2556b] px-4 py-2 text-sm font-medium text-[#fffaf7] disabled:opacity-60"
             >
               <Upload className="h-4 w-4" />
               {submitting === "document" ? "提交中" : "上传资料"}
@@ -430,12 +430,12 @@ export function MerchantKnowledgeLibrary() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+        <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-5">
           <div className="mb-4 flex items-center gap-3">
-            <Brain className="h-4 w-4 text-cyan-300" />
+            <Brain className="h-4 w-4 text-[#0f766e]" />
             <div>
-              <h2 className="text-sm font-medium text-white">记忆录入</h2>
-              <p className="mt-1 text-xs text-white/45">手动记录可编辑的用户记忆，最多 1000 个可见字符。</p>
+              <h2 className="text-sm font-medium text-[#1f2328]">记忆录入</h2>
+              <p className="mt-1 text-xs text-[#8b7b72]">手动记录可编辑的用户记忆，最多 1000 个可见字符。</p>
             </div>
           </div>
           <div className="space-y-3">
@@ -443,20 +443,20 @@ export function MerchantKnowledgeLibrary() {
               value={memoryTitle}
               onChange={(event) => setMemoryTitle(event.target.value)}
               placeholder="记忆名称"
-              className="w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none placeholder:text-white/25"
+              className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
             />
             <textarea
               value={memoryText}
               onChange={(event) => setMemoryText(event.target.value)}
               rows={5}
               placeholder="例如：主理人更希望弱化焦虑表达，重点讲真实体验和专业评估。"
-              className="w-full resize-none rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none placeholder:text-white/25"
+              className="w-full resize-none rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
             />
             <div className="flex items-center justify-between gap-3">
               <span
                 className={cn(
                   "text-xs",
-                  memoryCharCount > 1000 ? "text-rose-300" : "text-white/35",
+                  memoryCharCount > 1000 ? "text-rose-600" : "text-[#9b8d84]",
                 )}
               >
                 {memoryCharCount}/1000
@@ -467,7 +467,7 @@ export function MerchantKnowledgeLibrary() {
                   void createMemory();
                 }}
                 disabled={submitting !== null}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-300 px-4 py-2 text-sm font-medium text-black disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#22b8a7] px-4 py-2 text-sm font-medium text-[#fffaf7] disabled:opacity-60"
               >
                 <Brain className="h-4 w-4" />
                 {submitting === "memory" ? "保存中" : "保存记忆"}
@@ -476,12 +476,12 @@ export function MerchantKnowledgeLibrary() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+        <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-5">
           <div className="mb-4 flex items-center gap-3">
-            <ImageIcon className="h-4 w-4 text-emerald-300" />
+            <ImageIcon className="h-4 w-4 text-[#0f766e]" />
             <div>
-              <h2 className="text-sm font-medium text-white">项目图片/视频素材</h2>
-              <p className="mt-1 text-xs text-white/45">用于图文配图、视频 B-roll 和项目画面匹配。</p>
+              <h2 className="text-sm font-medium text-[#1f2328]">项目图片/视频素材</h2>
+              <p className="mt-1 text-xs text-[#8b7b72]">用于图文配图、视频 B-roll 和项目画面匹配。</p>
             </div>
           </div>
           <div className="space-y-3">
@@ -489,29 +489,29 @@ export function MerchantKnowledgeLibrary() {
               value={materialTitle}
               onChange={(event) => setMaterialTitle(event.target.value)}
               placeholder="素材名称"
-              className="w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none placeholder:text-white/25"
+              className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
             />
             <input
               key={mediaInputKey}
               type="file"
               accept="image/*,video/*"
               onChange={(event) => setSelectedMediaFile(event.target.files?.[0] ?? null)}
-              className="block w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-xs text-white/65 file:mr-3 file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white"
+              className="block w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-xs text-[#6f625d] file:mr-3 file:rounded-lg file:border-0 file:bg-[#fff0ef] file:px-3 file:py-1.5 file:text-xs file:text-[#1f2328]"
             />
             <textarea
               value={materialNote}
               onChange={(event) => setMaterialNote(event.target.value)}
               rows={3}
               placeholder="例如：样板间客厅、项目外立面、周边商圈转场。"
-              className="w-full resize-none rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none placeholder:text-white/25"
+              className="w-full resize-none rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
             />
             {submitting === "project-media" ? (
-              <p className="text-xs text-white/45">
+              <p className="text-xs text-[#8b7b72]">
                 {getUploadStageLabel(mediaUploadStage)}
                 {mediaUploadProgress !== null ? ` · ${mediaUploadProgress}%` : ""}
               </p>
             ) : selectedMediaFile ? (
-              <p className="text-xs text-white/35">
+              <p className="text-xs text-[#9b8d84]">
                 {selectedMediaFile.name} · {formatAssetSize(selectedMediaFile.size)}
               </p>
             ) : null}
@@ -521,7 +521,7 @@ export function MerchantKnowledgeLibrary() {
                 void createProjectMediaMaterial();
               }}
               disabled={submitting !== null}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-300 px-4 py-2 text-sm font-medium text-black disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#22b8a7] px-4 py-2 text-sm font-medium text-[#fffaf7] disabled:opacity-60"
             >
               <Upload className="h-4 w-4" />
               {submitting === "project-media" ? "上传中" : "上传素材"}
@@ -531,21 +531,21 @@ export function MerchantKnowledgeLibrary() {
       </section>
 
       {error ? (
-        <div className="rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-100">
+        <div className="rounded-xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
       {notice ? (
-        <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">
+        <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-[#0f766e]">
           {notice}
         </div>
       ) : null}
 
-      <section className="rounded-2xl border border-white/10 bg-white/[0.03]">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+      <section className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7]">
+        <div className="flex items-center justify-between border-b border-[#eadfd7] px-5 py-4">
           <div>
-            <h2 className="text-sm font-medium text-white">用户知识库内容</h2>
-            <p className="mt-1 text-xs text-white/40">只有“可用于咨询”的内容会进入咨询上下文。</p>
+            <h2 className="text-sm font-medium text-[#1f2328]">用户知识库内容</h2>
+            <p className="mt-1 text-xs text-[#9b8d84]">只有“可用于咨询”的内容会进入咨询上下文。</p>
           </div>
           <button
             type="button"
@@ -553,7 +553,7 @@ export function MerchantKnowledgeLibrary() {
               void loadDocuments();
             }}
             disabled={loading || submitting !== null}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-white/70 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#eadfd7] px-3 py-2 text-xs text-[#5f514a] disabled:opacity-60"
           >
             <RefreshCw className={cn("h-3.5 w-3.5", loading ? "animate-spin" : "")} />
             刷新
@@ -561,13 +561,13 @@ export function MerchantKnowledgeLibrary() {
         </div>
 
         {loading ? (
-          <div className="px-5 py-10 text-center text-sm text-white/45">正在读取用户知识库...</div>
+          <div className="px-5 py-10 text-center text-sm text-[#8b7b72]">正在读取用户知识库...</div>
         ) : documents.length === 0 ? (
-          <div className="px-5 py-10 text-center text-sm text-white/45">
+          <div className="px-5 py-10 text-center text-sm text-[#8b7b72]">
             还没有用户资料或用户记忆。
           </div>
         ) : (
-          <div className="divide-y divide-white/10">
+          <div className="divide-y divide-[#eadfd7]">
             {documents.map((document) => {
               const isEditing = editDraft?.documentId === document.id;
               const isMemory = isMerchantMemory(document);
@@ -579,19 +579,19 @@ export function MerchantKnowledgeLibrary() {
                     <div className="min-w-0 space-y-2">
                       <div className="flex flex-wrap items-center gap-2">
                         {isMemory ? (
-                          <Brain className="h-4 w-4 text-cyan-300" />
+                          <Brain className="h-4 w-4 text-[#0f766e]" />
                         ) : (
-                          <FileText className="h-4 w-4 text-amber-300" />
+                          <FileText className="h-4 w-4 text-[#c46a00]" />
                         )}
-                        <h3 className="truncate text-sm font-medium text-white">{document.title}</h3>
-                        <span className="rounded-full border border-white/10 px-2 py-1 text-[11px] text-white/55">
+                        <h3 className="truncate text-sm font-medium text-[#1f2328]">{document.title}</h3>
+                        <span className="rounded-full border border-[#eadfd7] px-2 py-1 text-[11px] text-[#7f7067]">
                           {getContentTypeLabel(document)}
                         </span>
                         <span className={cn("rounded-full border px-2 py-1 text-[11px]", status.className)}>
                           {status.label}
                         </span>
                       </div>
-                      <p className="text-xs text-white/35">
+                      <p className="text-xs text-[#9b8d84]">
                         更新于 {formatDate(document.updatedAt)} · {document.chunkCount} 个 chunk
                         {document.latestJob?.errorSummary ? ` · ${document.latestJob.errorSummary}` : ""}
                       </p>
@@ -642,13 +642,13 @@ export function MerchantKnowledgeLibrary() {
                   </div>
 
                   {isEditing && editDraft ? (
-                    <div className="space-y-3 rounded-xl border border-white/10 bg-black/20 p-3">
+                    <div className="space-y-3 rounded-xl border border-[#eadfd7] bg-white/70 p-3">
                       <input
                         value={editDraft.title}
                         onChange={(event) =>
                           setEditDraft({ ...editDraft, title: event.target.value })
                         }
-                        className="w-full rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none"
+                        className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none"
                       />
                       {isMemory ? (
                         <>
@@ -658,14 +658,14 @@ export function MerchantKnowledgeLibrary() {
                               setEditDraft({ ...editDraft, textContent: event.target.value })
                             }
                             rows={5}
-                            className="w-full resize-none rounded-xl border border-white/10 bg-[#050505] px-3 py-2 text-sm text-white outline-none"
+                            className="w-full resize-none rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2 text-sm text-[#1f2328] outline-none"
                           />
-                          <p className="text-xs text-white/35">
+                          <p className="text-xs text-[#9b8d84]">
                             {visibleCharCount(editDraft.textContent.trim())}/1000
                           </p>
                         </>
                       ) : (
-                        <p className="text-xs text-white/45">
+                        <p className="text-xs text-[#8b7b72]">
                           该类型资料不支持在线修改正文，如需修改内容，请删除后重新上传。
                         </p>
                       )}
@@ -675,7 +675,7 @@ export function MerchantKnowledgeLibrary() {
                           void saveEdit();
                         }}
                         disabled={submitting !== null}
-                        className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black disabled:opacity-60"
+                        className="inline-flex items-center gap-2 rounded-xl border border-[#eadfd7] bg-white px-4 py-2 text-sm font-medium text-[#1f2328] disabled:opacity-60"
                       >
                         <Save className="h-4 w-4" />
                         {submitting === `edit:${document.id}` ? "保存中" : "保存修改"}
@@ -689,11 +689,11 @@ export function MerchantKnowledgeLibrary() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-white/[0.03]">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+      <section className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7]">
+        <div className="flex items-center justify-between border-b border-[#eadfd7] px-5 py-4">
           <div>
-            <h2 className="text-sm font-medium text-white">项目媒体素材</h2>
-            <p className="mt-1 text-xs text-white/40">图片和视频会进入素材库，用于后续图文与视频生成匹配。</p>
+            <h2 className="text-sm font-medium text-[#1f2328]">项目媒体素材</h2>
+            <p className="mt-1 text-xs text-[#9b8d84]">图片和视频会进入素材库，用于后续图文与视频生成匹配。</p>
           </div>
           <button
             type="button"
@@ -701,7 +701,7 @@ export function MerchantKnowledgeLibrary() {
               void loadProjectMaterials();
             }}
             disabled={materialsLoading || submitting !== null}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-white/70 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#eadfd7] px-3 py-2 text-xs text-[#5f514a] disabled:opacity-60"
           >
             <RefreshCw className={cn("h-3.5 w-3.5", materialsLoading ? "animate-spin" : "")} />
             刷新
@@ -709,13 +709,13 @@ export function MerchantKnowledgeLibrary() {
         </div>
 
         {materialsLoading ? (
-          <div className="px-5 py-10 text-center text-sm text-white/45">正在读取项目媒体素材...</div>
+          <div className="px-5 py-10 text-center text-sm text-[#8b7b72]">正在读取项目媒体素材...</div>
         ) : projectMaterials.length === 0 ? (
-          <div className="px-5 py-10 text-center text-sm text-white/45">
+          <div className="px-5 py-10 text-center text-sm text-[#8b7b72]">
             还没有图片或视频素材。
           </div>
         ) : (
-          <div className="divide-y divide-white/10">
+          <div className="divide-y divide-[#eadfd7]">
             {projectMaterials.map((material) => {
               const assetType = getProjectMediaAssetType(material);
               const isVideo = assetType === "video";
@@ -725,15 +725,15 @@ export function MerchantKnowledgeLibrary() {
                   <div className="min-w-0 space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
                       {isVideo ? (
-                        <Video className="h-4 w-4 text-emerald-300" />
+                        <Video className="h-4 w-4 text-[#0f766e]" />
                       ) : (
-                        <ImageIcon className="h-4 w-4 text-emerald-300" />
+                        <ImageIcon className="h-4 w-4 text-[#0f766e]" />
                       )}
-                      <h3 className="truncate text-sm font-medium text-white">{material.title}</h3>
-                      <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-2 py-1 text-[11px] text-emerald-100">
+                      <h3 className="truncate text-sm font-medium text-[#1f2328]">{material.title}</h3>
+                      <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-2 py-1 text-[11px] text-[#0f766e]">
                         {isVideo ? "视频素材" : "图片素材"}
                       </span>
-                      <span className="rounded-full border border-white/10 px-2 py-1 text-[11px] text-white/55">
+                      <span className="rounded-full border border-[#eadfd7] px-2 py-1 text-[11px] text-[#7f7067]">
                         {material.status === "parsing"
                           ? "识别中"
                           : material.retrievalTargets.includes("article_image_asset")
@@ -743,12 +743,12 @@ export function MerchantKnowledgeLibrary() {
                               : material.engagementLabel ?? "项目素材"}
                       </span>
                     </div>
-                    <p className="text-xs text-white/35">
+                    <p className="text-xs text-[#9b8d84]">
                       更新于 {formatDate(material.updatedAt)}
                       {getProjectMediaFileName(material) ? ` · ${getProjectMediaFileName(material)}` : ""}
                     </p>
                     {material.description ? (
-                      <p className="line-clamp-2 text-xs leading-5 text-white/45">{material.description}</p>
+                      <p className="line-clamp-2 text-xs leading-5 text-[#8b7b72]">{material.description}</p>
                     ) : null}
                   </div>
                 </div>
@@ -880,7 +880,7 @@ function IconButton(props: {
       aria-label={props.label}
       disabled={props.disabled}
       onClick={props.onClick}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-white/65 transition-colors hover:bg-white/10 hover:text-white disabled:opacity-50"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[#eadfd7] text-[#6f625d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328] disabled:opacity-50"
     >
       {props.children}
     </button>

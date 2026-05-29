@@ -303,20 +303,20 @@ export function ArticleWorkbench({
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex h-14 items-center justify-between border-b border-white/10 px-4">
+      <div className="flex min-h-14 flex-col gap-3 border-b border-[#eadfd7] px-4 py-3 sm:flex-row sm:items-center sm:justify-between lg:h-14 lg:py-0">
         <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="rounded-lg p-2 text-white/45 hover:bg-white/5 hover:text-white">
+          <Link href="/dashboard" className="rounded-lg p-2 text-[#8b7b72] hover:bg-[#fffaf7] hover:text-[#1f2328]">
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div>
             <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">
               图文工作台
             </h1>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">小红书笔记</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">小红书笔记</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="hidden rounded-xl bg-white/5 p-1 md:flex">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          <div className="hidden rounded-xl bg-[#fffaf7] p-1 md:flex">
             {[
               ["create", "从 0 到 1创作"],
               ["rewrite", "基于素材改写"],
@@ -327,8 +327,8 @@ export function ArticleWorkbench({
                 onClick={() => setMode(value as "create" | "rewrite")}
                 className={
                   mode === value
-                    ? "rounded-lg bg-[#0a0a0a] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-amber-500"
-                    : "rounded-lg px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-white/75"
+                    ? "rounded-lg bg-[#fffaf6] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#f2556b]"
+                    : "rounded-lg px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#9b8d84] hover:text-[#4f433d]"
                 }
               >
                 {label}
@@ -341,14 +341,14 @@ export function ArticleWorkbench({
               void generateDraft();
             }}
             disabled={generating || loadingSession}
-            className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-amber-500 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#f2556b] disabled:opacity-60"
           >
             {generating ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <FileText className="h-3.5 w-3.5" />}
             {draftBundle ? "重新生成" : mode === "rewrite" ? "开始改写" : "开始创作"}
           </button>
           <Link
             href="/dashboard/history"
-            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-white/65"
+            className="rounded-full border border-[#eadfd7] bg-[#fffaf7] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#6f625d]"
           >
             去历史页
           </Link>
@@ -356,22 +356,22 @@ export function ArticleWorkbench({
       </div>
 
       {error ? (
-        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-200">
+        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
       {notice ? (
-        <div className="border-b border-amber-500/20 bg-amber-500/10 px-6 py-3 text-sm text-amber-100">
+        <div className="border-b border-[#f2556b]/25 bg-[#fff0ef] px-6 py-3 text-sm text-[#8a4b00]">
           {notice}
         </div>
       ) : null}
 
-      <div className="flex min-h-0 flex-1">
-        <aside className="flex w-[380px] shrink-0 flex-col border-r border-white/10 bg-[#0a0a0a]">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        <aside className="flex w-full shrink-0 flex-col border-b border-[#eadfd7] bg-[#fffaf6] lg:w-[380px] lg:border-b-0 lg:border-r">
           <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-6">
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">已带入策略</p>
-              <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-white/75">
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">已带入策略</p>
+              <div className="mt-3 rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4 text-sm leading-7 text-[#4f433d]">
                 <p>
                   {session?.strategySnapshot.positioning ??
                     (isDailyTaskSource
@@ -383,20 +383,20 @@ export function ArticleWorkbench({
 
             {selectedCalendarItem ? (
               <section>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">已带入日历卡片</p>
-                <div className="mt-3 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">已带入日历卡片</p>
+                <div className="mt-3 rounded-2xl border border-[#f2556b]/25 bg-[#fff0ef] p-4">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-white/55">
+                    <span className="rounded-full border border-[#eadfd7] bg-white/70 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-[#7f7067]">
                       {selectedCalendarItem.dayLabel}
                     </span>
-                    <span className="rounded-full bg-orange-500/15 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-orange-300">
+                    <span className="rounded-full bg-[#fff7ed] px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-[#c46a00]">
                       {selectedCalendarItem.strategyTag}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm font-medium leading-6 text-white">
+                  <p className="mt-3 text-sm font-medium leading-6 text-[#1f2328]">
                     {selectedCalendarItem.title}
                   </p>
-                  <p className="mt-2 text-xs leading-6 text-white/55">
+                  <p className="mt-2 text-xs leading-6 text-[#7f7067]">
                     {selectedCalendarItem.summary}
                   </p>
                 </div>
@@ -406,20 +406,20 @@ export function ArticleWorkbench({
             {mode === "rewrite" ? (
               <section>
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">参考素材</p>
-                  <Link href="/dashboard/content" className="text-[10px] uppercase tracking-[0.2em] text-amber-500">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">参考素材</p>
+                  <Link href="/dashboard/content" className="text-[10px] uppercase tracking-[0.2em] text-[#f2556b]">
                     {referenceMaterial ? "更换素材" : "打开素材库"}
                   </Link>
                 </div>
-                <div className="mt-3 flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white/5 text-white/30">
+                <div className="mt-3 flex gap-3 rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-3">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-[#fffaf7] text-[#a7978e]">
                     <ImageIcon className="h-6 w-6" />
                   </div>
                   <div className="min-w-0">
-                    <p className="line-clamp-1 text-sm font-serif text-white/80">
+                    <p className="line-clamp-1 text-sm font-serif text-[#3d332f]">
                       {referenceMaterial?.title ?? "请先从素材库选择一条参考素材"}
                     </p>
-                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/45">
+                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#8b7b72]">
                       {referenceMaterial?.description ??
                         "改写模式会把素材拆解、原文结构和互动表现带入生成上下文。"}
                     </p>
@@ -429,17 +429,17 @@ export function ArticleWorkbench({
             ) : null}
 
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">内容目标</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">内容目标</p>
               <textarea
                 value={goal}
                 onChange={(event) => setGoal(event.target.value)}
                 rows={4}
-                className="mt-3 w-full rounded-2xl border border-white/10 bg-[#050505] px-4 py-3 text-sm text-white outline-none"
+                className="mt-3 w-full rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 text-sm text-[#1f2328] outline-none"
               />
             </section>
 
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">创作策略</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">创作策略</p>
               <div className="mt-3 grid gap-2">
                 {articlePlaybooks.map((playbook) => {
                   const selected = articlePlaybook === playbook.value;
@@ -451,14 +451,14 @@ export function ArticleWorkbench({
                       onClick={() => setArticlePlaybook(playbook.value)}
                       className={
                         selected
-                          ? "rounded-2xl border border-amber-500/40 bg-amber-500/10 p-3 text-left"
-                          : "rounded-2xl border border-white/10 bg-white/5 p-3 text-left transition-colors hover:border-white/20 hover:bg-white/10"
+                          ? "rounded-2xl border border-[#f2556b]/40 bg-[#fff0ef] p-3 text-left"
+                          : "rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-3 text-left transition-colors hover:border-[#eadfd7] hover:bg-[#fff0ef]"
                       }
                     >
-                      <span className={selected ? "text-sm text-amber-200" : "text-sm text-white/75"}>
+                      <span className={selected ? "text-sm text-[#c46a00]" : "text-sm text-[#4f433d]"}>
                         {playbook.label}
                       </span>
-                      <span className="mt-1 block text-xs leading-5 text-white/40">
+                      <span className="mt-1 block text-xs leading-5 text-[#9b8d84]">
                         {playbook.description}
                       </span>
                     </button>
@@ -468,18 +468,18 @@ export function ArticleWorkbench({
             </section>
 
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">附加要求</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">附加要求</p>
               <textarea
                 value={extraRequirement}
                 onChange={(event) => setExtraRequirement(event.target.value)}
                 rows={5}
                 placeholder="例如：更口语一点，末尾引导预约一次沟通，强调真实经验和信任感。"
-                className="mt-3 w-full rounded-2xl border border-white/10 bg-[#050505] px-4 py-3 text-sm text-white outline-none placeholder:text-white/25"
+                className="mt-3 w-full rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
               />
             </section>
 
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">平台风格与口吻</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">平台风格与口吻</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {toneStyles.map((tag) => (
                   <button
@@ -488,8 +488,8 @@ export function ArticleWorkbench({
                     onClick={() => setToneStyle(tag)}
                     className={
                       toneStyle === tag
-                        ? "rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-amber-500"
-                        : "rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/55"
+                        ? "rounded-lg border border-[#f2556b]/40 bg-[#fff0ef] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#f2556b]"
+                        : "rounded-lg border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#7f7067]"
                     }
                   >
                     {tag}
@@ -499,12 +499,12 @@ export function ArticleWorkbench({
             </section>
 
             <section>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">内容标签</p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">内容标签</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {session?.strategySnapshot.strategyTags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs text-amber-500"
+                    className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-3 py-1 text-xs text-[#f2556b]"
                   >
                     {tag}
                   </span>
@@ -512,14 +512,14 @@ export function ArticleWorkbench({
               </div>
             </section>
           </div>
-          <div className="shrink-0 border-t border-white/10 bg-[#070707] p-5">
+          <div className="shrink-0 border-t border-[#eadfd7] bg-[#fffaf6] p-5">
             <button
               type="button"
               onClick={() => {
                 void generateDraft();
               }}
               disabled={generating || loadingSession}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600/80 px-5 py-3 text-[10px] uppercase tracking-[0.25em] text-white shadow-[0_18px_60px_rgba(180,83,9,0.22)] transition-colors hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#f2556b] px-5 py-3 text-[10px] uppercase tracking-[0.25em] text-[#fffaf7] shadow-[0_18px_60px_rgba(242,85,107,0.16)] transition-colors hover:bg-[#e94b73] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {generating ? (
                 <RefreshCw className="h-4 w-4 animate-spin" />
@@ -539,15 +539,15 @@ export function ArticleWorkbench({
 
         <div className="min-h-0 flex-1 overflow-y-auto px-6 py-8 lg:px-12">
           {loadingSession ? (
-            <div className="flex h-full items-center justify-center text-sm text-white/40">
+            <div className="flex h-full items-center justify-center text-sm text-[#9b8d84]">
               正在读取咨询上下文...
             </div>
           ) : draftBundle && selectedVariant ? (
             <div className="mx-auto max-w-4xl space-y-8">
-              <section className="rounded-3xl border border-white/10 bg-[#111111]">
-                <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">标题方案</p>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-emerald-400">已保存到记录</p>
+              <section className="rounded-3xl border border-[#eadfd7] bg-white">
+                <div className="flex items-center justify-between border-b border-[#eadfd7] px-6 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">标题方案</p>
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#0f766e]">已保存到记录</p>
                 </div>
                 <div className="space-y-3 p-6">
                   {draftBundle.variants.map((variant) => (
@@ -557,8 +557,8 @@ export function ArticleWorkbench({
                       onClick={() => setSelectedVariantId(variant.id)}
                       className={
                         variant.id === selectedVariant.id
-                          ? "w-full rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-left text-lg text-white"
-                          : "w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-lg text-white/75"
+                          ? "w-full rounded-2xl border border-[#f2556b]/40 bg-[#fff0ef] p-4 text-left text-lg text-[#1f2328]"
+                          : "w-full rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4 text-left text-lg text-[#4f433d]"
                       }
                     >
                       {variant.title}
@@ -567,19 +567,19 @@ export function ArticleWorkbench({
                 </div>
               </section>
 
-              <section className="rounded-3xl border border-white/10 bg-[#111111]">
-                <div className="border-b border-white/10 px-6 py-4">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">正文与排版</p>
+              <section className="rounded-3xl border border-[#eadfd7] bg-white">
+                <div className="border-b border-[#eadfd7] px-6 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">正文与排版</p>
                 </div>
-                <div className="whitespace-pre-wrap px-8 py-8 text-base leading-8 text-white/85">
+                <div className="whitespace-pre-wrap px-8 py-8 text-base leading-8 text-[#2f2824]">
                   {selectedVariant.bodyText}
                 </div>
               </section>
 
-              <section className="rounded-3xl border border-white/10 bg-[#111111]">
-                <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">自然语言修改</p>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/30">
+              <section className="rounded-3xl border border-[#eadfd7] bg-white">
+                <div className="flex items-center justify-between border-b border-[#eadfd7] px-6 py-4">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">自然语言修改</p>
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#a7978e]">
                     追加新版本
                   </p>
                 </div>
@@ -589,7 +589,7 @@ export function ArticleWorkbench({
                     onChange={(event) => setRevisionInstruction(event.target.value)}
                     rows={4}
                     placeholder="例如：更口语一点，开头别太吓人，强调真实经验。"
-                    className="w-full rounded-2xl border border-white/10 bg-[#050505] px-4 py-3 text-sm text-white outline-none placeholder:text-white/25"
+                    className="w-full rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c]"
                   />
                   <div className="flex justify-end">
                     <button
@@ -598,7 +598,7 @@ export function ArticleWorkbench({
                         void reviseDraft();
                       }}
                       disabled={revising || !revisionInstruction.trim()}
-                      className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-amber-500 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#f2556b] disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {revising ? (
                         <RefreshCw className="h-3.5 w-3.5 animate-spin" />
@@ -612,34 +612,34 @@ export function ArticleWorkbench({
               </section>
 
               <section className="grid gap-6 lg:grid-cols-2">
-                <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">话题标签</p>
+                <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">话题标签</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {selectedVariant.hashtags.map((item) => (
                       <span
                         key={item}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+                        className="rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1 text-xs text-[#5f514a]"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
                 </section>
-                <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">配图建议</p>
+                <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">配图建议</p>
                   {matchedProjectMaterials.length ? (
                     <div className="mt-4 flex flex-wrap gap-2">
                       {matchedProjectMaterials.slice(0, 4).map((item, index) => (
                         <span
                           key={`${readRecordLabel(item)}-${index}`}
-                          className="rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs text-amber-100/80"
+                          className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-3 py-1 text-xs text-[#8a4b00]"
                         >
                           {readRecordLabel(item)}
                         </span>
                       ))}
                     </div>
                   ) : null}
-                  <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-white/75">
+                  <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-[#4f433d]">
                     {(imageStructureSuggestions.length
                       ? imageStructureSuggestions
                       : [
@@ -675,11 +675,11 @@ export function ArticleWorkbench({
           ) : (
             <div className="flex h-full items-center justify-center">
               <div className="max-w-lg text-center">
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5 text-amber-500">
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-[#eadfd7] bg-[#fffaf7] text-[#f2556b]">
                   <PenLine className="h-7 w-7" />
                 </div>
-                <p className="text-2xl text-white [font-family:var(--font-cormorant)]">图文草稿还没生成</p>
-                <p className="mt-3 text-sm leading-7 text-white/45">
+                <p className="text-2xl text-[#1f2328] [font-family:var(--font-cormorant)]">图文草稿还没生成</p>
+                <p className="mt-3 text-sm leading-7 text-[#8b7b72]">
                   这里会把今日任务或咨询页沉淀下来的策略快照转换成真实的 `content_drafts / content_variants`
                   记录，并直接展示可切换的标题与正文版本。
                 </p>
@@ -718,9 +718,9 @@ function InsightList({
   const visibleItems = items.length ? items : [emptyText];
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-[#111111] p-6">
-      <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">{title}</p>
-      <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-white/75">
+    <section className="rounded-3xl border border-[#eadfd7] bg-white p-6">
+      <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">{title}</p>
+      <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-[#4f433d]">
         {visibleItems.map((item) => (
           <li key={item}>{item}</li>
         ))}

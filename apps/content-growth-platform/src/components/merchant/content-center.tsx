@@ -255,12 +255,12 @@ export function MerchantContentCenter() {
 
   return (
     <div className="relative flex h-full min-h-0 w-full flex-col bg-transparent">
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-6">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b border-[#eadfd7] px-6">
         <div>
           <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">
             社媒爆款内容库
           </h1>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
             TikHub 解析内容 · 正文评论互动数据
           </p>
         </div>
@@ -268,7 +268,7 @@ export function MerchantContentCenter() {
           <button
             type="button"
             onClick={() => setShowUploadModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-[#5f514a] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328]"
           >
             <Plus className="h-3.5 w-3.5" />
             解析单条
@@ -276,7 +276,7 @@ export function MerchantContentCenter() {
           <button
             type="button"
             onClick={() => setShowFindModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-amber-600/80 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-white shadow-[0_18px_60px_rgba(180,83,9,0.22)] transition-colors hover:bg-amber-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#f2556b] px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-[#fffaf7] shadow-[0_18px_60px_rgba(242,85,107,0.16)] transition-colors hover:bg-[#e94b73]"
           >
             <Search className="h-3.5 w-3.5" />
             找爆款
@@ -285,38 +285,38 @@ export function MerchantContentCenter() {
       </header>
 
       {error ? (
-        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-200">
+        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
 
       {loading ? (
-        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-white/40">
+        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-[#9b8d84]">
           正在读取素材库...
         </div>
       ) : materials.length === 0 ? (
         <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-6 text-center">
-          <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-white/5 text-amber-500/80">
+          <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-full border border-[#eadfd7] bg-[#fffaf7] text-[#c46a00]">
             <Library className="h-10 w-10" />
           </div>
-          <h2 className="text-2xl text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+          <h2 className="text-2xl text-[#1f2328] [font-family:var(--font-cormorant)]">
             社媒爆款内容库为空
           </h2>
-          <p className="mt-4 max-w-md text-sm leading-7 text-white/40 [font-family:var(--font-cormorant)]">
+          <p className="mt-4 max-w-md text-sm leading-7 text-[#9b8d84] [font-family:var(--font-cormorant)]">
             这里只沉淀小红书和抖音的社媒爆款内容，包括正文、标签、互动数据和评论。项目图片和项目视频素材继续留在资料库，不放进这里。
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <button
               type="button"
               onClick={() => setShowUploadModal(true)}
-              className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-[10px] uppercase tracking-[0.25em] text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+              className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-6 py-3 text-[10px] uppercase tracking-[0.25em] text-[#4f433d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328]"
             >
               解析单条
             </button>
             <button
               type="button"
               onClick={() => setShowFindModal(true)}
-              className="rounded-xl bg-amber-600 px-6 py-3 text-[10px] uppercase tracking-[0.25em] text-white shadow-[0_18px_60px_rgba(180,83,9,0.24)] transition-colors hover:bg-amber-500"
+              className="rounded-xl bg-[#f2556b] px-6 py-3 text-[10px] uppercase tracking-[0.25em] text-[#fffaf7] shadow-[0_18px_60px_rgba(242,85,107,0.18)] transition-colors hover:bg-[#e94b73]"
             >
               去找爆款
             </button>
@@ -324,17 +324,17 @@ export function MerchantContentCenter() {
         </div>
       ) : (
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
-          <aside className="flex h-[340px] shrink-0 flex-col border-b border-white/10 bg-[#0a0a0a] lg:h-full lg:w-[400px] lg:border-b-0 lg:border-r">
-            <div className="space-y-3 border-b border-white/5 p-5">
+          <aside className="flex h-[340px] shrink-0 flex-col border-b border-[#eadfd7] bg-[#fffaf6] lg:h-full lg:w-[400px] lg:border-b-0 lg:border-r">
+            <div className="space-y-3 border-b border-[#eadfd7]/70 p-5">
               <div className="flex gap-3">
                 <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" />
+                  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9b8d84]" />
                   <input
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     type="text"
                     placeholder="搜索标题、正文、作者..."
-                    className="h-10 w-full rounded-xl border border-white/10 bg-[#050505] pl-11 pr-4 text-xs text-[#e0e0e0] outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                    className="h-10 w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] pl-11 pr-4 text-xs text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
                   />
                 </div>
                 <button
@@ -344,7 +344,7 @@ export function MerchantContentCenter() {
                     setMaterialTypeFilter("all");
                     setQuery("");
                   }}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-[#050505] text-white/55 transition-colors hover:bg-white/5 hover:text-white"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#eadfd7] bg-[#fffaf7] text-[#7f7067] transition-colors hover:bg-[#fffaf7] hover:text-[#1f2328]"
                   aria-label="重置筛选"
                 >
                   <Filter className="h-4 w-4" />
@@ -375,23 +375,23 @@ export function MerchantContentCenter() {
                     className={cn(
                       "flex w-full gap-4 overflow-hidden rounded-2xl border p-4 text-left transition-all",
                       isSelected
-                        ? "border-amber-500/40 bg-amber-500/10 shadow-[0_18px_70px_rgba(180,83,9,0.16)]"
-                        : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]",
+                        ? "border-[#f2556b]/40 bg-[#fff0ef] shadow-[0_18px_70px_rgba(242,85,107,0.12)]"
+                        : "border-[#eadfd7] bg-[#fffaf7] hover:border-[#eadfd7] hover:bg-[#fff5f1]",
                     )}
                   >
                     <MaterialThumbnail item={item} asset={primaryAsset} selected={isSelected} size="list" />
                     <div className="min-w-0 flex-1">
-                      <h3 className="line-clamp-2 text-sm leading-snug text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+                      <h3 className="line-clamp-2 text-sm leading-snug text-[#1f2328] [font-family:var(--font-cormorant)]">
                         {item.title}
                       </h3>
                       <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.16em]">
-                        <span className="rounded border border-white/10 bg-white/5 px-2 py-1 text-white/55">
+                        <span className="rounded border border-[#eadfd7] bg-[#fffaf7] px-2 py-1 text-[#7f7067]">
                           {platformLabels[item.platform]}
                         </span>
-                        <span className="rounded border border-white/10 bg-white/5 px-2 py-1 text-white/55">
+                        <span className="rounded border border-[#eadfd7] bg-[#fffaf7] px-2 py-1 text-[#7f7067]">
                           {materialTypeLabels[item.materialType]}
                         </span>
-                        <span className="rounded border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-amber-500">
+                        <span className="rounded border border-[#f2556b]/25 bg-[#fff0ef] px-2 py-1 text-[#f2556b]">
                           {item.engagementLabel ?? "待分析"}
                         </span>
                       </div>
@@ -400,7 +400,7 @@ export function MerchantContentCenter() {
                 );
               })}
               {filteredMaterials.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center text-sm text-white/40">
+                <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-6 text-center text-sm text-[#9b8d84]">
                   没找到匹配素材，可以换个关键词。
                 </div>
               ) : null}
@@ -409,8 +409,8 @@ export function MerchantContentCenter() {
 
           <main className="min-h-0 flex-1 overflow-y-auto p-6 lg:p-10">
             {selectedItem ? (
-              <div className="mx-auto flex min-h-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d0d0d] shadow-[0_24px_100px_rgba(0,0,0,0.35)]">
-                <section className="flex items-start justify-between gap-6 border-b border-white/10 bg-[#050505] p-8">
+              <div className="mx-auto flex min-h-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-[#eadfd7] bg-white shadow-[0_24px_100px_rgba(77,53,43,0.10)]">
+                <section className="flex items-start justify-between gap-6 border-b border-[#eadfd7] bg-[#fffaf7] p-8">
                   <div className="flex gap-5">
                     <MaterialThumbnail
                       item={selectedItem}
@@ -419,21 +419,21 @@ export function MerchantContentCenter() {
                       size="detail"
                     />
                     <div>
-                      <h2 className="text-2xl leading-snug text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+                      <h2 className="text-2xl leading-snug text-[#1f2328] [font-family:var(--font-cormorant)]">
                         {selectedItem.title}
                       </h2>
                       <div className="mt-4 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em]">
-                        <span className="rounded border border-white/10 bg-white/5 px-2 py-1 text-white/55">
+                        <span className="rounded border border-[#eadfd7] bg-[#fffaf7] px-2 py-1 text-[#7f7067]">
                           {platformLabels[selectedItem.platform]}
                         </span>
-                        <span className="rounded border border-white/10 bg-white/5 px-2 py-1 text-white/55">
+                        <span className="rounded border border-[#eadfd7] bg-[#fffaf7] px-2 py-1 text-[#7f7067]">
                           {materialTypeLabels[selectedItem.materialType]}
                         </span>
-                        <span className="rounded border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-amber-500">
+                        <span className="rounded border border-[#f2556b]/25 bg-[#fff0ef] px-2 py-1 text-[#f2556b]">
                           {selectedItem.engagementLabel ?? "待分析"}
                         </span>
-                        <span className="text-white/30">{sourceKindLabels[selectedItem.sourceKind]}</span>
-                        <span className="text-white/25">{formatMaterialTime(selectedItem.createdAt)}</span>
+                        <span className="text-[#a7978e]">{sourceKindLabels[selectedItem.sourceKind]}</span>
+                        <span className="text-[#b2a49c]">{formatMaterialTime(selectedItem.createdAt)}</span>
                       </div>
                     </div>
                   </div>
@@ -442,7 +442,7 @@ export function MerchantContentCenter() {
                       href={selectedItem.originalUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-white/40 transition-colors hover:text-amber-500"
+                      className="inline-flex shrink-0 items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[#9b8d84] transition-colors hover:text-[#f2556b]"
                     >
                       原文链接
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -450,10 +450,10 @@ export function MerchantContentCenter() {
                   ) : null}
                 </section>
 
-                <section className="min-h-[260px] flex-1 space-y-8 p-8 text-sm leading-8 text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+                <section className="min-h-[260px] flex-1 space-y-8 p-8 text-sm leading-8 text-[#1f2328] [font-family:var(--font-cormorant)]">
                   {selectedMediaAssets.length > 0 ? (
                     <div>
-                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                         媒体预览
                       </h3>
                       <div className="grid gap-3 md:grid-cols-2">
@@ -465,7 +465,7 @@ export function MerchantContentCenter() {
                   ) : null}
 
                   <div>
-                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                       正文 / 文案
                     </h3>
                     <div className="whitespace-pre-wrap text-base leading-8">
@@ -475,14 +475,14 @@ export function MerchantContentCenter() {
 
                   {selectedTags.length > 0 ? (
                     <div>
-                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                         标签
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedTags.map((tag) => (
                           <span
                             key={tag}
-                            className="rounded border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/65"
+                            className="rounded border border-[#eadfd7] bg-[#fffaf7] px-2.5 py-1 text-xs text-[#6f625d]"
                           >
                             #{tag}
                           </span>
@@ -493,16 +493,16 @@ export function MerchantContentCenter() {
 
                   {selectedMetrics.length > 0 ? (
                     <div>
-                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                      <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                         互动数据
                       </h3>
                       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                         {selectedMetrics.map((metric) => (
-                          <div key={metric.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                            <div className="text-[10px] uppercase tracking-[0.2em] text-white/35">
+                          <div key={metric.label} className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-4">
+                            <div className="text-[10px] uppercase tracking-[0.2em] text-[#9b8d84]">
                               {metric.label}
                             </div>
-                            <div className="mt-2 text-xl text-amber-400">{metric.value}</div>
+                            <div className="mt-2 text-xl text-[#f2556b]">{metric.value}</div>
                           </div>
                         ))}
                       </div>
@@ -510,7 +510,7 @@ export function MerchantContentCenter() {
                   ) : null}
 
                   <div>
-                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                       评论
                     </h3>
                     {selectedComments.length > 0 ? (
@@ -518,43 +518,43 @@ export function MerchantContentCenter() {
                         {selectedComments.map((comment, index) => (
                           <div
                             key={`${comment.externalCommentId ?? comment.content}-${index}`}
-                            className="rounded-xl border border-white/10 bg-white/[0.03] p-4"
+                            className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-4"
                           >
-                            <div className="mb-2 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.18em] text-white/35">
+                            <div className="mb-2 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.18em] text-[#9b8d84]">
                               <span>{comment.authorName || "匿名用户"}</span>
                               <span>{formatCommentStats(comment)}</span>
                             </div>
-                            <p className="text-sm leading-7 text-white/70">{comment.content}</p>
+                            <p className="text-sm leading-7 text-[#5f514a]">{comment.content}</p>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-white/35">
+                      <p className="text-sm text-[#9b8d84]">
                         本条内容暂未保存评论，可能是平台风控字段缺失或 TikHub 评论接口未返回。
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/35">
+                    <h3 className="mb-3 text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
                       TikHub 解析字段
                     </h3>
-                    <div className="grid gap-2 text-xs text-white/55 md:grid-cols-2">
+                    <div className="grid gap-2 text-xs text-[#7f7067] md:grid-cols-2">
                       {selectedProviderSummary.map((row) => (
-                        <div key={row.label} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                          <span className="text-white/35">{row.label}：</span>
+                        <div key={row.label} className="rounded-lg border border-[#eadfd7] bg-[#fffaf7] px-3 py-2">
+                          <span className="text-[#9b8d84]">{row.label}：</span>
                           <span>{row.value}</span>
                         </div>
                       ))}
                     </div>
-                    <p className="mt-4 text-xs leading-6 text-white/30">
+                    <p className="mt-4 text-xs leading-6 text-[#a7978e]">
                       原始 TikHub payload 已随内容保存，普通用户页面不展示 raw JSON。
                     </p>
                   </div>
                 </section>
               </div>
             ) : (
-              <div className="flex h-full items-center justify-center text-sm italic text-white/35 [font-family:var(--font-cormorant)]">
+              <div className="flex h-full items-center justify-center text-sm italic text-[#9b8d84] [font-family:var(--font-cormorant)]">
                 请选择左侧素材。
               </div>
             )}
@@ -563,8 +563,8 @@ export function MerchantContentCenter() {
       )}
 
       {showUploadModal ? (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 p-6 backdrop-blur-sm">
-          <div className="flex w-full max-w-xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] shadow-[0_24px_120px_rgba(0,0,0,0.55)]">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#4f433d]/35 p-6 backdrop-blur-sm">
+          <div className="flex w-full max-w-xl flex-col overflow-hidden rounded-3xl border border-[#eadfd7] bg-[#fffaf6] shadow-[0_24px_120px_rgba(77,53,43,0.18)]">
             <ModalHeader title="解析单条爆款内容" onClose={() => setShowUploadModal(false)} />
             <div className="space-y-6 p-8">
               <OptionGroup
@@ -574,17 +574,17 @@ export function MerchantContentCenter() {
                 onChange={setUploadPlatform}
               />
               <div>
-                <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-white/55">
+                <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-[#7f7067]">
                   单条内容链接
                 </label>
                 <div className="relative">
-                  <Link2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+                  <Link2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a7978e]" />
                   <input
                     value={uploadLink}
                     onChange={(event) => setUploadLink(event.target.value)}
                     type="text"
                     placeholder="粘贴小红书笔记或抖音视频链接..."
-                    className="w-full rounded-xl border border-white/10 bg-[#050505] py-3 pl-12 pr-4 text-sm text-[#e0e0e0] outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                    className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] py-3 pl-12 pr-4 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
                   />
                 </div>
               </div>
@@ -593,7 +593,7 @@ export function MerchantContentCenter() {
                   type="button"
                   onClick={handleUploadParse}
                   disabled={!uploadLink.trim() || isParsing}
-                  className="inline-flex items-center gap-2 rounded-xl bg-amber-600/80 px-6 py-3 text-[10px] uppercase tracking-[0.22em] text-white transition-colors hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#f2556b] px-6 py-3 text-[10px] uppercase tracking-[0.22em] text-[#fffaf7] transition-colors hover:bg-[#e94b73] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isParsing ? <Search className="h-3.5 w-3.5 animate-spin" /> : null}
                   {isParsing ? "解析中..." : "解析入库"}
@@ -605,9 +605,9 @@ export function MerchantContentCenter() {
       ) : null}
 
       {showFindModal ? (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 p-6 backdrop-blur-sm">
-          <div className="flex w-full max-w-xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] shadow-[0_24px_120px_rgba(0,0,0,0.55)]">
-            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 bg-[#050505] px-8 pt-4">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#4f433d]/35 p-6 backdrop-blur-sm">
+          <div className="flex w-full max-w-xl flex-col overflow-hidden rounded-3xl border border-[#eadfd7] bg-[#fffaf6] shadow-[0_24px_120px_rgba(77,53,43,0.18)]">
+            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[#eadfd7] bg-[#fffaf7] px-8 pt-4">
               <div className="flex">
                 {[
                   ["keyword", "关键词"],
@@ -620,12 +620,12 @@ export function MerchantContentCenter() {
                     onClick={() => handleFindMethodChange(value as FindMethod)}
                     className={cn(
                       "relative px-5 py-3 text-xs uppercase tracking-[0.2em] transition-colors",
-                      findMethod === value ? "text-amber-500" : "text-white/40 hover:text-white/75",
+                      findMethod === value ? "text-[#f2556b]" : "text-[#9b8d84] hover:text-[#4f433d]",
                     )}
                   >
                     {label}
                     {findMethod === value ? (
-                      <span className="absolute bottom-0 left-0 h-px w-full bg-amber-500" />
+                      <span className="absolute bottom-0 left-0 h-px w-full bg-[#f2556b]" />
                     ) : null}
                   </button>
                 ))}
@@ -633,7 +633,7 @@ export function MerchantContentCenter() {
               <button
                 type="button"
                 onClick={() => setShowFindModal(false)}
-                className="mb-4 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/45 transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-400"
+                className="mb-4 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#eadfd7] bg-[#fffaf7] text-[#8b7b72] transition-colors hover:border-[#f2556b]/40 hover:bg-[#fff0ef] hover:text-[#f2556b]"
                 aria-label="关闭社媒爆款检索弹窗"
               >
                 <X className="h-4 w-4" />
@@ -651,17 +651,17 @@ export function MerchantContentCenter() {
               {findMethod === "keyword" ? (
                 <>
                   <div>
-                    <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-white/55">
+                    <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-[#7f7067]">
                       搜索关键词
                     </label>
                     <div className="relative">
-                      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+                      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a7978e]" />
                       <input
                         value={findKeyword}
                         onChange={(event) => setFindKeyword(event.target.value)}
                         type="text"
                         placeholder="例如：普拉提 产后修复"
-                        className="w-full rounded-xl border border-white/10 bg-[#050505] py-3 pl-12 pr-4 text-sm text-[#e0e0e0] outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                        className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] py-3 pl-12 pr-4 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
                       />
                     </div>
                   </div>
@@ -675,20 +675,20 @@ export function MerchantContentCenter() {
                 </>
               ) : findMethod === "profile" ? (
                 <div>
-                  <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-white/55">
+                  <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-[#7f7067]">
                     博主主页链接
                   </label>
                   <div className="relative">
-                    <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+                    <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a7978e]" />
                     <input
                       value={findProfileUrl}
                       onChange={(event) => setFindProfileUrl(event.target.value)}
                       type="text"
                       placeholder="粘贴博主主页链接..."
-                      className="w-full rounded-xl border border-white/10 bg-[#050505] py-3 pl-12 pr-4 text-sm text-[#e0e0e0] outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                      className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] py-3 pl-12 pr-4 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
                     />
                   </div>
-                  <p className="mt-3 text-xs leading-6 text-white/35">
+                  <p className="mt-3 text-xs leading-6 text-[#9b8d84]">
                     会优先拉取该博主近期互动表现更好的内容，供咨询和选题 Agent 查询。
                   </p>
                   <div className="mt-6">
@@ -699,27 +699,27 @@ export function MerchantContentCenter() {
                       onChange={setFindCount}
                       suffix="篇"
                     />
-                    <p className="mt-3 text-xs leading-6 text-white/30">
+                    <p className="mt-3 text-xs leading-6 text-[#a7978e]">
                       全量会分页拉取，当前服务器有保护上限，避免一次性请求过多。
                     </p>
                   </div>
                 </div>
               ) : (
                 <div>
-                  <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-white/55">
+                  <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-[#7f7067]">
                     单条内容链接
                   </label>
                   <div className="relative">
-                    <Link2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+                    <Link2 className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a7978e]" />
                     <input
                       value={findDetailUrl}
                       onChange={(event) => setFindDetailUrl(event.target.value)}
                       type="text"
                       placeholder="粘贴小红书笔记或抖音视频链接..."
-                      className="w-full rounded-xl border border-white/10 bg-[#050505] py-3 pl-12 pr-4 text-sm text-[#e0e0e0] outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                      className="w-full rounded-xl border border-[#eadfd7] bg-[#fffaf7] py-3 pl-12 pr-4 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
                     />
                   </div>
-                  <p className="mt-3 text-xs leading-6 text-white/35">
+                  <p className="mt-3 text-xs leading-6 text-[#9b8d84]">
                     单条链接会解析正文、互动数据和评论；视频不会进入视频剪辑素材库。
                   </p>
                 </div>
@@ -735,7 +735,7 @@ export function MerchantContentCenter() {
                     (findMethod === "profile" && !findProfileUrl.trim()) ||
                     (findMethod === "detail" && !findDetailUrl.trim())
                   }
-                  className="inline-flex items-center gap-2 rounded-xl bg-amber-600/80 px-6 py-3 text-[10px] uppercase tracking-[0.22em] text-white transition-colors hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#f2556b] px-6 py-3 text-[10px] uppercase tracking-[0.22em] text-[#fffaf7] transition-colors hover:bg-[#e94b73] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSearching ? <Search className="h-3.5 w-3.5 animate-spin" /> : null}
                   {isSearching ? "解析中..." : "开始解析"}
@@ -768,8 +768,8 @@ function MaterialThumbnail({
     "relative flex shrink-0 items-center justify-center overflow-hidden rounded-xl border",
     size === "list" ? "h-16 w-16" : "h-14 w-14",
     selected
-      ? "border-amber-500/20 bg-amber-500/15 text-amber-500"
-      : "border-white/10 bg-white/5 text-white/35",
+      ? "border-[#f2556b]/25 bg-[#fff0ef] text-[#f2556b]"
+      : "border-[#eadfd7] bg-[#fffaf7] text-[#9b8d84]",
   );
 
   if (previewUrl && asset && isImagePreviewAsset(asset)) {
@@ -782,7 +782,7 @@ function MaterialThumbnail({
           loading="lazy"
         />
         {asset.assetType === "cover" ? (
-          <div className="absolute bottom-1 right-1 rounded bg-black/65 p-1 text-amber-400">
+          <div className="absolute bottom-1 right-1 rounded bg-white/85 p-1 text-[#f2556b] shadow-[0_6px_16px_rgba(77,53,43,0.14)]">
             <Video className="h-3 w-3" />
           </div>
         ) : null}
@@ -795,12 +795,12 @@ function MaterialThumbnail({
       <div className={className}>
         <video
           src={previewUrl}
-          className="h-full w-full bg-black object-cover"
+          className="h-full w-full bg-[#f3ede7] object-cover"
           muted
           playsInline
           preload="metadata"
         />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 text-amber-400">
+        <div className="absolute inset-0 flex items-center justify-center bg-white/70 text-[#f2556b]">
           <Play className="h-4 w-4 fill-current" />
         </div>
       </div>
@@ -825,8 +825,8 @@ function MaterialMediaPreview({ asset }: { asset: MaterialMediaAsset }) {
   const isImage = isImagePreviewAsset(asset);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
-      <div className={cn("relative w-full bg-[#050505]", isVideo ? "aspect-video" : "aspect-square")}>
+    <div className="overflow-hidden rounded-xl border border-[#eadfd7] bg-[#fffaf7]">
+      <div className={cn("relative w-full bg-[#fffaf7]", isVideo ? "aspect-video" : "aspect-square")}>
         {isVideo ? (
           <video
             src={previewUrl}
@@ -845,13 +845,13 @@ function MaterialMediaPreview({ asset }: { asset: MaterialMediaAsset }) {
             />
           </a>
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-white/35">
+          <div className="flex h-full w-full items-center justify-center text-[#9b8d84]">
             <FileText className="h-6 w-6" />
           </div>
         )}
       </div>
-      <div className="flex min-h-10 items-center justify-between gap-3 border-t border-white/10 px-3 py-2">
-        <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-white/45">
+      <div className="flex min-h-10 items-center justify-between gap-3 border-t border-[#eadfd7] px-3 py-2">
+        <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8b7b72]">
           {isVideo ? <Video className="h-3.5 w-3.5" /> : <ImageIcon className="h-3.5 w-3.5" />}
           {formatAssetTypeLabel(asset)}
         </span>
@@ -859,7 +859,7 @@ function MaterialMediaPreview({ asset }: { asset: MaterialMediaAsset }) {
           href={previewUrl}
           target="_blank"
           rel="noreferrer"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-white/45 transition-colors hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-400"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#eadfd7] bg-[#fffaf7] text-[#8b7b72] transition-colors hover:border-[#f2556b]/40 hover:bg-[#fff0ef] hover:text-[#f2556b]"
           aria-label="打开媒体预览"
         >
           <ArrowUpRight className="h-3.5 w-3.5" />
@@ -1036,14 +1036,14 @@ function toRecord(value: unknown): Record<string, unknown> {
 
 function ModalHeader({ title, onClose }: { title: string; onClose: () => void }) {
   return (
-    <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-[#050505] px-8 py-6">
-      <h2 className="text-2xl italic text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+    <div className="flex shrink-0 items-center justify-between border-b border-[#eadfd7] bg-[#fffaf7] px-8 py-6">
+      <h2 className="text-2xl italic text-[#1f2328] [font-family:var(--font-cormorant)]">
         {title}
       </h2>
       <button
         type="button"
         onClick={onClose}
-        className="rounded-xl p-2 text-white/40 transition-colors hover:bg-white/5 hover:text-white"
+        className="rounded-xl p-2 text-[#9b8d84] transition-colors hover:bg-[#fffaf7] hover:text-[#1f2328]"
         aria-label="关闭弹窗"
       >
         <X className="h-5 w-5" />
@@ -1072,8 +1072,8 @@ function InlineFilterGroup<T extends string>({
           className={cn(
             "h-8 rounded-lg border px-3 text-[10px] uppercase tracking-[0.16em] transition-colors",
             value === option
-              ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-              : "border-white/10 bg-white/[0.03] text-white/50 hover:bg-white/5 hover:text-white/75",
+              ? "border-[#f2556b]/40 bg-[#fff0ef] text-[#f2556b]"
+              : "border-[#eadfd7] bg-[#fffaf7] text-[#7f7067] hover:bg-[#fffaf7] hover:text-[#4f433d]",
           )}
         >
           {formatOptionLabel(option)}
@@ -1098,7 +1098,7 @@ function OptionGroup<T extends string>({
 }) {
   return (
     <div>
-      <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-white/55">
+      <label className="mb-3 block text-[10px] uppercase tracking-[0.22em] text-[#7f7067]">
         {label}
       </label>
       <div className="flex flex-wrap gap-2">
@@ -1110,8 +1110,8 @@ function OptionGroup<T extends string>({
             className={cn(
               "rounded-lg border px-4 py-2 text-[10px] uppercase tracking-[0.18em] transition-colors",
               value === option
-                ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white",
+                ? "border-[#f2556b]/40 bg-[#fff0ef] text-[#f2556b]"
+                : "border-[#eadfd7] bg-[#fffaf7] text-[#6f625d] hover:bg-[#fff0ef] hover:text-[#1f2328]",
             )}
           >
             {formatOptionLabel(option)}

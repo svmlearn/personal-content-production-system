@@ -1034,23 +1034,23 @@ export function VideoWorkbench({
 
   return (
     <div className="relative flex h-full min-h-0 flex-col">
-      <div className="flex h-14 shrink-0 items-center justify-between border-b border-white/10 px-4">
+      <div className="flex min-h-14 shrink-0 flex-col gap-3 border-b border-[#eadfd7] px-4 py-3 sm:flex-row sm:items-center sm:justify-between lg:h-14 lg:py-0">
         <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="rounded-lg p-2 text-white/45 hover:bg-white/5 hover:text-white">
+          <Link href="/dashboard" className="rounded-lg p-2 text-[#8b7b72] hover:bg-[#fffaf7] hover:text-[#1f2328]">
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div>
             <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">
               视频脚本室
             </h1>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
               AI 对话 + 脚本画布
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="hidden items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-emerald-400 md:inline-flex">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          <span className="hidden items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-[#0f766e] md:inline-flex">
             <CheckCircle2 className="h-3.5 w-3.5" />
             上下文已就绪
           </span>
@@ -1060,7 +1060,7 @@ export function VideoWorkbench({
               void generateScript();
             }}
             disabled={generating || loadingSession}
-            className="inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-amber-500 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#f2556b] disabled:opacity-60"
           >
             {generating ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Video className="h-3.5 w-3.5" />}
             {draftBundle ? "重新生成脚本" : "生成视频脚本"}
@@ -1071,7 +1071,7 @@ export function VideoWorkbench({
               void approveSelectedScript();
             }}
             disabled={approvingScript || !selectedVariant || scriptApproved}
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-emerald-400 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#0f766e] disabled:opacity-50"
           >
             {approvingScript ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
             {scriptApproved ? "脚本已锁定" : "创建时自动锁定"}
@@ -1082,12 +1082,12 @@ export function VideoWorkbench({
               void createVideoJob();
             }}
             disabled={creatingJob || Boolean(jobIsRunning) || !selectedVariant}
-            className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-white/70 transition-colors hover:bg-white/10 disabled:opacity-50"
+            className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[#eadfd7] bg-[#fffaf7] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-[#5f514a] transition-colors hover:bg-[#fff0ef] disabled:opacity-50"
           >
             {creatingJob || jobIsRunning ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-500" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#f2556b]" />
             ) : (
-              <Wand2 className="h-3.5 w-3.5 text-amber-500" />
+              <Wand2 className="h-3.5 w-3.5 text-[#f2556b]" />
             )}
             {jobIsRunning ? "AI 剪辑中" : "AI 一键剪辑"}
           </button>
@@ -1095,19 +1095,19 @@ export function VideoWorkbench({
       </div>
 
       {error ? (
-        <div className="whitespace-pre-line border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm leading-6 text-rose-200">
+        <div className="whitespace-pre-line border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm leading-6 text-rose-700">
           {error}
         </div>
       ) : null}
 
-      <div className="flex min-h-0 flex-1">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         <section
           className={
             showCanvas && canvasExpanded
-              ? "hidden min-h-0 shrink-0 flex-col border-r border-white/10 bg-[#0a0a0a] lg:flex lg:w-[320px]"
+              ? "hidden min-h-0 shrink-0 flex-col border-r border-[#eadfd7] bg-[#fffaf6] lg:flex lg:w-[320px]"
               : showCanvas
-                ? "flex min-h-0 w-[420px] shrink-0 flex-col border-r border-white/10 bg-[#0a0a0a]"
-                : "mx-auto flex min-h-0 w-full max-w-3xl flex-col bg-[#0a0a0a]"
+                ? "flex min-h-0 w-full shrink-0 flex-col border-b border-[#eadfd7] bg-[#fffaf6] lg:w-[420px] lg:border-b-0 lg:border-r"
+                : "mx-auto flex min-h-0 w-full max-w-3xl flex-col bg-[#fffaf6]"
           }
         >
           <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-6">
@@ -1119,8 +1119,8 @@ export function VideoWorkbench({
                 <div
                   className={
                     message.role === "agent"
-                      ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-500"
-                      : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs text-white/60"
+                      ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff0ef] text-[#f2556b]"
+                      : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff0ef] text-xs text-[#6f625d]"
                   }
                 >
                   {message.role === "agent" ? <PlayCircle className="h-4 w-4" /> : "商"}
@@ -1128,8 +1128,8 @@ export function VideoWorkbench({
                 <div
                   className={
                     message.role === "agent"
-                      ? "rounded-2xl rounded-tl-none border border-white/10 bg-[#0d0d0d] p-4 text-sm leading-7 text-white/75"
-                      : "rounded-2xl rounded-tr-none bg-amber-600/80 p-4 text-sm leading-7 text-white"
+                      ? "rounded-2xl rounded-tl-none border border-[#eadfd7] bg-white p-4 text-sm leading-7 text-[#4f433d]"
+                      : "rounded-2xl rounded-tr-none bg-[#f2556b] p-4 text-sm leading-7 text-[#fffaf7]"
                   }
                 >
                   {message.content}
@@ -1139,18 +1139,18 @@ export function VideoWorkbench({
 
             {generating ? (
               <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-500">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff0ef] text-[#f2556b]">
                   <PlayCircle className="h-4 w-4" />
                 </div>
-                <div className="flex items-center gap-2 rounded-2xl rounded-tl-none border border-white/10 bg-[#0d0d0d] p-4 text-sm italic text-white/45">
-                  <RefreshCw className="h-4 w-4 animate-spin text-amber-500" />
+                <div className="flex items-center gap-2 rounded-2xl rounded-tl-none border border-[#eadfd7] bg-white p-4 text-sm italic text-[#8b7b72]">
+                  <RefreshCw className="h-4 w-4 animate-spin text-[#f2556b]" />
                   正在和脚本助手沟通...
                 </div>
               </div>
             ) : null}
           </div>
 
-          <div className="shrink-0 border-t border-white/10 bg-[#080808] p-5">
+          <div className="shrink-0 border-t border-[#eadfd7] bg-[#fffaf7] p-5">
             <form onSubmit={handleSend} className="relative">
               <textarea
                 value={input}
@@ -1162,12 +1162,12 @@ export function VideoWorkbench({
                   }
                 }}
                 placeholder="告诉 AI：镜头节奏、台词风格、素材限制或转化目标..."
-                className="max-h-32 min-h-20 w-full resize-none rounded-2xl border border-white/10 bg-[#050505] px-4 py-3 pr-14 text-sm text-white outline-none placeholder:text-white/25 focus:border-amber-500/50"
+                className="max-h-32 min-h-20 w-full resize-none rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-4 py-3 pr-14 text-sm text-[#1f2328] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/50"
               />
               <button
                 type="submit"
                 disabled={generating || !input.trim()}
-                className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-xl bg-amber-600/80 text-white transition-colors hover:bg-amber-600 disabled:opacity-50"
+                className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-xl bg-[#f2556b] text-[#fffaf7] transition-colors hover:bg-[#e94b73] disabled:opacity-50"
                 aria-label="发送脚本意见"
               >
                 <Send className="h-4 w-4" />
@@ -1177,24 +1177,24 @@ export function VideoWorkbench({
         </section>
 
         {showCanvas ? (
-          <section className="flex min-h-0 flex-1 justify-center overflow-hidden p-5 lg:p-7">
-            <div className="flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0d0d0d] shadow-[0_24px_100px_rgba(0,0,0,0.35)]">
-              <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-[#050505] px-6 py-4">
+          <section className="flex min-h-0 flex-1 justify-center overflow-hidden p-4 lg:p-7">
+            <div className="flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-[#eadfd7] bg-white shadow-[0_24px_100px_rgba(77,53,43,0.10)]">
+              <div className="flex shrink-0 flex-col gap-3 border-b border-[#eadfd7] bg-[#fffaf7] px-5 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-6">
                 <div>
                   <div className="flex items-center gap-3">
-                    <h2 className="max-w-xl truncate text-base text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+                    <h2 className="max-w-xl truncate text-base text-[#1f2328] [font-family:var(--font-cormorant)]">
                       {selectedVariant?.title ??
                         session?.strategySnapshot.videoBrief?.workingTitle ??
                         referenceMaterial?.title ??
                         "等待生成视频脚本"}
                     </h2>
                     {routeContext.strategyTag ? (
-                      <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-amber-500">
+                      <span className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[#f2556b]">
                         {routeContext.strategyTag}
                       </span>
                     ) : null}
                   </div>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-white/35">
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
                     镜头画布 · 台词 · 素材要求
                   </p>
                 </div>
@@ -1202,7 +1202,7 @@ export function VideoWorkbench({
                   <button
                     type="button"
                     onClick={() => setCanvasExpanded((current) => !current)}
-                    className="rounded-xl border border-white/10 bg-white/5 p-2 text-white/45 transition-colors hover:text-amber-500"
+                    className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-2 text-[#8b7b72] transition-colors hover:text-[#f2556b]"
                     aria-label={canvasExpanded ? "缩小画布" : "放大画布"}
                   >
                     {canvasExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -1210,7 +1210,7 @@ export function VideoWorkbench({
                   <button
                     type="button"
                     onClick={() => setShowCanvas(false)}
-                    className="rounded-xl border border-white/10 bg-white/5 p-2 text-white/45 transition-colors hover:text-white"
+                    className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-2 text-[#8b7b72] transition-colors hover:text-[#1f2328]"
                     aria-label="收起画布"
                   >
                     <PanelRightClose className="h-4 w-4" />
@@ -1241,11 +1241,11 @@ export function VideoWorkbench({
                       onRecordingError={setVoiceProfileCreateError}
                     />
 
-                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#080808]">
-                    <div className="grid grid-cols-12 border-b border-white/10 bg-[#050505] text-[10px] uppercase tracking-[0.2em] text-white/35">
-                      <div className="col-span-2 border-r border-white/10 p-4 text-center">时长</div>
-                      <div className="col-span-4 border-r border-white/10 p-4">画面 / 镜头要求</div>
-                      <div className="col-span-4 border-r border-white/10 p-4">台词 / 旁白</div>
+                    <div className="overflow-hidden rounded-2xl border border-[#eadfd7] bg-[#fffaf7]">
+                    <div className="grid grid-cols-12 border-b border-[#eadfd7] bg-[#fffaf7] text-[10px] uppercase tracking-[0.2em] text-[#9b8d84]">
+                      <div className="col-span-2 border-r border-[#eadfd7] p-4 text-center">时长</div>
+                      <div className="col-span-4 border-r border-[#eadfd7] p-4">画面 / 镜头要求</div>
+                      <div className="col-span-4 border-r border-[#eadfd7] p-4">台词 / 旁白</div>
                       <div className="col-span-2 p-4 text-center">素材</div>
                     </div>
                     {canvasScenes.map((scene, index) => (
@@ -1262,13 +1262,13 @@ export function VideoWorkbench({
                 ) : (
                   <div className="flex h-full min-h-[420px] items-center justify-center">
                     <div className="max-w-lg text-center">
-                      <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-white/5 text-amber-500">
+                      <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#eadfd7] bg-[#fffaf7] text-[#f2556b]">
                         <Film className="h-8 w-8" />
                       </div>
-                      <p className="text-3xl text-white [font-family:var(--font-cormorant)]">
+                      <p className="text-3xl text-[#1f2328] [font-family:var(--font-cormorant)]">
                         视频脚本还没生成
                       </p>
-                      <p className="mt-4 text-sm leading-7 text-white/45">
+                      <p className="mt-4 text-sm leading-7 text-[#8b7b72]">
                         左侧继续和 AI 对话，或点击顶部「生成视频脚本」。脚本生成后，这里会变成可放大/收起的镜头画布。
                       </p>
                     </div>
@@ -1285,10 +1285,10 @@ export function VideoWorkbench({
                       )}
                     </div>
                     <div>
-                      <p className="text-sm text-[#e0e0e0] [font-family:var(--font-cormorant)]">
+                      <p className="text-sm text-[#1f2328] [font-family:var(--font-cormorant)]">
                         {jobStatusCopy?.title ?? "AI 一键剪辑提示"}
                       </p>
-                      <p className="mt-2 text-xs leading-6 text-white/50">
+                      <p className="mt-2 text-xs leading-6 text-[#7f7067]">
                         {jobStatusCopy?.detail ??
                           "脚本确认后点击顶部「AI 一键剪辑」，系统会按镜头顺序和素材要求创建视频任务。"}
                       </p>
@@ -1311,7 +1311,7 @@ export function VideoWorkbench({
                           type="button"
                           onClick={() => void retryVideoJob(job.id)}
                           disabled={creatingJob}
-                          className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-amber-500 disabled:opacity-50"
+                          className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#f2556b] disabled:opacity-50"
                         >
                           {creatingJob ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
                           重试任务
@@ -1322,7 +1322,7 @@ export function VideoWorkbench({
                           type="button"
                           onClick={() => void createVideoJob(job.id)}
                           disabled={creatingJob}
-                          className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/60 transition-colors hover:bg-white/10 hover:text-white disabled:opacity-50"
+                          className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#6f625d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328] disabled:opacity-50"
                         >
                           {creatingJob ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />}
                           制作修订
@@ -1336,13 +1336,13 @@ export function VideoWorkbench({
                         controls
                         playsInline
                         preload="metadata"
-                        className="aspect-video w-full rounded-2xl border border-white/10 bg-black"
+                        className="aspect-video w-full rounded-2xl border border-[#eadfd7] bg-[#f3ede7]"
                         src={resultVideoPreviewUrl}
                       />
                       {resultVideoDownloadUrl ? (
                         <a
                           href={resultVideoDownloadUrl}
-                          className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+                          className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#6f625d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328]"
                         >
                           <Download className="h-3.5 w-3.5" />
                           下载成片
@@ -1359,7 +1359,7 @@ export function VideoWorkbench({
             <button
               type="button"
               onClick={() => setShowCanvas(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-[10px] uppercase tracking-[0.25em] text-white/65 transition-colors hover:bg-white/10 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-5 py-3 text-[10px] uppercase tracking-[0.25em] text-[#6f625d] transition-colors hover:bg-[#fff0ef] hover:text-[#1f2328]"
             >
               <PanelRightOpen className="h-4 w-4" />
               展开脚本画布
@@ -1375,7 +1375,7 @@ function VideoProgressModules({ modules }: { modules: VideoEditProgressModuleDto
   return (
     <div className="mt-5 grid gap-2">
       {modules.map((module) => (
-        <div key={module.key} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/15 px-3 py-2">
+        <div key={module.key} className="flex items-center gap-3 rounded-2xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2">
           <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${getProgressModuleIconClass(module.status)}`}>
             {module.status === "running" ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1387,12 +1387,12 @@ function VideoProgressModules({ modules }: { modules: VideoEditProgressModuleDto
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-3">
-              <p className="truncate text-xs text-white/70">{module.label}</p>
-              <span className="shrink-0 text-[10px] uppercase tracking-[0.16em] text-white/35">
+              <p className="truncate text-xs text-[#5f514a]">{module.label}</p>
+              <span className="shrink-0 text-[10px] uppercase tracking-[0.16em] text-[#9b8d84]">
                 {getProgressModuleStatusLabel(module.status)}
               </span>
             </div>
-            <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-2 h-1 overflow-hidden rounded-full bg-[#fff0ef]">
               <div
                 className={`h-full rounded-full ${getProgressModuleBarClass(module.status)}`}
                 style={{ width: `${module.progressPct}%` }}
@@ -1531,26 +1531,26 @@ function VoiceoverSettingsPanel({
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#080808] p-5">
+    <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-2 text-amber-400">
+          <span className="rounded-xl border border-[#f2556b]/25 bg-[#fff0ef] p-2 text-[#f2556b]">
             <Volume2 className="h-4 w-4" />
           </span>
           <div>
-            <p className="text-sm text-white/80">配音</p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/35">
+            <p className="text-sm text-[#3d332f]">配音</p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[#9b8d84]">
               voiceover
             </p>
           </div>
         </div>
 
-        <label className="inline-flex items-center gap-2 text-xs text-white/55">
+        <label className="inline-flex items-center gap-2 text-xs text-[#7f7067]">
           <input
             type="checkbox"
             checked={includeOriginalAudio}
             onChange={(event) => onIncludeOriginalAudioChange(event.target.checked)}
-            className="h-4 w-4 accent-amber-500"
+            className="h-4 w-4 accent-[#f2556b]"
           />
           保留原视频声音
         </label>
@@ -1562,8 +1562,8 @@ function VoiceoverSettingsPanel({
           onClick={() => onModeChange("system")}
           className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
             mode === "system"
-              ? "border-amber-500/35 bg-amber-500/10 text-amber-100"
-              : "border-white/10 bg-white/[0.03] text-white/60 hover:bg-white/[0.06]"
+              ? "border-[#f2556b]/35 bg-[#fff0ef] text-[#8a4b00]"
+              : "border-[#eadfd7] bg-[#fffaf7] text-[#6f625d] hover:bg-[#fff5f1]"
           }`}
         >
           <Radio className="h-4 w-4" />
@@ -1574,8 +1574,8 @@ function VoiceoverSettingsPanel({
           onClick={() => onModeChange("voice_profile")}
           className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
             mode === "voice_profile"
-              ? "border-emerald-500/35 bg-emerald-500/10 text-emerald-100"
-              : "border-white/10 bg-white/[0.03] text-white/60 hover:bg-white/[0.06]"
+              ? "border-emerald-500/35 bg-emerald-500/10 text-[#0f766e]"
+              : "border-[#eadfd7] bg-[#fffaf7] text-[#6f625d] hover:bg-[#fff5f1]"
           }`}
         >
           <Volume2 className="h-4 w-4" />
@@ -1585,12 +1585,12 @@ function VoiceoverSettingsPanel({
 
       {mode === "system" ? (
         <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <label className="grid gap-2 text-xs text-white/45">
+          <label className="grid gap-2 text-xs text-[#8b7b72]">
             Provider
             <select
               value={systemVoiceProvider}
               onChange={(event) => onSystemVoiceProviderChange(event.target.value)}
-              className="h-10 rounded-xl border border-white/10 bg-[#050505] px-3 text-sm text-white/75 outline-none focus:border-amber-500/45"
+              className="h-10 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 text-sm text-[#4f433d] outline-none focus:border-[#f2556b]/45"
             >
               <option value="aliyun_cosyvoice">Aliyun CosyVoice</option>
               <option value="bytedance_bigtts">ByteDance BigTTS</option>
@@ -1598,25 +1598,25 @@ function VoiceoverSettingsPanel({
               <option value="302">302</option>
             </select>
           </label>
-          <label className="grid gap-2 text-xs text-white/45">
+          <label className="grid gap-2 text-xs text-[#8b7b72]">
             Speaker
             <input
               value={systemVoiceSpeaker}
               onChange={(event) => onSystemVoiceSpeakerChange(event.target.value)}
               placeholder="可选"
-              className="h-10 rounded-xl border border-white/10 bg-[#050505] px-3 text-sm text-white/75 outline-none placeholder:text-white/25 focus:border-amber-500/45"
+              className="h-10 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 text-sm text-[#4f433d] outline-none placeholder:text-[#b2a49c] focus:border-[#f2556b]/45"
             />
           </label>
         </div>
       ) : (
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]">
-          <label className="grid gap-2 text-xs text-white/45">
+          <label className="grid gap-2 text-xs text-[#8b7b72]">
             已有音色
             <select
               value={selectedVoiceProfileId}
               onChange={(event) => onSelectedVoiceProfileIdChange(event.target.value)}
               disabled={loadingVoiceProfiles || voiceProfiles.length === 0}
-              className="h-10 rounded-xl border border-white/10 bg-[#050505] px-3 text-sm text-white/75 outline-none disabled:opacity-50"
+              className="h-10 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 text-sm text-[#4f433d] outline-none disabled:opacity-50"
             >
               {voiceProfiles.length === 0 ? (
                 <option value="">暂无克隆音色</option>
@@ -1630,7 +1630,7 @@ function VoiceoverSettingsPanel({
             </select>
           </label>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+          <div className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-4">
             <div className="grid gap-3">
               <input
                 value={createState.displayName}
@@ -1641,9 +1641,9 @@ function VoiceoverSettingsPanel({
                   }))
                 }
                 placeholder="新音色名称"
-                className="h-10 rounded-xl border border-white/10 bg-[#050505] px-3 text-sm text-white/75 outline-none placeholder:text-white/25 focus:border-emerald-500/45"
+                className="h-10 rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 text-sm text-[#4f433d] outline-none placeholder:text-[#b2a49c] focus:border-emerald-500/45"
               />
-              <label className="flex items-start gap-2 text-xs leading-5 text-white/55">
+              <label className="flex items-start gap-2 text-xs leading-5 text-[#7f7067]">
                 <input
                   type="checkbox"
                   checked={createState.authorizationAccepted}
@@ -1660,8 +1660,8 @@ function VoiceoverSettingsPanel({
               <label
                 className={`flex h-20 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed px-3 text-center transition-colors ${
                   isBusy
-                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
-                    : "border-white/10 bg-[#050505] text-white/40 hover:border-emerald-500/40 hover:text-emerald-300"
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-[#0f766e]"
+                    : "border-[#eadfd7] bg-[#fffaf7] text-[#9b8d84] hover:border-emerald-500/40 hover:text-[#0f766e]"
                 }`}
               >
                 <input
@@ -1688,15 +1688,15 @@ function VoiceoverSettingsPanel({
                 disabled={isCreating}
                 className={`inline-flex h-10 items-center justify-center gap-2 rounded-xl border px-3 text-xs transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
                   isRecording
-                    ? "border-rose-500/35 bg-rose-500/10 text-rose-100"
-                    : "border-white/10 bg-[#050505] text-white/55 hover:border-emerald-500/40 hover:text-emerald-300"
+                    ? "border-rose-500/35 bg-rose-500/10 text-rose-700"
+                    : "border-[#eadfd7] bg-[#fffaf7] text-[#7f7067] hover:border-emerald-500/40 hover:text-[#0f766e]"
                 }`}
               >
                 {isRecording ? <Square className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 {isRecording ? "停止并创建音色" : "录音创建音色"}
               </button>
               {createState.error ? (
-                <p className="text-xs leading-5 text-rose-300">{createState.error}</p>
+                <p className="text-xs leading-5 text-rose-600">{createState.error}</p>
               ) : null}
             </div>
           </div>
@@ -1723,52 +1723,52 @@ function ScriptSegmentRow({
   const materials = scene.materials.filter(Boolean);
 
   return (
-    <div className="grid grid-cols-12 border-b border-white/5 last:border-b-0 hover:bg-white/[0.02]">
-      <div className="col-span-2 flex flex-col items-center justify-start border-r border-white/5 p-5 text-center font-mono text-xs text-white/55">
+    <div className="grid grid-cols-12 border-b border-[#eadfd7]/70 last:border-b-0 hover:bg-[#fffaf7]">
+      <div className="col-span-2 flex flex-col items-center justify-start border-r border-[#eadfd7]/70 p-5 text-center font-mono text-xs text-[#7f7067]">
         {scene.timeRange}
-        <span className="mt-3 rounded border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-amber-500">
+        <span className="mt-3 rounded border border-[#f2556b]/25 bg-[#fff0ef] px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-[#f2556b]">
           镜头 {sceneNo}
         </span>
       </div>
-      <div className="col-span-4 border-r border-white/5 p-5 text-sm leading-7 text-white/75 [font-family:var(--font-cormorant)]">
-        <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-amber-500/80">
+      <div className="col-span-4 border-r border-[#eadfd7]/70 p-5 text-sm leading-7 text-[#4f433d] [font-family:var(--font-cormorant)]">
+        <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-[#c46a00]">
           镜头要求
         </p>
-        <p className="text-white/85">{scene.shotRequirement}</p>
-        <p className="mt-3 text-white/70">{scene.visual}</p>
-        <dl className="mt-4 space-y-2 text-xs leading-5 text-white/45">
+        <p className="text-[#2f2824]">{scene.shotRequirement}</p>
+        <p className="mt-3 text-[#5f514a]">{scene.visual}</p>
+        <dl className="mt-4 space-y-2 text-xs leading-5 text-[#8b7b72]">
           <div>
-            <dt className="inline text-amber-500/70">运镜：</dt>
+            <dt className="inline text-[#c46a00]">运镜：</dt>
             <dd className="inline">{scene.cameraMovement}</dd>
           </div>
           <div>
-            <dt className="inline text-amber-500/70">目的：</dt>
+            <dt className="inline text-[#c46a00]">目的：</dt>
             <dd className="inline">{scene.purpose}</dd>
           </div>
           <div>
-            <dt className="inline text-amber-500/70">备选：</dt>
+            <dt className="inline text-[#c46a00]">备选：</dt>
             <dd className="inline">{scene.fallbackShot}</dd>
           </div>
         </dl>
       </div>
-      <div className="col-span-4 border-r border-white/5 p-5 text-sm leading-7 text-white/80 whitespace-pre-wrap [font-family:var(--font-cormorant)]">
-        <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-white/35">
+      <div className="col-span-4 border-r border-[#eadfd7]/70 p-5 text-sm leading-7 text-[#3d332f] whitespace-pre-wrap [font-family:var(--font-cormorant)]">
+        <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-[#9b8d84]">
           台词 / 旁白
         </p>
         <p>{scene.voiceover}</p>
         {scene.subtitle ? (
-          <p className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-white/55">
+          <p className="mt-4 rounded-xl border border-[#eadfd7] bg-[#fffaf7] p-3 text-xs leading-6 text-[#7f7067]">
             字幕：{scene.subtitle}
           </p>
         ) : null}
       </div>
       <div className="col-span-2 flex flex-col items-center justify-center gap-3 p-5">
         {materials.length > 0 ? (
-          <div className="w-full space-y-1 text-center text-[10px] leading-5 text-white/45">
+          <div className="w-full space-y-1 text-center text-[10px] leading-5 text-[#8b7b72]">
             {materials.map((material) => (
               <div
                 key={material}
-                className="truncate rounded-full border border-white/10 bg-white/[0.03] px-2 py-1"
+                className="truncate rounded-full border border-[#eadfd7] bg-[#fffaf7] px-2 py-1"
                 title={material}
               >
                 {material}
@@ -1777,7 +1777,7 @@ function ScriptSegmentRow({
           </div>
         ) : null}
         {isUploading ? (
-          <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-xl border border-amber-500/25 bg-amber-500/10 px-2 text-amber-300">
+          <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-xl border border-[#f2556b]/25 bg-[#fff0ef] px-2 text-[#c46a00]">
             <Loader2 className="h-5 w-5 animate-spin" />
             <span className="text-[10px] uppercase tracking-[0.16em]">
               {getSegmentUploadStageLabel(uploadState)}
@@ -1787,8 +1787,8 @@ function ScriptSegmentRow({
           <label
             className={
               isUploaded
-                ? "flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-2 text-center text-emerald-400 transition-colors hover:border-emerald-400/50 hover:bg-emerald-500/15"
-                : "flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 bg-[#050505] px-2 text-center text-white/35 transition-colors hover:border-amber-500/40 hover:bg-amber-500/5 hover:text-amber-500"
+                ? "flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-2 text-center text-[#0f766e] transition-colors hover:border-emerald-400/50 hover:bg-emerald-500/15"
+                : "flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[#eadfd7] bg-[#fffaf7] px-2 text-center text-[#9b8d84] transition-colors hover:border-[#f2556b]/40 hover:bg-[#fff7ed] hover:text-[#f2556b]"
             }
           >
             <input
@@ -1808,12 +1808,12 @@ function ScriptSegmentRow({
               {isUploaded ? uploadState.fileName ?? "已上传" : uploadState?.status === "failed" ? "重传" : "传镜头"}
             </span>
             {isUploaded && uploadState.asset ? (
-              <span className="max-w-full truncate text-[9px] text-emerald-200/65">
+              <span className="max-w-full truncate text-[9px] text-[#0f766e]/65">
                 {formatAssetSize(uploadState.asset.fileSizeBytes)}
               </span>
             ) : null}
             {uploadState?.status === "failed" && uploadState.error ? (
-              <span className="max-w-full truncate text-[9px] text-rose-300/75">
+              <span className="max-w-full truncate text-[9px] text-rose-600/75">
                 上传失败
               </span>
             ) : null}
@@ -2146,24 +2146,24 @@ function getProgressModuleStatusLabel(status: VideoEditProgressModuleDto["status
 
 function getProgressModuleIconClass(status: VideoEditProgressModuleDto["status"]) {
   if (status === "running") {
-    return "border-amber-500/35 bg-amber-500/10 text-amber-400";
+    return "border-[#f2556b]/35 bg-[#fff0ef] text-[#f2556b]";
   }
   if (status === "succeeded") {
-    return "border-emerald-500/35 bg-emerald-500/10 text-emerald-400";
+    return "border-emerald-500/35 bg-emerald-500/10 text-[#0f766e]";
   }
   if (status === "failed") {
-    return "border-rose-500/35 bg-rose-500/10 text-rose-300";
+    return "border-rose-500/35 bg-rose-500/10 text-rose-600";
   }
   if (status === "skipped") {
-    return "border-white/10 bg-white/5 text-white/30";
+    return "border-[#eadfd7] bg-[#fffaf7] text-[#a7978e]";
   }
 
-  return "border-white/10 bg-white/5 text-white/25";
+  return "border-[#eadfd7] bg-[#fffaf7] text-[#b2a49c]";
 }
 
 function getProgressModuleBarClass(status: VideoEditProgressModuleDto["status"]) {
   if (status === "running") {
-    return "bg-amber-500";
+    return "bg-[#f2556b]";
   }
   if (status === "succeeded") {
     return "bg-emerald-500";
@@ -2172,41 +2172,41 @@ function getProgressModuleBarClass(status: VideoEditProgressModuleDto["status"])
     return "bg-rose-500";
   }
 
-  return "bg-white/20";
+  return "bg-[#eadfd7]";
 }
 
 function getVideoJobToneClassNames(tone: VideoJobStatusCopyTone) {
   if (tone === "success") {
     return {
       panel: "border-emerald-500/20 bg-emerald-500/5",
-      icon: "bg-emerald-500/15 text-emerald-400",
-      message: "border border-emerald-500/20 bg-emerald-500/10 text-emerald-100",
-      badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400",
+      icon: "bg-emerald-500/15 text-[#0f766e]",
+      message: "border border-emerald-500/20 bg-emerald-500/10 text-[#0f766e]",
+      badge: "border-emerald-500/20 bg-emerald-500/10 text-[#0f766e]",
     };
   }
 
   if (tone === "warning") {
     return {
-      panel: "border-amber-500/20 bg-amber-500/5",
-      icon: "bg-amber-500/15 text-amber-500",
-      message: "border border-amber-500/20 bg-amber-500/10 text-amber-100",
-      badge: "border-amber-500/20 bg-amber-500/10 text-amber-500",
+      panel: "border-[#f2556b]/25 bg-[#fff7ed]",
+      icon: "bg-[#fff0ef] text-[#f2556b]",
+      message: "border border-[#f2556b]/25 bg-[#fff0ef] text-[#8a4b00]",
+      badge: "border-[#f2556b]/25 bg-[#fff0ef] text-[#f2556b]",
     };
   }
 
   if (tone === "danger") {
     return {
       panel: "border-rose-500/20 bg-rose-500/5",
-      icon: "bg-rose-500/15 text-rose-300",
-      message: "border border-rose-500/20 bg-rose-500/10 text-rose-100",
-      badge: "border-rose-500/20 bg-rose-500/10 text-rose-200",
+      icon: "bg-rose-500/15 text-rose-600",
+      message: "border border-rose-500/20 bg-rose-500/10 text-rose-700",
+      badge: "border-rose-500/20 bg-rose-500/10 text-rose-700",
     };
   }
 
   return {
-    panel: "border-amber-500/20 bg-amber-500/5",
-    icon: "bg-amber-500/15 text-amber-500",
-    message: "border border-white/10 bg-white/5 text-white/55",
-    badge: "border-white/10 bg-white/5 text-white/55",
+    panel: "border-[#f2556b]/25 bg-[#fff7ed]",
+    icon: "bg-[#fff0ef] text-[#f2556b]",
+    message: "border border-[#eadfd7] bg-[#fffaf7] text-[#7f7067]",
+    badge: "border-[#eadfd7] bg-[#fffaf7] text-[#7f7067]",
   };
 }
