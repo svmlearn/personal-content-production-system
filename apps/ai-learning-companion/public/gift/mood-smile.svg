@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图形 5备份</title>
+    <defs>
+        <path d="M6,0 L42,0 C45.3137085,-6.08718376e-16 48,2.6862915 48,6 L48,42 C48,45.3137085 45.3137085,48 42,48 L6,48 C2.6862915,48 2.02906125e-16,45.3137085 0,42 L0,6 C-4.05812251e-16,2.6862915 2.6862915,4.05812251e-16 6,0 Z" id="path-1"></path>
+    </defs>
+    <g id="图形-5备份" stroke="none" fill="none" xlink:href="#path-1">
+        <use fill="#FF9E1B" fill-rule="evenodd" xlink:href="#path-1"></use>
+        <circle id="椭圆形" fill="#000000" fill-rule="evenodd" cx="12.5714286" cy="19.4285714" r="3.42857143"></circle>
+        <circle id="椭圆形备份" fill="#000000" fill-rule="evenodd" cx="35.4285714" cy="19.4285714" r="3.42857143"></circle>
+        <path d="M18.2857143,25.1428571 L18.2857143,27.1020408 C18.2857143,29.807109 20.8440871,32 24,32 C27.1559129,32 29.7142857,29.807109 29.7142857,27.1020408 L29.7142857,25.1428571" id="路径" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+    </g>
+</svg>
