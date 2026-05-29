@@ -560,13 +560,13 @@ export function ConsultationWorkspace() {
   }
 
   return (
-    <div className="relative flex h-full min-h-0 flex-col">
-      <div className="flex h-14 items-center justify-between border-b border-white/10 px-6">
+    <div className="relative flex h-full min-h-0 flex-col bg-[#fbfaf7] text-[#1f2328]">
+      <div className="flex h-14 items-center justify-between border-b border-[#eadfd7] bg-white/75 px-6">
         <div className="flex items-center gap-4">
           <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">
             AI 咨询诊断
           </h1>
-          <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.25em] text-amber-500">
+          <span className="rounded-full border border-[#f6c37a] bg-[#fff7ed] px-2.5 py-1 text-[10px] uppercase tracking-[0.25em] text-[#c46a00]">
             {assistantPending ? "思考中" : session?.currentStage ?? "准备中"}
           </span>
         </div>
@@ -577,7 +577,7 @@ export function ConsultationWorkspace() {
               void createSession();
             }}
             disabled={creating}
-            className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1.5 text-[10px] uppercase tracking-[0.25em] text-amber-500 transition-colors hover:bg-amber-500/20 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-full border border-[#f2556b]/25 bg-[#fff0f2] px-3 py-1.5 text-[10px] uppercase tracking-[0.25em] text-[#d83f58] transition-colors hover:bg-[#ffe3e7] disabled:opacity-60"
           >
             <Plus className="h-3.5 w-3.5" />
             新开对话
@@ -588,8 +588,8 @@ export function ConsultationWorkspace() {
             className={cn(
               "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.25em] transition-colors",
               historyOpen
-                ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                : "border-white/10 bg-white/5 text-white/65 hover:bg-white/10 hover:text-white",
+                ? "border-[#f2556b]/30 bg-[#fff0f2] text-[#d83f58]"
+                : "border-[#eadfd7] bg-white text-[#6f625d] hover:bg-[#fff5f1] hover:text-[#1f2328]",
             )}
           >
             <History className="h-3.5 w-3.5" />
@@ -604,19 +604,19 @@ export function ConsultationWorkspace() {
             type="button"
             aria-label="关闭咨询历史记录"
             onClick={() => setHistoryOpen(false)}
-            className="absolute inset-0 z-20 bg-black/35 backdrop-blur-[1px]"
+            className="absolute inset-0 z-20 bg-[#1f2328]/18 backdrop-blur-[1px]"
           />
-          <div className="absolute inset-y-0 right-0 z-30 flex w-full max-w-md flex-col border-l border-white/10 bg-[#0a0a0a]/95 shadow-[0_24px_90px_rgba(0,0,0,0.55)] backdrop-blur">
-            <div className="flex h-14 items-center justify-between border-b border-white/10 px-5">
+          <div className="absolute inset-y-0 right-0 z-30 flex w-full max-w-md flex-col border-l border-[#eadfd7] bg-white/95 shadow-[0_24px_90px_rgba(77,53,43,0.16)] backdrop-blur">
+            <div className="flex h-14 items-center justify-between border-b border-[#eadfd7] px-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-amber-500/80">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#d83f58]">
                   Consultation History
                 </p>
-                <h2 className="mt-1 text-sm font-medium text-white">咨询聊天记录</h2>
+                <h2 className="mt-1 text-sm font-medium text-[#1f2328]">咨询聊天记录</h2>
               </div>
               <div className="flex items-center gap-2">
                 {sessionsRefreshing ? (
-                  <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-white/35">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[#6f625d]">
                     <Loader2 className="h-3 w-3 animate-spin" />
                     同步中
                   </span>
@@ -624,7 +624,7 @@ export function ConsultationWorkspace() {
                 <button
                   type="button"
                   onClick={() => setHistoryOpen(false)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/55 transition-colors hover:bg-white/10 hover:text-white"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#eadfd7] bg-white text-[#6f625d] transition-colors hover:bg-[#fff5f1] hover:text-[#1f2328]"
                   aria-label="关闭咨询历史记录"
                 >
                   <X className="h-4 w-4" />
@@ -634,7 +634,7 @@ export function ConsultationWorkspace() {
 
             <div className="min-h-0 flex-1 overflow-y-auto p-4">
               {sessionsLoading && !sessionsLoaded ? (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/55">
+                <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4 text-sm leading-6 text-[#6f625d]">
                   正在读取咨询聊天记录...
                 </div>
               ) : sessions.length ? (
@@ -645,8 +645,8 @@ export function ConsultationWorkspace() {
                       className={cn(
                         "rounded-2xl border p-4 transition-colors",
                         item.id === sessionId
-                          ? "border-amber-500/40 bg-amber-500/10"
-                          : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/5",
+                          ? "border-[#f2556b]/30 bg-[#fff0f2]"
+                          : "border-[#eadfd7] bg-white hover:border-[#f6c37a] hover:bg-[#fffaf7]",
                       )}
                     >
                       <div className="flex items-start justify-between gap-3 text-left">
@@ -656,16 +656,16 @@ export function ConsultationWorkspace() {
                             onClick={() => selectHistorySession(item.id)}
                             className="block max-w-full text-left focus-visible:outline-none"
                           >
-                            <span className="block truncate text-sm font-medium text-white">
+                            <span className="block truncate text-sm font-medium text-[#1f2328]">
                               {item.title ?? "未命名咨询"}
                             </span>
                           </button>
-                          <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/35">
+                          <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-[#8b7b72]">
                             {item.currentStage ?? "咨询中"}
                           </p>
                         </div>
                         <div className="flex shrink-0 items-center gap-2">
-                          <span className="text-[10px] text-white/35">
+                          <span className="text-[10px] text-[#8b7b72]">
                             {formatConsultationTime(item.lastMessageAt)}
                           </span>
                           <button
@@ -677,8 +677,8 @@ export function ConsultationWorkspace() {
                             className={cn(
                               "inline-flex h-8 items-center gap-1 rounded-full border px-2 text-[10px] transition-colors disabled:opacity-50",
                               pendingDeleteSessionId === item.id
-                                ? "border-red-400/30 bg-red-500/10 text-red-200 hover:bg-red-500/20"
-                                : "border-white/10 bg-white/5 text-white/40 hover:border-red-400/30 hover:bg-red-500/10 hover:text-red-200",
+                                ? "border-red-300 bg-red-50 text-red-700 hover:bg-red-100"
+                                : "border-[#eadfd7] bg-white text-[#8b7b72] hover:border-red-300 hover:bg-red-50 hover:text-red-700",
                             )}
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -695,7 +695,7 @@ export function ConsultationWorkspace() {
                         onClick={() => selectHistorySession(item.id)}
                         className="mt-3 block w-full text-left focus-visible:outline-none"
                       >
-                        <span className="block max-h-12 overflow-hidden text-xs leading-6 text-white/55">
+                        <span className="block max-h-12 overflow-hidden text-xs leading-6 text-[#6f625d]">
                           {item.latestMessagePreview || item.summaryText || "暂无消息摘要"}
                         </span>
                       </button>
@@ -703,7 +703,7 @@ export function ConsultationWorkspace() {
                   ))}
                 </div>
               ) : (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/55">
+                <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4 text-sm leading-6 text-[#6f625d]">
                   还没有咨询聊天记录。新开对话后，会在这里显示。
                 </div>
               )}
@@ -718,15 +718,15 @@ export function ConsultationWorkspace() {
             type="button"
             aria-label="关闭内容日历"
             onClick={() => setCalendarOpen(false)}
-            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 z-40 bg-[#1f2328]/20 backdrop-blur-sm"
           />
-          <div className="absolute inset-4 z-50 flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a0a] shadow-[0_24px_90px_rgba(0,0,0,0.65)] md:inset-8">
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-5">
+          <div className="absolute inset-4 z-50 flex flex-col overflow-hidden rounded-3xl border border-[#eadfd7] bg-white shadow-[0_24px_90px_rgba(77,53,43,0.18)] md:inset-8">
+            <div className="flex items-center justify-between gap-4 border-b border-[#eadfd7] px-6 py-5">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-amber-500/80">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#0f766e]">
                   Content Marketing Calendar
                 </p>
-                <h2 className="mt-2 text-xl italic tracking-tight text-white [font-family:var(--font-cormorant)]">
+                <h2 className="mt-2 text-xl italic tracking-tight text-[#1f2328] [font-family:var(--font-cormorant)]">
                   营销内容日历
                 </h2>
               </div>
@@ -739,7 +739,7 @@ export function ConsultationWorkspace() {
                   disabled={
                     teamGenerationBusy || contentCalendar.length === 0
                   }
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-emerald-300 transition-colors hover:bg-emerald-500/15 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#22b8a7]/25 bg-[#e9fbf8] px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#0f766e] transition-colors hover:bg-[#d9f7f2] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {teamGenerationBusy ? (
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -751,7 +751,7 @@ export function ConsultationWorkspace() {
                 <button
                   type="button"
                   onClick={() => setCalendarOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/55 transition-colors hover:bg-white/10 hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#eadfd7] bg-white text-[#6f625d] transition-colors hover:bg-[#fff5f1] hover:text-[#1f2328]"
                   aria-label="关闭内容日历"
                 >
                   <X className="h-4 w-4" />
@@ -769,36 +769,36 @@ export function ConsultationWorkspace() {
                   {contentCalendar.map((item) => (
                     <article
                       key={item.id}
-                      className="flex min-h-44 flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                      className="flex min-h-44 flex-col rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-white/55">
+                        <span className="rounded-full border border-[#eadfd7] bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-[#6f625d]">
                           {item.dayLabel}
                         </span>
                         <span
                           className={cn(
                             "rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.22em]",
                             item.contentType === "article"
-                              ? "bg-orange-500/15 text-orange-300"
-                              : "bg-sky-500/15 text-sky-300",
+                              ? "bg-[#fff7ed] text-[#c46a00]"
+                              : "bg-[#eff6ff] text-[#1d4ed8]",
                           )}
                         >
                           {item.contentType === "article" ? "图文" : "视频"}
                         </span>
                       </div>
                       {item.strategyTag.trim() && item.strategyTag.trim() !== item.title.trim() ? (
-                        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-amber-500/80">
+                        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#d83f58]">
                           {item.strategyTag}
                         </p>
                       ) : null}
-                      <h3 className="mt-2 text-sm font-medium leading-6 text-white">{item.title}</h3>
-                      <p className="mt-2 line-clamp-3 text-xs leading-6 text-white/50">{item.summary}</p>
+                      <h3 className="mt-2 text-sm font-medium leading-6 text-[#1f2328]">{item.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-xs leading-6 text-[#6f625d]">{item.summary}</p>
                       <CalendarGuidanceChips item={item} className="mt-auto pt-4" />
                     </article>
                   ))}
                 </div>
               ) : (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-sm leading-7 text-white/55">
+                <div className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-6 text-sm leading-7 text-[#6f625d]">
                   暂无内容日历。继续和 AI 咨询诊断沟通后，这里会同步生成可执行的图文和视频任务。
                 </div>
               )}
@@ -808,12 +808,12 @@ export function ConsultationWorkspace() {
       ) : null}
 
       {error ? (
-        <div className="border-b border-rose-500/20 bg-rose-500/10 px-6 py-3 text-sm text-rose-200">
+        <div className="border-b border-rose-200 bg-rose-50 px-6 py-3 text-sm text-rose-700">
           {error}
         </div>
       ) : null}
 
-      <div className="border-b border-white/10 px-6 py-3">
+      <div className="border-b border-[#eadfd7] bg-white/50 px-6 py-3">
         <div className="flex gap-2 overflow-x-auto">
           {sessions.map((item) => (
             <button
@@ -823,8 +823,8 @@ export function ConsultationWorkspace() {
               className={cn(
                 "shrink-0 rounded-full border px-3 py-1.5 text-xs transition-colors",
                 sessionId === item.id
-                  ? "border-amber-500/40 bg-amber-500/10 text-amber-500"
-                  : "border-white/10 bg-white/5 text-white/55 hover:bg-white/10 hover:text-white",
+                  ? "border-[#f2556b]/30 bg-[#fff0f2] text-[#d83f58]"
+                  : "border-[#eadfd7] bg-white text-[#6f625d] hover:bg-[#fff5f1] hover:text-[#1f2328]",
               )}
             >
               {item.title ?? "未命名咨询"}
@@ -837,25 +837,25 @@ export function ConsultationWorkspace() {
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             {toolCards.length ? (
-              <section className="border-b border-white/10 px-6 py-3">
+              <section className="border-b border-[#eadfd7] bg-white/40 px-6 py-3">
                 <button
                   type="button"
                   aria-expanded={!toolCardsCollapsed}
                   onClick={() => setToolCardsCollapsed((collapsed) => !collapsed)}
-                  className="flex w-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:border-amber-500/30 hover:bg-amber-500/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/30"
+                  className="flex w-full items-center justify-between gap-4 rounded-2xl border border-[#eadfd7] bg-white px-4 py-3 text-left transition-colors hover:border-[#f6c37a] hover:bg-[#fffaf7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f2556b]/20"
                 >
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-amber-500/80">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-[#0f766e]">
                       Agent 执行过程
                     </p>
-                    <p className="mt-1 truncate text-sm text-white/65">
+                    <p className="mt-1 truncate text-sm text-[#6f625d]">
                       记录 {toolCards.length} 项执行事实
                       {failedToolCardCount > 0 ? `，${failedToolCardCount} 项失败` : ""}：
                       {toolCards.slice(0, 3).map((tool) => tool.label).join("、")}
                       {toolCards.length > 3 ? " 等" : ""}
                     </p>
                   </div>
-                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-[#050505] px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-white/55">
+                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-[#6f625d]">
                     {toolCardsCollapsed ? "展开" : "收起"}
                     <ChevronDown
                       className={cn(
@@ -869,9 +869,9 @@ export function ConsultationWorkspace() {
                 {!toolCardsCollapsed ? (
                   <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                     {toolCards.map((tool, index) => (
-                      <div key={`${tool.key}-${index}`} className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div key={`${tool.key}-${index}`} className="rounded-2xl border border-[#eadfd7] bg-white p-3">
                         <div className="flex items-start justify-between gap-3">
-                          <p className="min-w-0 text-[10px] uppercase tracking-[0.25em] text-white/35">
+                          <p className="min-w-0 text-[10px] uppercase tracking-[0.25em] text-[#8b7b72]">
                             {tool.label}
                           </p>
                           <span
@@ -883,7 +883,7 @@ export function ConsultationWorkspace() {
                             {getToolCardStatusLabel(tool.status)}
                           </span>
                         </div>
-                        <p className="mt-2 text-sm text-white/80">{tool.summary}</p>
+                        <p className="mt-2 text-sm text-[#1f2328]">{tool.summary}</p>
                       </div>
                     ))}
                   </div>
@@ -893,7 +893,7 @@ export function ConsultationWorkspace() {
 
             <div className="px-6 py-6">
               {((sessionsLoading && !sessionsLoaded) || sessionLoading) && !session ? (
-                <div className="flex min-h-[12rem] items-center justify-center text-sm text-white/40">
+                <div className="flex min-h-[12rem] items-center justify-center text-sm text-[#8b7b72]">
                   正在读取咨询会话...
                 </div>
               ) : (
@@ -910,7 +910,7 @@ export function ConsultationWorkspace() {
                         )}
                       >
                         {message.role !== "user" ? (
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-500">
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff0f2] text-[#d83f58]">
                             <Sparkles className="h-4 w-4" />
                           </div>
                         ) : null}
@@ -918,12 +918,12 @@ export function ConsultationWorkspace() {
                           className={cn(
                             "max-w-2xl rounded-2xl border px-4 py-3 text-sm leading-7",
                             message.role === "user"
-                              ? "border-amber-500/20 bg-amber-600/80 text-white"
-                              : "border-white/10 bg-[#111111] text-white/85",
+                              ? "border-[#f2556b] bg-[#f2556b] text-white shadow-[0_12px_28px_rgba(242,85,107,0.18)]"
+                              : "border-[#eadfd7] bg-white text-[#2f3339] shadow-[0_12px_34px_rgba(77,53,43,0.07)]",
                           )}
                         >
                           {message.role !== "user" && agentLoopMeta?.agentName ? (
-                            <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-amber-500/80">
+                            <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-[#d83f58]">
                               {agentLoopMeta.agentName}
                             </p>
                           ) : null}
@@ -938,7 +938,7 @@ export function ConsultationWorkspace() {
             </div>
           </div>
 
-          <div className="shrink-0 border-t border-white/10 bg-[#0d0d0d]/95 px-6 py-4">
+          <div className="shrink-0 border-t border-[#eadfd7] bg-[#fffaf7]/95 px-6 py-4">
             {isLegacyRoundtable ? (
               <LegacyRoundtableNotice />
             ) : null}
@@ -968,12 +968,12 @@ export function ConsultationWorkspace() {
                       ? "AI 正在思考中..."
                     : "告诉我你的背景、擅长能力、想服务的人或当前卡住的问题..."
                 }
-                className="max-h-36 min-h-[72px] flex-1 resize-y rounded-2xl border border-white/10 bg-[#050505] px-4 py-3 text-sm text-white outline-none placeholder:text-white/25 disabled:cursor-not-allowed disabled:opacity-60"
+                className="max-h-36 min-h-[72px] flex-1 resize-y rounded-2xl border border-[#eadfd7] bg-white px-4 py-3 text-sm text-[#1f2328] outline-none placeholder:text-[#9a8f89] focus:border-[#f2556b]/45 focus:ring-2 focus:ring-[#f2556b]/10 disabled:cursor-not-allowed disabled:opacity-60"
               />
               <button
                 type="submit"
                 disabled={composerDisabled || !input.trim()}
-                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-amber-600 text-white transition-colors hover:bg-amber-500 disabled:opacity-60"
+                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#f2556b] text-white shadow-[0_12px_28px_rgba(242,85,107,0.24)] transition-colors hover:bg-[#e94b73] disabled:opacity-60"
               >
                 <Send className="h-4 w-4" />
               </button>
@@ -986,7 +986,7 @@ export function ConsultationWorkspace() {
                     type="button"
                     disabled={assistantPending}
                     onClick={() => setInput(prompt)}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-white/55 transition-colors hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                    className="rounded-full border border-[#eadfd7] bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-[#6f625d] transition-colors hover:bg-[#fff5f1] hover:text-[#1f2328] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {prompt}
                   </button>
@@ -996,14 +996,14 @@ export function ConsultationWorkspace() {
           </div>
         </div>
 
-        <aside className="hidden w-96 shrink-0 overflow-y-auto border-l border-white/10 bg-[#0a0a0a] xl:flex xl:flex-col">
+        <aside className="hidden w-96 shrink-0 overflow-y-auto border-l border-[#eadfd7] bg-[#fffaf7] xl:flex xl:flex-col">
           <div className="space-y-4 p-6">
             <div className="flex items-center justify-between">
-              <h2 className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-white/40">
-                <BookOpen className="h-4 w-4 text-amber-500" />
+              <h2 className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[#6f625d]">
+                <BookOpen className="h-4 w-4 text-[#c46a00]" />
                 我的策略资产
               </h2>
-              <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-emerald-400">
+              <span className="rounded-full border border-[#22b8a7]/25 bg-[#e9fbf8] px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-[#0f766e]">
                 可执行
               </span>
             </div>
@@ -1018,16 +1018,16 @@ export function ConsultationWorkspace() {
             </Card>
           </div>
 
-          <div className="mt-auto border-t border-white/10 p-6">
+          <div className="mt-auto border-t border-[#eadfd7] p-6">
             <div className="flex items-center justify-between gap-3">
-              <h2 className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-white/40">
-                <CalendarDays className="h-4 w-4 text-amber-500" />
+              <h2 className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-[#6f625d]">
+                <CalendarDays className="h-4 w-4 text-[#0f766e]" />
                 营销内容日历
               </h2>
               <button
                 type="button"
                 onClick={() => setCalendarOpen(true)}
-                className="text-[10px] uppercase tracking-[0.25em] text-amber-500"
+                className="text-[10px] uppercase tracking-[0.25em] text-[#d83f58]"
               >
                 查看全部内容
               </button>
@@ -1038,7 +1038,7 @@ export function ConsultationWorkspace() {
                 void startTeamWeekGeneration();
               }}
               disabled={teamGenerationBusy || contentCalendar.length === 0}
-              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-emerald-300 transition-colors hover:bg-emerald-500/15 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[#22b8a7]/25 bg-[#e9fbf8] px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-[#0f766e] transition-colors hover:bg-[#d9f7f2] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {teamGenerationBusy ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1056,15 +1056,15 @@ export function ConsultationWorkspace() {
               {contentCalendar.map((item) => (
                 <article
                   key={item.id}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4"
+                  className="rounded-2xl border border-[#eadfd7] bg-white p-4"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">
+                      <p className="text-[10px] uppercase tracking-[0.25em] text-[#8b7b72]">
                         {formatCalendarItemMeta(item)}
                       </p>
-                      <p className="mt-2 text-sm text-white">{item.title}</p>
-                      <p className="mt-2 text-xs leading-6 text-white/50">{item.summary}</p>
+                      <p className="mt-2 text-sm text-[#1f2328]">{item.title}</p>
+                      <p className="mt-2 text-xs leading-6 text-[#6f625d]">{item.summary}</p>
                       <CalendarGuidanceChips item={item} className="mt-3" />
                     </div>
                   </div>
@@ -1113,7 +1113,7 @@ function CalendarGuidanceChips({
       {chips.map((chip) => (
         <span
           key={chip}
-          className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-white/35"
+          className="rounded-full border border-[#eadfd7] bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[#8b7b72]"
         >
           {chip}
         </span>
@@ -1139,7 +1139,7 @@ function TeamGenerationStatusBanner({
     return (
       <div
         className={cn(
-          "rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm leading-6 text-rose-100/80",
+          "rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-700",
           compact ? "mt-3 text-xs" : "mb-4",
         )}
       >
@@ -1155,7 +1155,7 @@ function TeamGenerationStatusBanner({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-100/80",
+        "rounded-2xl border border-[#22b8a7]/25 bg-[#e9fbf8] px-4 py-3 text-sm leading-6 text-[#0f766e]",
         compact ? "mt-3 text-xs" : "mb-4",
       )}
     >
@@ -1223,14 +1223,14 @@ function getToolCardStatusLabel(status: ConsultationToolCardDto["status"]) {
 
 function getToolCardStatusClassName(status: ConsultationToolCardDto["status"]) {
   if (status === "failed") {
-    return "border-red-500/30 bg-red-500/10 text-red-200";
+    return "border-red-200 bg-red-50 text-red-700";
   }
 
   if (status === "skipped") {
-    return "border-white/10 bg-white/5 text-white/45";
+    return "border-[#eadfd7] bg-[#fffaf7] text-[#8b7b72]";
   }
 
-  return "border-emerald-500/25 bg-emerald-500/10 text-emerald-200";
+  return "border-[#22b8a7]/25 bg-[#e9fbf8] text-[#0f766e]";
 }
 
 function ExpertMentionBar(props: {
@@ -1239,7 +1239,7 @@ function ExpertMentionBar(props: {
 }) {
   return (
     <div className="mx-auto mb-3 flex max-w-3xl items-center gap-2 overflow-x-auto pb-1">
-      <span className="shrink-0 text-[10px] uppercase tracking-[0.22em] text-white/35">
+      <span className="shrink-0 text-[10px] uppercase tracking-[0.22em] text-[#8b7b72]">
         @ 专家
       </span>
       {props.experts.map((expert) => (
@@ -1251,14 +1251,14 @@ function ExpertMentionBar(props: {
           className={cn(
             "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors",
             expert.isDefault
-              ? "border-amber-500/35 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20"
-              : "border-white/10 bg-white/5 text-white/60 hover:border-white/20 hover:bg-white/10 hover:text-white",
+              ? "border-[#f6c37a] bg-[#fff7ed] text-[#c46a00] hover:bg-[#ffedd5]"
+              : "border-[#eadfd7] bg-white text-[#6f625d] hover:border-[#f6c37a] hover:bg-[#fffaf7] hover:text-[#1f2328]",
           )}
         >
           <Sparkles className="h-3.5 w-3.5" />
           {expert.displayName}
           {expert.isDefault ? (
-            <span className="text-[10px] text-amber-300/60">默认</span>
+            <span className="text-[10px] text-[#c46a00]/70">默认</span>
           ) : null}
         </button>
       ))}
@@ -1268,11 +1268,11 @@ function ExpertMentionBar(props: {
 
 function LegacyRoundtableNotice() {
   return (
-    <div className="mx-auto mb-3 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+    <div className="mx-auto mb-3 max-w-3xl rounded-2xl border border-[#eadfd7] bg-white p-4">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-[#8b7b72]">
         Legacy Roundtable
       </p>
-      <p className="mt-2 text-sm leading-6 text-white/60">
+      <p className="mt-2 text-sm leading-6 text-[#6f625d]">
         这个会话来自旧圆桌咨询入口。当前主流程已收口到普通咨询里的 @ 专家容器，请新开对话后选择专家继续。
       </p>
     </div>
@@ -1282,16 +1282,16 @@ function LegacyRoundtableNotice() {
 function AssistantThinkingBubble() {
   return (
     <div className="flex gap-4 justify-start">
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-500">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#fff0f2] text-[#d83f58]">
         <Sparkles className="h-4 w-4" />
       </div>
-      <div className="max-w-2xl rounded-2xl border border-white/10 bg-[#111111] px-4 py-3 text-sm leading-7 text-white/75">
+      <div className="max-w-2xl rounded-2xl border border-[#eadfd7] bg-white px-4 py-3 text-sm leading-7 text-[#2f3339] shadow-[0_12px_34px_rgba(77,53,43,0.07)]">
         <div className="flex items-center gap-2">
           <span>思考中</span>
           <span className="flex items-center gap-1" aria-hidden="true">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400" />
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 [animation-delay:120ms]" />
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 [animation-delay:240ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#f2556b]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#f2556b] [animation-delay:120ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#f2556b] [animation-delay:240ms]" />
           </span>
         </div>
       </div>
@@ -1301,10 +1301,10 @@ function AssistantThinkingBubble() {
 
 function Card(props: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+    <div className="rounded-2xl border border-[#eadfd7] bg-white p-4 shadow-[0_12px_34px_rgba(77,53,43,0.06)]">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] uppercase tracking-[0.25em] text-white/35">{props.title}</p>
-        <Edit3 className="h-3.5 w-3.5 text-white/25" />
+        <p className="text-[10px] uppercase tracking-[0.25em] text-[#8b7b72]">{props.title}</p>
+        <Edit3 className="h-3.5 w-3.5 text-[#9a8f89]" />
       </div>
       <div className="mt-3">{props.children}</div>
     </div>
@@ -1322,13 +1322,13 @@ function StrategyAssetDocument({ markdown }: { markdown: string }) {
     <div className="space-y-4">
       {sections.map((section) => (
         <section key={section.title} className="space-y-2">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-white/30">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-[#8b7b72]">
             {section.title}
           </p>
-          <div className="space-y-2 text-sm leading-7 text-white/75">
+          <div className="space-y-2 text-sm leading-7 text-[#2f3339]">
             {section.items.length ? (
               section.items.map((item) => (
-                <p key={item} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+                <p key={item} className="rounded-xl border border-[#eadfd7] bg-[#fffaf7] px-3 py-2">
                   {item}
                 </p>
               ))
