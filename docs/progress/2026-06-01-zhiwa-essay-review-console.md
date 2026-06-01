@@ -71,18 +71,19 @@ worktree：`/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/zhiwa-ai-int
    - 题目
    - 得分 `15/20`
    - 字数统计
-   - 五维评价
-   - 原文批改，使用原型里的绿色命中高亮、红色波浪线、得分章和旁批样式
-   - 遗漏要点
+   - 五维评价雷达图
+   - 原文批改白卡片，使用绿色命中高亮、加分标记和红色扣分提示
+   - 击败考生、作答用时和扣分提示
    - 批改评语
    - 修改后答案
-7. 根据 `V4.0-笔试原型（2026-01-23最新）/原文批改.html` 和 Dify YAML 中 `批改富文本渲染` 节点，重做右侧手机报告视觉：
-   - 顶部 `批改结果` 导航样式
+7. 结合本地 V4.0 原型、Dify YAML 中 `批改富文本渲染` 节点，以及后续补充的 App Store 官方截图，重做右侧手机报告视觉：
+   - 顶部 `申论报告` 导航样式
+   - `分数说明` 入口
    - 得分圆环
-   - 原文批改纸张区
-   - `text-good` / `score-stamp` 命中样式
-   - `text-bad` / `comment-block` 错误旁批样式
-   - 黄色老师评语
+   - 事实指标区：击败考生、作答用时
+   - 浅红扣分提示条
+   - 五维评价雷达图
+   - 原文批改双标签卡片
    - 绿色修改后答案卡
 
 ## 4. 重要边界
@@ -212,3 +213,84 @@ git diff --check
 已按 `feedback-writer` 记录到项目反馈：
 
 - `.codex/feedback/portfolio-showcase-less-explanation.md`
+
+## 12. 绿色主题对齐
+
+用户进一步指出独立项目页视觉应与上一层作品集详情保持一致，智蛙项目主视觉应为绿色系。
+
+已处理：
+
+1. 将独立项目页根色板对齐上一层 `project-detail[data-theme="zhiwa"]`：
+   - 背景：`#edfff7`
+   - 主绿：`#0eb698`
+   - 辅助薄荷绿：`#8fe6c0`
+2. 将页面背景、顶部导航、卡片边框、卡片阴影、主按钮、iPhone 外框阴影、手机报告底色和评分条从蓝色倾向调整为绿色倾向。
+3. 清理项目页 CSS 中旧蓝色变量和蓝色渐变残留。
+4. 再次验证真实页面里不存在用户浏览器批注中提到的旧模块文本：
+   - `DIFY 节点流转`
+   - `Dify 工作流：`
+   - `增长转化`
+
+补充浏览器验证：
+
+- 桌面视口：`1440x1100`
+- 移动视口：`390x1200`
+- console errors：0
+- 横向溢出：false
+- 主题变量检测：`--page: #edfff7`、`--green: #0eb698`、`--mint: #8fe6c0`
+- 点击“填入演示答案”和“运行批改”后报告仍正常生成
+- 报告仍包含 `原文批改`、`批改评语`、`修改后答案`
+- 旧解释型模块文本检测：false
+
+补充截图：
+
+- `/tmp/zhiwa-green-desktop.png`
+- `/tmp/zhiwa-green-mobile.png`
+
+## 13. 公开报告样式参考与二次改版
+
+用户指出当前手机报告还不是更接近原版的样式，并要求去小红书等公开渠道找智蛙申论报告参考。
+
+本轮补充调研：
+
+1. 小红书搜索 `智蛙面试 申论报告`：
+   - 搜索页出现相关搜索：`智蛙申论报告模板下载`、`智蛙申论报告怎么用`。
+   - 直接结果中未找到清晰可确认的“申论报告原版完整截图”。
+   - 找到一张智蛙面试反馈截图，样式特征是绿色渐变顶部、白色圆角卡片、总分大号展示和四项能力条，可作为同品牌报告语言参考。
+   - 搜索截图留存：`/tmp/xhs-zhiwa-search.png`
+   - 疑似反馈截图留存：`/tmp/zhiwa-xhs-images/xhs1-first-green.webp`
+2. App Store 官方页面 `智蛙公考`：
+   - 公开官方截图中出现 `AI申论智能批改`。
+   - 该截图比小红书结果更接近当前要复刻的申论报告 UI。
+   - 关键样式：顶部 `申论报告`、右侧 `分数说明`、圆环得分、击败考生、作答用时、浅红扣分提示、多维雷达图、原文批改卡、提升建议。
+   - 参考截图留存：
+     - `/tmp/zhiwa-appstore/appstore-02.jpg`
+     - `/tmp/zhiwa-appstore/appstore-07.jpg`
+
+已据此调整：
+
+1. `apps/portfolio/projects/zhiwa-ai-interview/script.js`
+   - 手机报告顶部使用 `申论报告`。
+   - 增加 `分数说明`、击败考生、作答用时、扣分提示条。
+   - 五维评价从横向进度条改为雷达图。
+   - 原文批改改为官方截图更接近的白卡片、双标签、绿色高亮、加分标记结构。
+   - 保留 `批改评语` 和 `修改后答案`，保证作品展示里仍能看到结构化报告闭环。
+2. `apps/portfolio/projects/zhiwa-ai-interview/styles.css`
+   - 新增官方报告式白卡、雷达图、扣分条、双标签和原文批改样式。
+   - 删除不再使用的旧版富文本批改样式、统计块和对应脚本 helper。
+
+补充验证：
+
+- `node --check apps/portfolio/projects/zhiwa-ai-interview/script.js`：通过。
+- 桌面视口 `1440x1200`：console errors 0，横向溢出 false。
+- 移动视口 `390x1300`：console errors 0，横向溢出 false。
+- 报告文本包含：`申论报告`、`分数说明`、`击败考生`、`五维评价`、`原文批改`、`修改后答案`。
+- 旧解释型模块文本检测：false。
+- 旧版报告文案检测：false。
+
+补充截图：
+
+- `/tmp/zhiwa-official-report-desktop.png`
+- `/tmp/zhiwa-official-report-mobile.png`
+- `/tmp/zhiwa-official-report-phone-detail.png`
+- `/tmp/zhiwa-official-report-phone-bottom.png`

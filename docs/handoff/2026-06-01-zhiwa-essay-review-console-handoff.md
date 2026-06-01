@@ -37,12 +37,21 @@
    - “填入演示答案”
    - “运行批改”
    - iPhone 风格结构化报告预览
-   - 参考原型的原文批改样式：绿色命中高亮、得分章、红色波浪线、旁批、老师评语、修改后答案
+   - 更接近官方截图的申论报告样式：圆环得分、击败考生、作答用时、扣分提示、雷达图、原文批改、批改评语、修改后答案
    - 静态模拟边界说明，避免误读为真实 Dify API 已接入
    - 移动端报告生成前的轻量加载状态
 
 5. 写入执行记录：
    - `docs/progress/2026-06-01-zhiwa-essay-review-console.md`
+
+6. 按用户反馈对齐上一层作品集详情页的智蛙绿色主题：
+   - 页面背景、顶部导航、卡片边框/阴影、主按钮、手机报告底色和评分条已统一到 `#edfff7 / #0eb698 / #8fe6c0` 这一套绿色系。
+   - 项目页 CSS 中旧蓝色变量、蓝色按钮渐变和蓝色评分条残留已清理。
+
+7. 按用户要求补充公开渠道调研并重做报告样式：
+   - 小红书搜索 `智蛙面试 申论报告`，未找到清晰可确认的申论报告原版完整截图，但找到智蛙面试反馈截图，验证了同品牌绿色渐变和白色圆角报告卡语言。
+   - App Store 官方 `智蛙公考` 截图中有 `AI申论智能批改`，作为更可靠的申论报告参考。
+   - 手机报告已改为更接近官方截图的结构：`申论报告` 顶栏、`分数说明`、圆环得分、击败考生、作答用时、浅红扣分条、多维雷达图、原文批改卡和提升建议式白卡。
 
 ## 4. 验证结果
 
@@ -73,6 +82,30 @@
 - `/tmp/zhiwa-essay-review-console-mobile-final.png`
 - `/tmp/zhiwa-essay-review-polished-desktop.png`
 - `/tmp/zhiwa-essay-review-polished-mobile.png`
+- `/tmp/zhiwa-green-desktop.png`
+- `/tmp/zhiwa-green-mobile.png`
+- `/tmp/xhs-zhiwa-search.png`
+- `/tmp/zhiwa-xhs-images/xhs1-first-green.webp`
+- `/tmp/zhiwa-appstore/appstore-02.jpg`
+- `/tmp/zhiwa-appstore/appstore-07.jpg`
+- `/tmp/zhiwa-official-report-desktop.png`
+- `/tmp/zhiwa-official-report-mobile.png`
+- `/tmp/zhiwa-official-report-phone-detail.png`
+- `/tmp/zhiwa-official-report-phone-bottom.png`
+
+绿色主题补充验证：
+
+- 桌面 `1440x1100` 与移动 `390x1200` 均无横向溢出。
+- console errors：0。
+- 主题变量检测为 `--page: #edfff7`、`--green: #0eb698`、`--mint: #8fe6c0`。
+- 页面文本不包含旧的 `DIFY 节点流转`、`Dify 工作流：`、`增长转化`。
+
+官方报告样式补充验证：
+
+- 桌面 `1440x1200` 与移动 `390x1300` 均无横向溢出。
+- console errors：0。
+- 手机报告包含 `申论报告`、`分数说明`、`击败考生`、`五维评价`、`原文批改`、`修改后答案`。
+- 旧版报告文案检测：false。
 
 ## 5. 重要边界
 
