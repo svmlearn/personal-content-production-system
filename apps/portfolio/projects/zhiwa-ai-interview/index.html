@@ -16,7 +16,7 @@
       <nav class="section-nav" aria-label="页面章节">
         <a href="#overview">产品全景</a>
         <a href="#workflow">Dify 工作流</a>
-        <a href="#demo">批改 Demo</a>
+        <a href="#demo">批改体验台</a>
         <a href="#growth">增长转化</a>
       </nav>
     </header>
@@ -165,19 +165,79 @@
 
       <section class="content-section demo-section" id="demo" aria-labelledby="demo-title">
         <div class="section-heading">
-          <p class="eyebrow">Essay Review Demo</p>
-          <h2 id="demo-title">申论批改 Demo：按题型给出不同评分重心</h2>
+          <p class="eyebrow">Essay Review Console</p>
+          <h2 id="demo-title">申论批改体验台：从 Dify 输入到手机报告</h2>
           <p>
-            以下样例为脱敏重写素材，用来展示产品交互和批改结构，不对应真实用户答案。
+            以“提出对策题-申论批改【V4】”工作流为底，前端只暴露题目和用户答案，参考答案、材料和评分约束按真实接入口径做成隐藏演示数据。
           </p>
         </div>
-        <div class="demo-shell">
-          <div class="demo-tabs" role="tablist" aria-label="申论题型切换">
-            <button class="demo-tab is-active" type="button" role="tab" aria-selected="true" data-demo="summary">归纳概括</button>
-            <button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo="solution">提出对策</button>
-            <button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo="analysis">综合分析</button>
+        <div class="review-lab">
+          <div class="review-input-panel">
+            <div class="workflow-field-grid" role="group" aria-label="Dify 工作流输入字段">
+              <div>
+                <span>question</span>
+                <strong>题目展示</strong>
+              </div>
+              <div>
+                <span>answer</span>
+                <strong>用户作答</strong>
+              </div>
+              <div>
+                <span>standardanswer</span>
+                <strong>内置隐藏</strong>
+              </div>
+              <div>
+                <span>score / number</span>
+                <strong>评分约束</strong>
+              </div>
+            </div>
+
+            <article class="question-card" aria-labelledby="essay-question-title">
+              <div class="question-card-header">
+                <span>提出对策题</span>
+                <strong>20 分 · 250-300 字</strong>
+              </div>
+              <h3 id="essay-question-title">请根据给定材料，围绕社区老旧小区公共服务响应慢、协同弱的问题，提出可落地的改进措施。</h3>
+              <p>要求：问题对应准确，措施具体可行，条理清楚，不超过 300 字。</p>
+            </article>
+
+            <label class="answer-editor" for="answerInput">
+              <span>用户答案</span>
+              <textarea id="answerInput" rows="9" placeholder="在这里输入申论答案"></textarea>
+            </label>
+
+            <div class="review-actions">
+              <button class="secondary-action" type="button" id="prefillAnswer">填入演示答案</button>
+              <button class="primary-action" type="button" id="runReview">运行批改</button>
+            </div>
+
+            <div class="hidden-input-note" aria-label="隐藏输入说明">
+              <span>隐藏输入</span>
+              <strong>information、standardanswer、requirement、score、number_min、number_max 已预置为静态模拟数据，不在界面展开。</strong>
+            </div>
           </div>
-          <article class="demo-panel" id="demoPanel" role="tabpanel" aria-live="polite"></article>
+
+          <div class="review-output-panel">
+            <div class="node-runner" aria-labelledby="runner-title">
+              <div class="runner-header">
+                <span>Dify 节点流转</span>
+                <strong id="runner-title">提出对策题批改链路</strong>
+              </div>
+              <div class="runner-steps" id="runnerSteps" aria-live="polite"></div>
+            </div>
+
+            <div class="iphone-shell" role="region" aria-label="iPhone 风格申论报告预览">
+              <div class="iphone-hardware">
+                <div class="iphone-notch" aria-hidden="true"></div>
+                <div class="phone-status" aria-hidden="true">
+                  <span>9:41</span>
+                  <span>5G 100%</span>
+                </div>
+                <div class="phone-screen" id="phoneReport" role="region" aria-label="结构化申论报告" aria-live="polite"></div>
+                <div class="home-indicator" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
