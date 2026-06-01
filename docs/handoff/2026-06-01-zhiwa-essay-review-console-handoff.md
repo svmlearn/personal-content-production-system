@@ -5,7 +5,7 @@
 
 ## 1. 当前目标
 
-把智蛙项目页里的“申论批改 Demo”升级成一个可点击体验台：用户看到题目，能一键填入演示答案，点击运行后看到 Dify 节点流转，并在 iPhone 风格手机框内生成结构化申论批改报告。
+把智蛙项目页里的“申论批改 Demo”升级成一个可点击体验台：用户看到题目，能一键填入演示答案，点击运行后在 iPhone 风格手机框内生成结构化申论批改报告。
 
 ## 2. Worktree / Branch
 
@@ -32,14 +32,14 @@
    - `apps/portfolio/projects/zhiwa-ai-interview/script.js`
 
 4. 新体验台包含：
-   - Dify 输入字段映射展示
    - 题目展示
    - 用户答案 textarea
    - “填入演示答案”
    - “运行批改”
-   - Dify 节点流转状态
    - iPhone 风格结构化报告预览
+   - 参考原型的原文批改样式：绿色命中高亮、得分章、红色波浪线、旁批、老师评语、修改后答案
    - 静态模拟边界说明，避免误读为真实 Dify API 已接入
+   - 移动端报告生成前的轻量加载状态
 
 5. 写入执行记录：
    - `docs/progress/2026-06-01-zhiwa-essay-review-console.md`
@@ -56,29 +56,39 @@
 - 桌面 `1440x1100`：
   - console errors：0
   - 预填答案成功
-  - 运行批改后 6 个节点完成
-  - 报告包含 `15/20`
-  - 报告包含 `批改评语`
+  - 运行批改后报告生成成功
+  - 报告包含 `原文批改`、`批改评语`、`修改后答案`
   - 横向溢出：false
 
 - 移动 `390x980`：
   - console errors：0
   - 预填答案成功
   - 运行批改后报告生成成功
+  - 报告包含 `原文批改`、`批改评语`、`修改后答案`
   - 横向溢出：false
 
 截图：
 
 - `/tmp/zhiwa-essay-review-console-desktop.png`
 - `/tmp/zhiwa-essay-review-console-mobile-final.png`
+- `/tmp/zhiwa-essay-review-polished-desktop.png`
+- `/tmp/zhiwa-essay-review-polished-mobile.png`
 
 ## 5. 重要边界
 
 当前不是实时 Dify 调用，而是静态体验模拟。
 
-界面不展示参考答案，但 demo 数据中的 `standardAnswer` 仍在前端 JS 中。若后续接真实 Dify，必须把参考答案、材料、评分规则、API key 和 Dify URL 放到后端代理，不要放到浏览器端。
+当前前端只保留演示题目、演示答案和报告展示文案。若后续接真实 Dify，必须把参考答案、材料、评分规则、API key 和 Dify URL 放到后端代理，不要放到浏览器端。
 
-只读 `code-reviewer` 已复核：无阻塞问题，可作为待验收分支。已按建议收紧文案边界，并补充字段映射和 iPhone 预览的语义化 `role`。
+只读 `code-reviewer` 已复核：无阻塞问题，可作为待验收分支。已按建议收紧文案边界。
+
+后续用户浏览器批注要求移除偏解释型模块，已进一步收窄页面：
+
+- 删除 `Product Ownership / 这段项目展示的能力`。
+- 删除 `Growth Conversion / 增长转化`。
+- 删除 `Dify Workflow / Dify 工作流`。
+- 删除体验台里的 Dify 输入字段映射、隐藏输入说明和节点流转列表。
+- 顶部导航只保留 `产品全景`、`批改体验台`。
 
 ## 6. 改动文件
 

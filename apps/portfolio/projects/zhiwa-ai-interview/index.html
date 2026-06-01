@@ -15,9 +15,7 @@
       </a>
       <nav class="section-nav" aria-label="页面章节">
         <a href="#overview">产品全景</a>
-        <a href="#workflow">Dify 工作流</a>
         <a href="#demo">批改体验台</a>
-        <a href="#growth">增长转化</a>
       </nav>
     </header>
 
@@ -27,12 +25,12 @@
           <p class="eyebrow">ZHIWA-42 / AI Education System</p>
           <h1 id="hero-title">智蛙 AI 面试</h1>
           <p class="hero-lede">
-            把 AI 面试、申论批改、Dify 工作流和学习报告串成考公备考产品系统，而不是只展示一套低代码编排。
+            把 AI 面试、申论批改和学习报告串成考公备考产品系统，让一次练习沉淀为可复盘的学习反馈。
           </p>
           <div class="hero-tags" aria-label="项目关键词">
             <span>AI 面试</span>
             <span>申论批改</span>
-            <span>Dify 工作流</span>
+            <span>结构化报告</span>
             <span>AI 教育系统</span>
           </div>
         </div>
@@ -60,8 +58,8 @@
             </div>
             <div>
               <span>04</span>
-              <strong>转化路径</strong>
-              <small>埋点、弹窗、首购路径复盘</small>
+              <strong>专项复盘</strong>
+              <small>错题回看、短板定位、下一题训练</small>
             </div>
           </div>
           <div class="report-strip">
@@ -70,8 +68,8 @@
               <strong>结构 / 内容 / 逻辑 / 表达 / 岗位匹配</strong>
             </div>
             <div>
-              <span>工作流引擎</span>
-              <strong>OCR、批改、报告、学习建议编排</strong>
+              <span>报告体验</span>
+              <strong>题目、作答、批改、复盘建议</strong>
             </div>
           </div>
         </div>
@@ -88,11 +86,11 @@
         </article>
         <article>
           <span>证据</span>
-          <strong>题库、AI 批改、报告、埋点和转化路径</strong>
+          <strong>题库、AI 批改、结构化报告和学习建议</strong>
         </article>
         <article>
-          <span>结果口径</span>
-          <strong>既有展示口径：付费转化率 +4.2%</strong>
+          <span>展示重点</span>
+          <strong>把批改过程做成可直接体验的产品界面</strong>
         </article>
       </section>
 
@@ -122,76 +120,22 @@
           </article>
           <article>
             <span>04</span>
-            <h3>转化路径设计</h3>
-            <p>围绕体验功能、到达付费页和下单路径补齐指标，用普通用户与付费用户差异反推注册流程和弹窗策略。</p>
+            <h3>学习报告闭环</h3>
+            <p>把一次练习后的得分、短板、修改建议和下一步训练组织在同一个反馈界面里，降低复盘成本。</p>
           </article>
-        </div>
-      </section>
-
-      <section class="content-section split-section" id="workflow" aria-labelledby="workflow-title">
-        <div class="section-heading">
-          <p class="eyebrow">Dify Workflow</p>
-          <h2 id="workflow-title">Dify 工作流：把执行编排藏在产品体验背后</h2>
-          <p>
-            工作流承担 OCR、题型识别、评分规则、批改报告和学习建议编排，但用户看到的是一次连贯的训练和反馈体验。
-          </p>
-        </div>
-        <div class="workflow-shell">
-          <div class="workflow-nodes" role="tablist" aria-label="Dify 工作流节点">
-            <button class="workflow-node is-active" type="button" role="tab" aria-selected="true" data-node="capture">
-              <span>01</span>
-              OCR 收卷
-            </button>
-            <button class="workflow-node" type="button" role="tab" aria-selected="false" data-node="classify">
-              <span>02</span>
-              题型识别
-            </button>
-            <button class="workflow-node" type="button" role="tab" aria-selected="false" data-node="rubric">
-              <span>03</span>
-              评分规则
-            </button>
-            <button class="workflow-node" type="button" role="tab" aria-selected="false" data-node="review">
-              <span>04</span>
-              批改报告
-            </button>
-            <button class="workflow-node" type="button" role="tab" aria-selected="false" data-node="plan">
-              <span>05</span>
-              学习建议
-            </button>
-          </div>
-          <article class="workflow-detail" id="workflowDetail" role="tabpanel" aria-live="polite"></article>
         </div>
       </section>
 
       <section class="content-section demo-section" id="demo" aria-labelledby="demo-title">
         <div class="section-heading">
           <p class="eyebrow">Essay Review Console</p>
-          <h2 id="demo-title">申论批改体验台：从 Dify 输入到手机报告</h2>
+          <h2 id="demo-title">申论批改体验台：输入答案，生成手机报告</h2>
           <p>
-            以“提出对策题-申论批改【V4】”工作流为底，前端只暴露题目和用户答案，参考答案、材料和评分约束按真实接入口径做成隐藏演示数据。
+            题目和答案为脱敏演示素材，重点展示用户从作答到查看结构化报告的完整体验。
           </p>
         </div>
         <div class="review-lab">
           <div class="review-input-panel">
-            <div class="workflow-field-grid" role="group" aria-label="Dify 工作流输入字段">
-              <div>
-                <span>question</span>
-                <strong>题目展示</strong>
-              </div>
-              <div>
-                <span>answer</span>
-                <strong>用户作答</strong>
-              </div>
-              <div>
-                <span>standardanswer</span>
-                <strong>内置隐藏</strong>
-              </div>
-              <div>
-                <span>score / number</span>
-                <strong>评分约束</strong>
-              </div>
-            </div>
-
             <article class="question-card" aria-labelledby="essay-question-title">
               <div class="question-card-header">
                 <span>提出对策题</span>
@@ -210,22 +154,9 @@
               <button class="secondary-action" type="button" id="prefillAnswer">填入演示答案</button>
               <button class="primary-action" type="button" id="runReview">运行批改</button>
             </div>
-
-            <div class="hidden-input-note" aria-label="隐藏输入说明">
-              <span>隐藏输入</span>
-              <strong>information、standardanswer、requirement、score、number_min、number_max 已预置为静态模拟数据，不在界面展开。</strong>
-            </div>
           </div>
 
           <div class="review-output-panel">
-            <div class="node-runner" aria-labelledby="runner-title">
-              <div class="runner-header">
-                <span>Dify 节点流转</span>
-                <strong id="runner-title">提出对策题批改链路</strong>
-              </div>
-              <div class="runner-steps" id="runnerSteps" aria-live="polite"></div>
-            </div>
-
             <div class="iphone-shell" role="region" aria-label="iPhone 风格申论报告预览">
               <div class="iphone-hardware">
                 <div class="iphone-notch" aria-hidden="true"></div>
@@ -237,79 +168,6 @@
                 <div class="home-indicator" aria-hidden="true"></div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="content-section" id="growth" aria-labelledby="growth-title">
-        <div class="section-heading">
-          <p class="eyebrow">Growth Conversion</p>
-          <h2 id="growth-title">增长转化：用路径差异指导体验和付费触发</h2>
-          <p>
-            指标不是附属报表，而是产品判断工具：看用户在哪里形成信任、在哪里犹豫、什么体验最接近首购意愿。
-          </p>
-        </div>
-        <div class="growth-grid">
-          <article class="growth-map">
-            <span>路径示意</span>
-            <h3>首购路径不是一条直线</h3>
-            <p>这里展示的是产品分析顺序，不代表真实转化比例。</p>
-            <div class="funnel-row">
-              <span>进入页面</span>
-              <strong>建立第一印象</strong>
-            </div>
-            <div class="funnel-row">
-              <span>体验 AI 面试 / 申论</span>
-              <strong>形成能力感知</strong>
-            </div>
-            <div class="funnel-row">
-              <span>查看报告价值点</span>
-              <strong>确认反馈价值</strong>
-            </div>
-            <div class="funnel-row">
-              <span>到达付费页</span>
-              <strong>承接权益解释</strong>
-            </div>
-            <div class="funnel-row">
-              <span>完成下单</span>
-              <strong>验证首购动机</strong>
-            </div>
-          </article>
-          <article>
-            <span>埋点口径</span>
-            <h3>从页面访问到下单的全链路</h3>
-            <p>补齐进入、开始练习、查看反馈、触发弹窗、到达付费页和下单事件，避免只看最终购买而丢失中间意图。</p>
-          </article>
-          <article>
-            <span>弹窗策略</span>
-            <h3>围绕价值确认触发</h3>
-            <p>付费提示不抢在体验之前，而是在用户完成批改、看到报告短板和下一步计划后承接转化。</p>
-          </article>
-          <article>
-            <span>路径差异</span>
-            <h3>普通用户与付费用户对比</h3>
-            <p>通过路径差异判断注册流程、功能试用和弹窗文案的真实作用，已有作品集口径保留为付费转化率 +4.2%。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="content-section review-section" aria-labelledby="review-title">
-        <div class="section-heading">
-          <p class="eyebrow">Product Ownership</p>
-          <h2 id="review-title">这段项目展示的能力</h2>
-        </div>
-        <div class="ownership-list">
-          <div>
-            <strong>从场景拆产品</strong>
-            <span>把面试训练、申论备考、学习报告和付费路径合成一个教育产品系统。</span>
-          </div>
-          <div>
-            <strong>从老师动作拆 AI 流程</strong>
-            <span>把批改习惯、评分规则、评语风格和学习建议转成可执行的工作流节点。</span>
-          </div>
-          <div>
-            <strong>从体验数据反推增长</strong>
-            <span>用埋点和路径对比判断转化触发点，而不是只堆弹窗或只看最终订单。</span>
           </div>
         </div>
       </section>
