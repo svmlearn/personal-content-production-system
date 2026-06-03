@@ -1,0 +1,47 @@
+export interface ParadigmPrdConfig {
+  slug: string;
+  productName: string;
+  oneLiner: string;
+  businessBackground: string;
+  painPoints: string[];
+  whyAgent: string[];
+  traditionalLimits: string[];
+  agentValue: string[];
+  targetUsers: string[];
+  scenarios: string[];
+  boundaries: string[];
+  notSolving: string[];
+  userNeedsTable: string[][];
+  agentGoal: string;
+  agentInputs: string[];
+  agentOutputs: string[];
+  agentContext: string[];
+  agentTools: string[];
+  agentData: string[];
+  agentReasoning: string[];
+  agentWorkflow: string[];
+  agentExceptions: string[];
+  humanConfirmNodes: string[];
+  featureModules: string[][];
+  tenStepFlow: string[];
+  mainFlow: string[];
+  branchFlows: string[];
+  exceptionFlows: string[];
+  humanFlows: string[];
+  pages: string[][];
+  dataSchema: string[][];
+  prompts: {
+    system: string;
+    intent: string;
+    planning: string;
+    tool: string;
+    result: string;
+    error: string;
+    confirm: string;
+  };
+  security: string[];
+  mvpTable: string[][];
+  acceptance: string[][];
+  techStack: string[][];
+  finalNote: string;
+}

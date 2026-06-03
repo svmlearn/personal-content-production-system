@@ -434,6 +434,15 @@ button {
   --detail-accent-2: #40d6c6;
 }
 
+.project-detail[data-theme="fde"] {
+  --detail-bg: #eff8ff;
+  --detail-panel: rgba(255, 255, 255, 0.78);
+  --detail-panel-strong: #fbfeff;
+  --detail-accent: #238bd8;
+  --detail-accent-2: #20c284;
+  --detail-line: rgba(35, 139, 216, 0.18);
+}
+
 .project-detail[data-theme="harness"] {
   --detail-bg: #f4efe7;
   --detail-panel: rgba(255, 251, 244, 0.8);

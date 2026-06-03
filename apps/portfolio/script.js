@@ -161,6 +161,48 @@ const projects = [
     },
   },
   {
+    code: "FDE-01",
+    title: "FDE 企业 AI 赋能",
+    shortTitle: "FDE",
+    type: "Enterprise AI Project",
+    accent: "#91d8ff",
+    accent2: "#9ef0c5",
+    summary:
+      "面向企业的大模型转型范式集合，把销售、客服、知识库、会议、BI、质检和流程 Agent 做成可体验样例。",
+    chips: ["ToB LLM", "Agent Demo", "Prompt Library", "AI Enablement"],
+    detail: {
+      theme: "fde",
+      kicker: "Enterprise AI / Enablement Playbook",
+      intro:
+        "FDE 企业 AI 赋能是面向 ToB 场景的大模型范式集合。它不是单个聊天助手，而是一组可被企业拿去理解、演示和改造的 AI 工作流样例，用来帮助业务团队把抽象的大模型能力落到具体岗位、流程和数据场景里。",
+      proof: ["完整项目已纳入 apps/fde-ai-empowerment", "销售 / 客服 / BI / 会议等范式", "Demo + Prompt 双入口", "企业 AI 转型样例库"],
+      flow: ["场景识别", "范式选择", "Prompt 复制", "Demo 体验", "企业改造"],
+      launch: {
+        label: "进入该项目",
+        port: 3004,
+        path: "/",
+        note: "本地预览服务：3004",
+      },
+      sections: [
+        {
+          title: "项目定位",
+          body:
+            "这个项目先作为企业 AI 赋能的范式库入口，展示不同部门如何把大模型能力嵌入到现有工作流里。后续可以把它扩展成面向客户演示、售前咨询和内部培训的统一 FDE 工作台。",
+        },
+        {
+          title: "体验方式",
+          body:
+            "每个范式保留原项目的 Demo 与 Prompt 面板，让用户既能看到交互效果，也能拿到可复制的提示词结构。当前先完整迁入原仓库内容，不拆、不重写、不抽象成静态介绍页。",
+        },
+        {
+          title: "企业价值",
+          body:
+            "FDE 的重点是让企业从“想用 AI”走到“知道哪个岗位、哪个流程、哪种数据适合先做”。它可以承接客户调研、场景共创、AI 培训和行业方案沉淀。",
+        },
+      ],
+    },
+  },
+  {
     code: "HARNESS-04",
     title: "Harness Engineering 理解",
     shortTitle: "Harness System",
