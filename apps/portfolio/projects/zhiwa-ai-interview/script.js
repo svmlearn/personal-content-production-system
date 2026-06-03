@@ -45,38 +45,48 @@ const interviewReviewDemo = {
   report: {
     score: 78,
     fullScore: 100,
-    abilityType: "表达待优化型",
+    abilityType: "表现良好",
+    percentile: "68%",
+    duration: "16分32秒",
+    durationLevel: "时长适中",
     diagnosis:
       "整体思路完整，能覆盖核实、回应、办理和复盘四个动作；短板在于措施颗粒度不足，部分句子偏工作汇报，现场感和考官听感还可以加强。",
+    questionScores: [
+      { label: "第1题", score: 72.5 },
+      { label: "第2题", score: 88.2 },
+      { label: "第3题", score: 69.5 },
+      { label: "第4题", score: 60.5 },
+      { label: "第5题", score: 52.5 },
+    ],
     dimensions: [
       {
         key: "language_expression",
         label: "语言表达",
-        score: 15,
-        analysis: "表达基本流畅，书面化程度较好，但感染力不足。",
+        score: 19,
+        analysis: "表达清晰流畅，答题节奏和现场听感较好。",
       },
       {
         key: "civil_service_literacy",
         label: "公职素养",
-        score: 16,
+        score: 17,
         analysis: "能体现主动回应、群众关切和责任意识。",
       },
       {
         key: "comprehensive_ability",
         label: "综合能力",
-        score: 15,
-        analysis: "流程完整，但处置动作还可以更具体。",
+        score: 17,
+        analysis: "流程完整，能兼顾事实、回应和整改。",
       },
       {
         key: "political_thinking",
         label: "政务思维",
-        score: 17,
+        score: 18,
         analysis: "政府视角明确，兼顾事实核查和依法澄清。",
       },
       {
         key: "adaptability_control",
         label: "应变控制",
-        score: 15,
+        score: 16,
         analysis: "时间控制合理，临场层次稳定。",
       },
     ],
@@ -154,6 +164,12 @@ function clearTimers(timerBucket) {
   timerBucket.length = 0;
 }
 
+function resetPhoneScreen(element) {
+  if (!element) return;
+
+  element.scrollTop = 0;
+}
+
 function renderPhoneIdle() {
   if (!phoneReport) return;
 
@@ -164,6 +180,7 @@ function renderPhoneIdle() {
       <p>运行批改后，这里会生成移动端结构化报告。</p>
     </div>
   `;
+  resetPhoneScreen(phoneReport);
 }
 
 function renderInterviewPhoneIdle() {
@@ -176,6 +193,7 @@ function renderInterviewPhoneIdle() {
       <p>生成报告后，这里会展示五维评分、逐句分析和答案润色。</p>
     </div>
   `;
+  resetPhoneScreen(interviewPhoneReport);
 }
 
 function renderPhoneLoading(step) {
@@ -232,6 +250,7 @@ function renderPhoneLoading(step) {
       </section>
     </div>
   `;
+  resetPhoneScreen(phoneReport);
 }
 
 function renderInterviewPhoneLoading(step) {
@@ -281,6 +300,7 @@ function renderInterviewPhoneLoading(step) {
       </section>
     </div>
   `;
+  resetPhoneScreen(interviewPhoneReport);
 }
 
 function renderPhoneReport(answer) {
@@ -349,27 +369,40 @@ function renderPhoneReport(answer) {
         <div class="report-card-title">
           <span></span>
           <strong>原文批改</strong>
+          <small>老师批注</small>
+        </div>
+        <div class="correction-legend" aria-hidden="true">
+          <span><i class="legend-dot good"></i>得分点</span>
+          <span><i class="legend-dot bad"></i>扣分点</span>
+          <span><i class="legend-dot note"></i>批注</span>
         </div>
         <div class="report-tabs" aria-hidden="true">
           <span class="active">我的答案</span>
           <span>修改后答案</span>
         </div>
-        <div class="essay-paper original-answer-sheet">
-          <h4>
-            <span class="text-good">社区治理要以统一入口和闭环反馈提质增效</span>
-            <span class="score-stamp">${checkIcon()} 好标题</span>
-          </h4>
+        <div class="essay-paper correction-paper original-answer-sheet">
+          <div class="correction-title-line">
+            <h4>
+              <span class="text-good">社区治理要以统一入口和闭环反馈提质增效</span>
+              <span class="score-stamp">${checkIcon()} 好标题</span>
+            </h4>
+            <p class="correction-note good-note">标题能概括“统一入口”和“闭环反馈”，符合提出对策题的中心任务。</p>
+          </div>
           <div class="essay-segment">
             <span class="text-good">一是建立统一诉求平台，将居民反映的问题集中收集</span><span class="score-stamp">+3</span>，按维修、环境、停车、养老等类别生成工单，避免多头反馈和重复提交。
+            <p class="correction-note good-note">得分点：抓住“统一入口”和“分类建单”，措施可操作。</p>
           </div>
           <div class="essay-segment">
             <span class="text-good">二是明确街道、社区、物业和职能部门职责</span><span class="score-stamp">+3</span>，由社区统一派单，相关部门限时办理。<span class="text-bad">相关部门</span>的牵头单位、协办单位和办结时限还可以写得更明确。
+            <p class="correction-note bad-note">扣分点：主体不够清楚，建议补成“街道牵头、社区派单、物业和职能部门协同办理”。</p>
           </div>
           <div class="essay-segment">
             <span class="text-good">三是对紧急事项、一般事项、高频事项分类处置</span><span class="score-stamp">+4</span>，建立台账和销号机制。四是定期公示办理进度，设置回访和满意度评价，对未解决事项继续跟踪。
+            <p class="correction-note good-note">亮点：分类处置和台账销号构成闭环，属于本题核心采分点。</p>
           </div>
           <div class="essay-segment">
-            五是针对反复出现的管网维修、公共空间占用等问题，由街道牵头开展专项整治，形成常态化治理机制。<span class="text-bad">定期复盘办理时长、重复投诉和群众满意度</span>方向正确，但还需要落到“如何反馈给责任部门、如何改进制度”。
+            五是针对反复出现的管网维修、公共空间占用等问题，由街道牵头开展专项整治，形成常态化治理机制。<span class="text-bad">定期复盘办理时长、重复投诉和群众满意度</span><span class="deduct-stamp">-1.5</span>方向正确，但还需要落到“如何反馈给责任部门、如何改进制度”。
+            <p class="correction-note bad-note">扣分点：复盘动作只写了指标，没有写责任反馈和制度修正，闭环最后一步偏虚。</p>
           </div>
         </div>
       </section>
@@ -391,6 +424,7 @@ function renderPhoneReport(answer) {
       </section>
     </div>
   `;
+  resetPhoneScreen(phoneReport);
 }
 
 function renderInterviewPhoneReport(answer) {
@@ -401,6 +435,13 @@ function renderInterviewPhoneReport(answer) {
   const report = interviewReviewDemo.report;
   const answerPreview =
     cleanAnswer.length > 82 ? `${escapeHtml(cleanAnswer.slice(0, 82))}...` : escapeHtml(cleanAnswer);
+  const interviewRadarDimensions = [
+    report.dimensions[0],
+    report.dimensions[1],
+    report.dimensions[3],
+    report.dimensions[4],
+    report.dimensions[2],
+  ];
 
   interviewPhoneReport.innerHTML = `
     <div class="mobile-report interview-mobile-report">
@@ -412,24 +453,46 @@ function renderInterviewPhoneReport(answer) {
           <strong>面试报告</strong>
           <span>${interviewReviewDemo.fields.questionType}</span>
         </div>
-        <span class="score-help">单题评估</span>
+        <span class="score-help">分数说明</span>
       </header>
 
-      <section class="report-section interview-score-card">
-        <div class="interview-score-ring" style="--score-percent: ${report.score}%">
-          <strong>${report.score}</strong>
-          <span>/${report.fullScore}</span>
+      <section class="report-section interview-official-score-card">
+        <div class="interview-score-summary">
+          <div class="interview-score-visual">
+            <div class="interview-score-ring official-ring" style="--score-percent: ${report.score}%">
+              <strong>${report.score}</strong>
+            </div>
+            <div class="frog-result-badge">
+              <img src="assets/green_frog.webp" alt="" aria-hidden="true">
+              <strong>${report.abilityType}</strong>
+            </div>
+          </div>
+          <div class="interview-score-facts">
+            <div>
+              <span class="interview-fact-icon trend">↗</span>
+              <p><small>击败考生</small><strong>超过 ${report.percentile} 考生</strong></p>
+            </div>
+            <div>
+              <span class="interview-fact-icon clock">◷</span>
+              <p><small>作答用时</small><strong>${report.duration} <em>${report.durationLevel}</em></strong></p>
+            </div>
+          </div>
         </div>
-        <div class="interview-score-copy">
-          <span class="ability-chip">${report.abilityType}</span>
-          <h4>五维综合表现良好</h4>
-          <p>${report.diagnosis}</p>
+        <div class="question-score-overview">
+          <h4>各题分数概览</h4>
+          <div class="question-score-list">
+            ${renderQuestionScoreOverview(report.questionScores)}
+          </div>
         </div>
-        <div class="interview-meta-strip">
-          <span>作答 ${interviewReviewDemo.fields.usedTime} 秒</span>
-          <span>字数 ${wordCount}</span>
-          <span>口头禅 ${report.fillerWords.reduce((sum, item) => sum + item.count, 0)} 次</span>
+      </section>
+
+      <section class="report-section interview-ability-card">
+        <div class="report-card-title">
+          <span></span>
+          <strong>能力表现分析</strong>
+          <small>五维单维度 20 分</small>
         </div>
+        ${renderInterviewRadarChart(interviewRadarDimensions)}
       </section>
 
       <section class="report-section question-summary">
@@ -440,17 +503,6 @@ function renderInterviewPhoneReport(answer) {
         </div>
         <p>${interviewReviewDemo.fields.question}</p>
         <p class="material-meta">${interviewReviewDemo.fields.analysis}</p>
-      </section>
-
-      <section class="report-section">
-        <div class="report-card-title">
-          <span></span>
-          <strong>五维评分</strong>
-          <small>每项 20 分</small>
-        </div>
-        <div class="dimension-list">
-          ${renderDimensionBars(report.dimensions)}
-        </div>
       </section>
 
       <section class="report-section answer-snapshot">
@@ -501,6 +553,77 @@ function renderInterviewPhoneReport(answer) {
         </div>
       </section>
     </div>
+  `;
+  resetPhoneScreen(interviewPhoneReport);
+}
+
+function renderQuestionScoreOverview(scores) {
+  return scores
+    .map((item) => {
+      const tone = item.score >= 80 ? "excellent" : item.score >= 65 ? "good" : item.score >= 58 ? "normal" : "weak";
+      return `
+        <div class="question-score-row ${tone}">
+          <span>${item.label}</span>
+          <div class="question-score-track" aria-hidden="true">
+            <i style="width: ${item.score}%"></i>
+          </div>
+          <strong>${item.score.toFixed(1)}</strong>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function renderInterviewRadarChart(dimensions) {
+  const center = 132;
+  const radius = 66;
+  const labelRadius = 90;
+  const points = dimensions.map((dimension, index) => {
+    const angle = -Math.PI / 2 + (index * 2 * Math.PI) / dimensions.length;
+    const distance = radius * (dimension.score / 20);
+    return [center + Math.cos(angle) * distance, center + Math.sin(angle) * distance];
+  });
+  const grid = [0.25, 0.5, 0.75, 1]
+    .map((scale) => {
+      const ring = dimensions
+        .map((_, index) => {
+          const angle = -Math.PI / 2 + (index * 2 * Math.PI) / dimensions.length;
+          return `${center + Math.cos(angle) * radius * scale},${center + Math.sin(angle) * radius * scale}`;
+        })
+        .join(" ");
+      return `<polygon points="${ring}" class="interview-radar-grid-ring"></polygon>`;
+    })
+    .join("");
+  const axis = dimensions
+    .map((_, index) => {
+      const angle = -Math.PI / 2 + (index * 2 * Math.PI) / dimensions.length;
+      return `<line x1="${center}" y1="${center}" x2="${center + Math.cos(angle) * radius}" y2="${center + Math.sin(angle) * radius}" class="interview-radar-axis"></line>`;
+    })
+    .join("");
+  const labels = dimensions
+    .map((dimension, index) => {
+      const angle = -Math.PI / 2 + (index * 2 * Math.PI) / dimensions.length;
+      const x = center + Math.cos(angle) * labelRadius;
+      const y = center + Math.sin(angle) * labelRadius;
+      const anchor = Math.cos(angle) > 0.25 ? "start" : Math.cos(angle) < -0.25 ? "end" : "middle";
+      return `
+        <text x="${x}" y="${y}" class="interview-radar-label" text-anchor="${anchor}" dominant-baseline="middle">
+          <tspan x="${x}" dy="-0.55em">${dimension.label}</tspan>
+          <tspan x="${x}" dy="1.35em">${dimension.score}分</tspan>
+        </text>
+      `;
+    })
+    .join("");
+  const shape = points.map(([x, y]) => `${x},${y}`).join(" ");
+
+  return `
+    <svg class="interview-official-radar" viewBox="0 0 264 264" role="img" aria-label="能力表现分析雷达图">
+      ${grid}
+      ${axis}
+      <polygon points="${shape}" class="interview-radar-area"></polygon>
+      <polyline points="${shape} ${points[0][0]},${points[0][1]}" class="interview-radar-line"></polyline>
+      ${labels}
+    </svg>
   `;
 }
 
