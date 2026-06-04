@@ -1,0 +1,7 @@
+{
+  "name": "proxy-agent",
+  "version": "5.0.0",
+  "private": true,
+  "main": "index.cjs",
+  "description": "Disabled proxy-agent compatibility stub for urllib optional proxy mode."
+}

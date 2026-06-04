@@ -35,8 +35,14 @@ const requiredAliyunOssEnv = [
   "ALIYUN_OSS_ENDPOINT",
 ] as const;
 
+const urllibProxyModeEnv = ["URLLIB_ENABLE_PROXY", "URLLIB_PROXY"] as const;
+
 export function getMissingAliyunOssEnv() {
   return requiredAliyunOssEnv.filter((name) => !process.env[name]?.trim());
+}
+
+export function getEnabledAliyunOssProxyEnv() {
+  return urllibProxyModeEnv.filter((name) => process.env[name]?.trim());
 }
 
 export function getAliyunOssConfig(): AliyunOssConfig {
@@ -195,6 +201,17 @@ export const aliyunOssProvider: ObjectStorageProvider = {
 };
 
 function createAliyunOssClient(config: AliyunOssConfig) {
+  const enabledProxyEnv = getEnabledAliyunOssProxyEnv();
+
+  if (enabledProxyEnv.length > 0) {
+    throw new ApiError(
+      503,
+      "OSS_PROXY_UNSUPPORTED",
+      "Aliyun OSS proxy mode is disabled for this application.",
+      { enabledProxyEnv },
+    );
+  }
+
   return new OSS({
     region: config.region,
     accessKeyId: config.accessKeyId,

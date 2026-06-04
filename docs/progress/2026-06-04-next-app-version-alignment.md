@@ -60,9 +60,11 @@ Browser smoke:
 - AI learning companion loads at `http://localhost:3003/`.
 - Content-growth login page loads at `http://localhost:3001/login?demo=1&next=%2Fdashboard`.
 
-## Remaining Risk
+## OSS Proxy Dependency Remediation
 
-`pnpm audit --prod` still exits non-zero because of the content-growth OSS SDK path:
+Follow-up remediation removed the production vulnerability path from the content-growth OSS SDK chain.
+
+Before remediation, `pnpm audit --prod` exited non-zero because of:
 
 ```text
 apps__content-growth-platform
@@ -75,5 +77,17 @@ apps__content-growth-platform
   > vm2
 ```
 
-This is not a Next.js vulnerability. `ali-oss` latest is still `6.23.0`, and it declares `urllib ^2.44.0`. Forcing `urllib` to 4.x or `proxy-agent` to 8.x would cross compatibility boundaries in the real OSS storage path. `proxy-agent@6.5.0` remains CommonJS but no longer exports the constructor in the shape expected by `urllib@2`, so overriding it would likely create a runtime break. Leave this as a separate storage SDK remediation task.
+The implemented fix keeps Aliyun OSS direct mode unchanged:
 
+- Set `.npmrc` `auto-install-peers=false` so pnpm does not auto-install optional peers such as `urllib`'s `proxy-agent`.
+- Added a local dependency-compatible `proxy-agent` stub at `packages/proxy-agent-disabled/` so Turbopack can resolve `urllib`'s lazy `require("proxy-agent")` during build.
+- Added a narrow Aliyun OSS guard that rejects `URLLIB_ENABLE_PROXY` / `URLLIB_PROXY`, the two env vars that would enable `urllib` proxy mode in this application.
+- Added explicit `@base-ui/react` peer dependencies `@date-fns/tz` and `date-fns`, which had previously been supplied by pnpm auto peer installation.
+
+After remediation:
+
+- `pnpm audit --prod` passes with `No known vulnerabilities found`.
+- `pnpm --dir apps/content-growth-platform list ali-oss urllib proxy-agent --depth 4` shows `urllib 2.44.0` satisfied by the local `proxy-agent` stub, without `pac-resolver`, `degenerator`, or `vm2`.
+- `pnpm build:content-growth` passes.
+- `pnpm typecheck:content-growth` passes.
+- `pnpm lint:content-growth` passes with the two existing warnings listed above.
