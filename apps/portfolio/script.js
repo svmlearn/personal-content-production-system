@@ -137,9 +137,10 @@ const projects = [
       flow: ["商家资料", "知识库与素材检索", "AI 咨询诊断", "营销日历", "图文与视频生产"],
       launch: {
         label: "进入该项目",
+        domain: "xhs.2young.xin",
         port: 3001,
         path: "/login?demo=1&next=%2Fdashboard",
-        note: "本地预览服务：3001",
+        note: "线上平台：xhs.2young.xin",
       },
       sections: [
         {
@@ -392,8 +393,12 @@ function renderDetail(scrollIntoView = false) {
 function resolveLaunchHref(launch) {
   if (launch.href) return launch.href;
   const currentHost = window.location.hostname || "127.0.0.1";
+  const isLocalHost = currentHost === "127.0.0.1" || currentHost === "localhost";
   const host = currentHost === "127.0.0.1" ? "localhost" : currentHost;
   const protocol = window.location.protocol === "https:" ? "https:" : "http:";
+  if (launch.domain && !isLocalHost) {
+    return `${protocol}//${launch.domain}${launch.path || "/"}`;
+  }
   return `${protocol}//${host}:${launch.port}${launch.path || "/"}`;
 }
 
