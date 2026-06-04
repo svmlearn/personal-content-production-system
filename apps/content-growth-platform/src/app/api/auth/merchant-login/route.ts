@@ -21,14 +21,18 @@ function getSafeNextPath(value: FormDataEntryValue | null) {
   return value;
 }
 
+function getRedirectBaseUrl(request: NextRequest) {
+  return process.env.APP_BASE_URL?.trim() || request.url;
+}
+
 function redirectToPath(request: NextRequest, path: string) {
-  const response = NextResponse.redirect(new URL(path, request.url), 303);
+  const response = NextResponse.redirect(new URL(path, getRedirectBaseUrl(request)), 303);
   response.headers.set("Cache-Control", "private, no-store");
   return response;
 }
 
 function redirectToLogin(request: NextRequest, error: string, next?: string) {
-  const url = new URL("/login", request.url);
+  const url = new URL("/login", getRedirectBaseUrl(request));
   url.searchParams.set("error", error);
 
   if (next) {
