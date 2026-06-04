@@ -1239,15 +1239,16 @@ p {
 
 .question-score-row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 46px;
+  grid-template-columns: 46px minmax(0, 1fr) 42px;
   align-items: center;
   gap: 10px;
 }
 
 .question-score-row span {
   color: #6d7b8c;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 850;
+  line-height: 1.15;
 }
 
 .question-score-track {
@@ -1278,8 +1279,9 @@ p {
 
 .question-score-row strong {
   color: #25547a;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 900;
+  line-height: 1.15;
   text-align: right;
 }
 
