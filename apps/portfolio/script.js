@@ -95,9 +95,10 @@ const projects = [
       flow: ["用户画像", "Skill 路由", "工具调用", "长期记忆", "日常陪伴"],
       launch: {
         label: "进入该项目",
+        domain: "learn.2young.xin",
         port: 3003,
         path: "/",
-        note: "本地预览服务：3003",
+        note: "线上项目：learn.2young.xin",
       },
       sections: [
         {
@@ -180,9 +181,10 @@ const projects = [
       flow: ["场景识别", "范式选择", "Prompt 复制", "Demo 体验", "企业改造"],
       launch: {
         label: "进入该项目",
+        domain: "fde.2young.xin",
         port: 3004,
         path: "/",
-        note: "本地预览服务：3004",
+        note: "线上项目：fde.2young.xin",
       },
       sections: [
         {
