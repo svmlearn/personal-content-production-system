@@ -29,5 +29,5 @@ export default async function ParadigmPrdPage({ params }: PageProps) {
   const prd = getParadigmPrd(slug);
   if (!paradigm || !prd) notFound();
 
-  return <ParadigmPrdEditor paradigm={paradigm} />;
+  return <ParadigmPrdEditor key={paradigm.slug} paradigm={paradigm} />;
 }

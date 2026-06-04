@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Sans_SC } from "next/font/google";
 import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
-
-const notoSansSc = Noto_Sans_SC({
-  variable: "--font-noto-sans-sc",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: "toB 大模型转型范式集合",
@@ -22,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${notoSansSc.variable} antialiased`}>
+      <body className="antialiased">
         <SiteHeader />
         <main>{children}</main>
         <footer className="border-t border-border/60 py-8 text-center text-xs text-muted-foreground">

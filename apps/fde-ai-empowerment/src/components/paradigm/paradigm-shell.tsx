@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createElement } from "react";
 import { ChevronLeft } from "lucide-react";
 import {
   CATEGORY_COLORS,
@@ -19,6 +20,7 @@ export function ParadigmShell({ paradigm }: ParadigmShellProps) {
   const colors = CATEGORY_COLORS[paradigm.category];
   const Demo = getParadigmDemo(paradigm.slug);
   const hasDemo = hasParadigmDemo(paradigm.slug);
+  const demoElement = Demo ? createElement(Demo) : null;
   const showPrompt = Boolean(paradigm.prompt);
   const immersive = paradigm.demoLayout === "immersive";
 
@@ -50,7 +52,7 @@ export function ParadigmShell({ paradigm }: ParadigmShellProps) {
               : ""
           }
         >
-          <Demo />
+          {demoElement}
           {showPrompt && paradigm.prompt && (
             <PromptPanel prompt={paradigm.prompt} />
           )}
@@ -103,8 +105,8 @@ export function ParadigmShell({ paradigm }: ParadigmShellProps) {
         }
       >
         <div className="min-w-0">
-          {hasDemo && Demo ? (
-            <Demo />
+          {hasDemo && demoElement ? (
+            demoElement
           ) : (
             <ComingSoon paradigm={paradigm} />
           )}

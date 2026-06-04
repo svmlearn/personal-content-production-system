@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import {
   Bot,
@@ -30,27 +30,22 @@ interface ParadigmPrdEditorProps {
 
 export function ParadigmPrdEditor({ paradigm }: ParadigmPrdEditorProps) {
   const doc = getParadigmPrd(paradigm.slug);
-  const [prd, setPrd] = useState<EditablePrd | null>(null);
+  const [prd, setPrd] = useState<EditablePrd | null>(() => {
+    if (!doc) return null;
+    const base = documentToEditable(doc);
+    if (typeof window === "undefined") return base;
+    try {
+      const raw = localStorage.getItem(storageKey(paradigm.slug));
+      return raw ? (JSON.parse(raw) as EditablePrd) : base;
+    } catch {
+      return base;
+    }
+  });
   const [activeId, setActiveId] = useState("ch-0");
   const [agentMsg, setAgentMsg] = useState("");
   const [agentInput, setAgentInput] = useState("");
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
-
-  useEffect(() => {
-    if (!doc) return;
-    const base = documentToEditable(doc);
-    try {
-      const raw = localStorage.getItem(storageKey(paradigm.slug));
-      if (raw) {
-        setPrd(JSON.parse(raw) as EditablePrd);
-        return;
-      }
-    } catch {
-      /* ignore */
-    }
-    setPrd(base);
-  }, [doc, paradigm.slug]);
 
   const persist = useCallback(
     (next: EditablePrd) => {

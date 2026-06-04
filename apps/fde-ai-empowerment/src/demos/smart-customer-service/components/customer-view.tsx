@@ -21,7 +21,9 @@ export function CustomerView() {
     startNewConversation,
   } = useService();
   const [input, setInput] = useState("");
-  const [ticketConfirmed, setTicketConfirmed] = useState(false);
+  const [confirmedConversationIds, setConfirmedConversationIds] = useState<Set<string>>(
+    () => new Set(),
+  );
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const lastAiWithTicket = [...activeConversation.messages]
@@ -29,14 +31,13 @@ export function CustomerView() {
     .find((m) => m.role === "ai" && m.pendingTicket);
 
   const intent = activeConversation.currentIntent;
+  const ticketConfirmed =
+    Boolean(activeConversation.ticketId) ||
+    confirmedConversationIds.has(activeConversation.id);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [activeConversation.messages]);
-
-  useEffect(() => {
-    setTicketConfirmed(Boolean(activeConversation.ticketId));
-  }, [activeConversation.id, activeConversation.ticketId]);
 
   function handleSend(text?: string) {
     const msg = (text ?? input).trim();
@@ -46,8 +47,12 @@ export function CustomerView() {
   }
 
   function handleConfirmTicket() {
+    setConfirmedConversationIds((prev) => {
+      const next = new Set(prev);
+      next.add(activeConversation.id);
+      return next;
+    });
     confirmTicket();
-    setTicketConfirmed(true);
   }
 
   return (

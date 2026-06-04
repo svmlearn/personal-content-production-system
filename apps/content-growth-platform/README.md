@@ -44,5 +44,3 @@ pnpm lint:content-growth
 pnpm typecheck:content-growth
 pnpm build:content-growth
 ```
-
-已知历史问题：`pnpm typecheck` 目前会被旧 `src/lib/supabase/**` 缺失 `@supabase/supabase-js`、`@supabase/ssr` 阻塞。迁移任务不处理该业务依赖问题。
