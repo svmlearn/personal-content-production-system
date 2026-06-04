@@ -1122,7 +1122,7 @@ p {
 
 .interview-score-ring.official-ring strong {
   color: var(--green);
-  font-size: 35px;
+  font-size: 14px;
 }
 
 .frog-result-badge {
@@ -1147,7 +1147,7 @@ p {
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 8px 18px rgba(53, 97, 79, 0.1);
   color: var(--green);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 900;
   line-height: 1;
   padding: 8px 10px;
@@ -1174,12 +1174,12 @@ p {
   height: 24px;
   border-radius: 999px;
   color: var(--green);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 900;
 }
 
 .interview-fact-icon.clock {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .interview-score-facts p {
@@ -1191,14 +1191,14 @@ p {
 
 .interview-score-facts small {
   color: #5b847a;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 850;
   line-height: 1;
 }
 
 .interview-score-facts strong {
   color: #1d211b;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 900;
   line-height: 1.2;
   white-space: nowrap;
@@ -1297,18 +1297,11 @@ p {
   padding-bottom: 12px;
 }
 
-.interview-ability-card .report-card-title strong {
-  font-size: 17px;
-}
-
-.interview-ability-card .report-card-title small {
-  color: #9a9f9a;
-  font-size: 13px;
-}
-
 .interview-official-radar {
   width: 100%;
+  max-width: 264px;
   height: auto;
+  justify-self: center;
   margin-top: -6px;
 }
 
@@ -1342,7 +1335,7 @@ p {
 
 .interview-radar-label tspan:nth-child(2) {
   fill: var(--green);
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .interview-score-card {
