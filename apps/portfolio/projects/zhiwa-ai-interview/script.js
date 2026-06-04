@@ -577,7 +577,7 @@ function renderQuestionScoreOverview(scores) {
 function renderInterviewRadarChart(dimensions) {
   const center = 132;
   const radius = 66;
-  const labelRadius = 90;
+  const labelRadius = 80;
   const points = dimensions.map((dimension, index) => {
     const angle = -Math.PI / 2 + (index * 2 * Math.PI) / dimensions.length;
     const distance = radius * (dimension.score / 20);

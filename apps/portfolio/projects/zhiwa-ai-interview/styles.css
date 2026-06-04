@@ -1122,7 +1122,7 @@ p {
 
 .interview-score-ring.official-ring strong {
   color: var(--green);
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .frog-result-badge {
@@ -1228,7 +1228,7 @@ p {
 .question-score-overview h4 {
   margin: 0;
   color: #1f251c;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 900;
 }
 
@@ -1239,14 +1239,14 @@ p {
 
 .question-score-row {
   display: grid;
-  grid-template-columns: 46px minmax(0, 1fr) 42px;
+  grid-template-columns: 38px minmax(0, 1fr) 34px;
   align-items: center;
   gap: 10px;
 }
 
 .question-score-row span {
   color: #6d7b8c;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 850;
   line-height: 1.15;
 }
@@ -1279,7 +1279,7 @@ p {
 
 .question-score-row strong {
   color: #25547a;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 900;
   line-height: 1.15;
   text-align: right;
