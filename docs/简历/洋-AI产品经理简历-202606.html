@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>洋 - AI 产品经理简历</title>
+    <style>
+      :root {
+        --paper: #ffffff;
+        --page-bg: #e9eee5;
+        --ink: #121510;
+        --muted: #5f675d;
+        --soft: #eef4ea;
+        --green: #2f8424;
+        --green-dark: #1f6419;
+        --gold: #b58a35;
+        --line: rgba(47, 132, 36, 0.22);
+        --rule: rgba(18, 21, 16, 0.12);
+        --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC",
+          "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--page-bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .resume-book {
+        display: grid;
+        gap: 24px;
+        justify-content: center;
+        padding: 28px;
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+        padding: 16mm 17mm 14mm;
+        background: var(--paper);
+        box-shadow: 0 24px 70px rgba(29, 42, 24, 0.18);
+      }
+
+      .page::after {
+        content: attr(data-page);
+        position: absolute;
+        right: 17mm;
+        bottom: 8mm;
+        color: rgba(18, 21, 16, 0.35);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 13px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .page-header::after {
+        content: "";
+        width: 58%;
+        height: 1px;
+        background: var(--rule);
+      }
+
+      .cover {
+        padding: 17mm 17mm 14mm;
+        background:
+          linear-gradient(90deg, rgba(47, 132, 36, 0.08), transparent 34%),
+          linear-gradient(155deg, #ffffff 0%, #ffffff 52%, #f2f7ee 100%);
+      }
+
+      .cover::before {
+        content: "AI PRODUCT";
+        position: absolute;
+        right: -18mm;
+        top: 21mm;
+        color: rgba(47, 132, 36, 0.08);
+        font-size: 48px;
+        font-weight: 950;
+        letter-spacing: 0.12em;
+        writing-mode: vertical-rl;
+      }
+
+      .cover::after {
+        display: none;
+      }
+
+      .cover-top {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .kicker {
+        margin: 0 0 12px;
+        color: var(--green-dark);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 72px;
+        font-weight: 950;
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .role {
+        margin: 18px 0 0;
+        max-width: 520px;
+        color: #20261d;
+        font-size: 22px;
+        font-weight: 850;
+        line-height: 1.3;
+      }
+
+      .portrait-mark {
+        display: grid;
+        place-items: center;
+        width: 32mm;
+        height: 39mm;
+        border: 2px solid var(--green);
+        background: #f8fbf5;
+        color: var(--green);
+        font-size: 54px;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .contact-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 18px 0 16px;
+        border-top: 2px solid var(--green);
+        border-bottom: 1px solid var(--rule);
+        padding: 10px 0;
+      }
+
+      .contact-item {
+        display: grid;
+        gap: 2px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .value {
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .cover-statement {
+        position: relative;
+        margin: 3mm 0 5mm;
+        padding: 7mm 10mm;
+        border-left: 6px solid var(--green);
+        background: rgba(238, 244, 234, 0.74);
+      }
+
+      .cover-statement span {
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 950;
+        letter-spacing: 0.18em;
+      }
+
+      .cover-statement h2 {
+        margin: 6px 0 8px;
+        font-size: 30px;
+        font-weight: 950;
+        line-height: 1.18;
+      }
+
+      .cover-statement p {
+        margin: 0;
+        max-width: 650px;
+        color: #283025;
+        font-size: 15.2px;
+        font-weight: 650;
+        line-height: 1.58;
+      }
+
+      .summary-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 10px;
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .summary-title::after {
+        content: "";
+        flex: 1;
+        height: 2px;
+        background: var(--green);
+      }
+
+      .summary-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: summary;
+      }
+
+      .summary-list li {
+        position: relative;
+        min-height: 42px;
+        padding-left: 42px;
+        font-size: 14.3px;
+        font-weight: 750;
+        line-height: 1.5;
+        counter-increment: summary;
+      }
+
+      .summary-list li::before {
+        content: counter(summary) ".";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--green-dark);
+        font-size: 24px;
+        font-weight: 950;
+        line-height: 1.1;
+      }
+
+      .cover-bottom {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 18px;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .keyword-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 9px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 25px;
+        padding: 4px 8px;
+        border: 1px solid var(--line);
+        background: #f7faf5;
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .site-list {
+        display: grid;
+        gap: 5px;
+        margin-top: 9px;
+      }
+
+      .site-list a {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid rgba(47, 132, 36, 0.18);
+        padding-bottom: 6px;
+      }
+
+      .site-list strong {
+        color: var(--green-dark);
+        font-size: 13px;
+      }
+
+      .site-list span {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: baseline;
+        gap: 9px;
+        margin: 0 0 11px;
+        color: var(--green);
+        font-size: 27px;
+        font-weight: 950;
+        line-height: 1.12;
+        white-space: nowrap;
+      }
+
+      .section-title::after {
+        content: "";
+        flex: 1;
+        min-width: 28px;
+        height: 2px;
+        background: var(--green);
+      }
+
+      .section-title small {
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 950;
+      }
+
+      .experience {
+        display: grid;
+        gap: 10px;
+      }
+
+      .meta-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        align-items: baseline;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .meta-row span:nth-child(2) {
+        text-align: center;
+      }
+
+      .meta-row span:nth-child(3) {
+        text-align: right;
+      }
+
+      .context {
+        margin: 0;
+        color: #171b14;
+        font-size: 13.6px;
+        font-weight: 700;
+        line-height: 1.65;
+      }
+
+      .topic {
+        display: grid;
+        gap: 4px;
+        padding-top: 6px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .topic h3 {
+        margin: 0;
+        color: #141812;
+        font-size: 18px;
+        font-weight: 950;
+        line-height: 1.35;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 21px;
+      }
+
+      li {
+        margin: 3px 0;
+        padding-left: 2px;
+      }
+
+      .topic > ul > li::marker {
+        color: var(--green);
+        font-size: 1.15em;
+      }
+
+      .topic ul ul {
+        margin-top: 3px;
+        padding-left: 18px;
+      }
+
+      .topic ul ul li::marker {
+        color: var(--gold);
+      }
+
+      .compact-list,
+      .topic li {
+        color: #1c2118;
+        font-size: 13.4px;
+        font-weight: 680;
+        line-height: 1.58;
+      }
+
+      .topic strong,
+      .context strong {
+        font-weight: 950;
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .subsection-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 12px 0 8px;
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 950;
+        line-height: 1.2;
+      }
+
+      .subsection-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .mini-block {
+        display: grid;
+        gap: 6px;
+        padding: 9px 0 8px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .mini-block h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 950;
+      }
+
+      .mini-block p {
+        margin: 0;
+        color: #252c22;
+        font-size: 12.6px;
+        font-weight: 660;
+        line-height: 1.58;
+      }
+
+      .education-grid {
+        display: grid;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .education-row {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 1fr;
+        gap: 16px;
+        align-items: baseline;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 7px;
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .education-row span:nth-child(3) {
+        text-align: right;
+      }
+
+      .certificate {
+        display: inline-flex;
+        margin-top: 8px;
+        border-left: 5px solid var(--green);
+        background: var(--soft);
+        padding: 8px 12px;
+        color: #172013;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .note {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 750;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 210mm;
+          background: #ffffff;
+        }
+
+        .resume-book {
+          display: block;
+          padding: 0;
+        }
+
+        .page {
+          width: 210mm;
+          height: 297mm;
+          margin: 0;
+          box-shadow: none;
+          break-after: page;
+          page-break-after: always;
+        }
+
+        .page:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .resume-book {
+          justify-content: start;
+          overflow-x: auto;
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="resume-book" aria-label="洋的 AI 产品经理简历">
+      <section class="page cover" data-page="01">
+        <div class="cover-top">
+          <div>
+            <p class="kicker">AI Product Manager / Product Builder</p>
+            <h1>洋</h1>
+            <p class="role">AI 产品经理｜AI 产品架构｜Agent 工作流编排</p>
+          </div>
+          <div class="portrait-mark" aria-label="姓名首字母">Y</div>
+        </div>
+
+        <div class="contact-strip" aria-label="联系方式">
+          <div class="contact-item">
+            <span class="label">Phone</span>
+            <span class="value">18831665919</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Email</span>
+            <a class="value" href="mailto:ywangyangw@163.com">ywangyangw@163.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="label">Website</span>
+            <a class="value" href="https://2young.xin/">https://2young.xin/</a>
+          </div>
+        </div>
+
+        <section class="cover-statement" aria-label="候选人定位">
+          <span>POSITIONING</span>
+          <h2>将业务需求与 AI 技术结合，推进真实产品落地</h2>
+          <p>
+            擅长拆解产品流程，判断哪些环节适合传统代码实现，哪些环节适合 LLM、RAG、
+            Agent / Workflow 实现；同时具备数据指标体系搭建、用户行为分析和 AI coding
+            Demo 推进能力。
+          </p>
+        </section>
+
+        <section aria-label="个人评价">
+          <h2 class="summary-title">个人评价</h2>
+          <ol class="summary-list">
+            <li>
+              在 AI 教育领域，独立完成从 0 到 1 的 AI 产品设计与落地；搭建数据指标体系，
+              分析用户行为，推动产品付费率提升 4.2%。
+            </li>
+            <li>
+              具备 AI 产品架构设计能力，能把业务需求拆成可执行流程，判断哪些适合传统代码，
+              哪些适合 LLM、RAG、Agent / Workflow 等技术实现。
+            </li>
+            <li>
+              日常使用 Claude Code、Codex、Pencil、Claude Design 等 AI 工具驱动产品工作流，
+              覆盖需求拆解、原型、Demo、研发协作与前沿实践追踪。
+            </li>
+            <li>
+              懂技术原理，能与研发一起结合 AI coding 产出产品 Demo，并把探索过程沉淀为
+              可复用的产品方案、Prompt 规范和工作流设计。
+            </li>
+          </ol>
+        </section>
+
+        <div class="cover-bottom">
+          <section aria-label="能力关键词">
+            <span class="label">Keywords</span>
+            <div class="keyword-row">
+              <span class="pill">AI 产品架构</span>
+              <span class="pill">Agent 工作流</span>
+              <span class="pill">数据指标体系</span>
+              <span class="pill">用户研究</span>
+              <span class="pill">PMF 验证</span>
+              <span class="pill">AI 教育</span>
+              <span class="pill">增长转化</span>
+              <span class="pill">AI Coding</span>
+            </div>
+          </section>
+          <section aria-label="官网与项目入口">
+            <span class="label">Portfolio Links</span>
+            <div class="site-list">
+              <a href="https://2young.xin/"><strong>2young.xin</strong><span>个人作品集主页</span></a>
+              <a href="https://learn.2young.xin/"><strong>learn.2young.xin</strong><span>AI 学习伴侣</span></a>
+              <a href="https://fde.2young.xin/"><strong>fde.2young.xin</strong><span>企业 AI 赋能 Demo</span></a>
+              <a href="https://xhs.2young.xin/"><strong>xhs.2young.xin</strong><span>内容获客平台</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" data-page="02">
+        <div class="page-header"><span>Yang Resume / Work Experience</span></div>
+        <h2 class="section-title">工作经历 1<small>AI 产品架构设计、AI 工作流编排、数据体系从 0-1 搭建</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2025.11-2026.4</span>
+            <span>智蛙面试</span>
+            <span>AI 产品经理</span>
+          </div>
+
+          <p class="context">
+            <strong>公司背景：</strong>AI 教育产品公司，核心产品“智蛙面试”面向考公考编人群，
+            涵盖 AI 面试模拟、申论批改等功能，同时与老牌教育公司华图教育等进行合作。
+          </p>
+
+          <section class="topic">
+            <h3>从 0 到 1 搭建申论 AI 产品模块</h3>
+            <ul>
+              <li>
+                <strong>项目背景：</strong>原有 AI 面试产品用户生命周期仅数周，LTV 较短。为延展用户价值，
+                沿考公备考全链路（行测、申论、面试）向上游扩展，新增申论模块以覆盖更长备考周期。
+                负责竞品调研、内容定义、AI 工作流设计到最终落地的全流程。
+              </li>
+              <li>
+                <strong>申论题库搭建：</strong>设计自动抓取素材、调用 Dify 工作流、审核答案、自然语言输入
+                批改建议、AI 结合建议重新生成答案等全流程。
+              </li>
+              <li>
+                <strong>申论 AI 批改：</strong>调研专业老师真实批改习惯，包括标注、打勾、评分、
+                评语风格，产出 AI 模拟老师笔迹批改的产品方案，提升用户感知价值。
+              </li>
+              <li>
+                深入拆解申论做题与批改流程，设计 AI 编排工作流模拟老师真实批改，
+                最终产出结构化报告。
+              </li>
+            </ul>
+          </section>
+
+          <section class="topic">
+            <h3>优化 AI 面试模块</h3>
+            <ul>
+              <li>增加“热点生成”功能，根据热点生成练习题，供考生进行针对性练习。</li>
+              <li>增加面试报告中的逐句分析模块，让用户能定位回答中的具体问题。</li>
+            </ul>
+          </section>
+
+          <section class="topic">
+            <h3>搭建产品数据指标体系</h3>
+            <ul>
+              <li>
+                <strong>背景：</strong>原有数据埋点仅记录页面点击等离散事件，无法串联用户行为路径，
+                也无法回答“用户因为什么行为而付费”这一核心问题。
+              </li>
+              <li>
+                设计全链路数据指标体系，追踪用户从进入页面、体验功能、到达付费页到最终下单的完整行为路径。
+              </li>
+              <li>
+                对比付费用户与普通用户的行为路径差异，定位付费驱动因素；设计新注册流程的一次免费面试体验
+                以及各类弹窗引导，推动付费转化率提升 4.2%。
+              </li>
+            </ul>
+          </section>
+        </article>
+      </section>
+
+      <section class="page" data-page="03">
+        <div class="page-header"><span>Yang Resume / AI Product Practice</span></div>
+        <h2 class="section-title">工作经历 2<small>用户调研、需求挖掘、PMF</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2025.6-2025.10</span>
+            <span>KeploreAI</span>
+            <span>产品经理</span>
+          </div>
+
+          <p class="context">
+            <strong>公司背景：</strong>聚焦 AI 算法工程师复现项目时“环境配置复杂、耗时长”的核心痛点，
+            设计面向项目复现与部署的 AI Agent 产品。
+          </p>
+
+          <div class="two-column">
+            <section class="topic">
+              <h3>产品 PMF 验证与商业化增长策略</h3>
+              <ul>
+                <li>
+                  通过内测群运营和深度用户访谈，将核心付费驱动因素定义为：
+                  用户在 3 轮对话内成功将自己的项目一键部署。
+                </li>
+                <li>
+                  基于 Aha Moment 设计以“激活”为核心的邀请裂变机制，奖励“成功启动项目”而非注册；
+                  设计社交督促看板，将邀请来的新用户激活率提升 60%。
+                </li>
+                <li>为实现 21% 付费转化率和早期用户增长奠定基础。</li>
+              </ul>
+            </section>
+
+            <section class="topic">
+              <h3>优化核心 AI 工作流</h3>
+              <ul>
+                <li>
+                  基于用户访谈发现“不知如何开始”的冷启动痛点，将首页从 GitHub 链接输入框重构为
+                  开放式 AI 对话入口。
+                </li>
+                <li>
+                  设计动态灵感用例模块，用户点击后可一键填充高质量 Prompt，
+                  将新用户首次有效操作转化率提升 40%。
+                </li>
+                <li>
+                  规划“成果沉淀”产品矩阵，落地一键提交 PR 至 GitHub，
+                  并规划批量文件下载与项目公开链接分享功能。
+                </li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <h2 class="subsection-title">个人项目：AI 智能学习伴侣</h2>
+        <article class="experience">
+          <div class="meta-row">
+            <span>2026.2-至今</span>
+            <span>多 Agent 架构</span>
+            <span>AI 产品设计</span>
+          </div>
+
+          <p class="context">
+            <strong>项目背景：</strong>为付费社群学员提供增值服务，从 0 到 1 设计高度个性化的
+            AI 智能学习伴侣，覆盖商业咨询、职业规划、日常陪伴和高频互动场景。
+          </p>
+
+          <div class="two-column">
+            <section class="mini-block">
+              <h3>商业咨询 + 职业规划</h3>
+              <p>
+                模拟老师在社群内的主要服务，目标达到老师 40-60% 的服务水准，扩大服务覆盖范围。
+                借鉴 Claude Code 的 Skill 设计思想，设计商业咨询 Skill 与职业规划 Skill。
+              </p>
+              <p>
+                商业咨询 Agent 设计商业计算器（ROI、LTV/CAC 等）和商业分析工具；职业规划侧设计长期记忆，
+                从对话中提取称呼、行业、职业、发展经历等信息，实现千人千面。
+              </p>
+            </section>
+
+            <section class="mini-block">
+              <h3>声音克隆 + 口吻模拟</h3>
+              <p>
+                通过声音克隆和说话口吻模拟提供情感支持，提升用户粘性。借助阿里云 TTS 模型，
+                重点调校克隆声音的语速，保证听感自然、温暖。
+              </p>
+              <p>
+                对比多版本 system prompt 与模型效果，并在 RAG 中尽量使用课程逐字稿，
+                保留口吻、语气词和口头禅。
+              </p>
+            </section>
+          </div>
+
+          <section class="mini-block">
+            <h3>高粘性的互动游戏引擎</h3>
+            <p>
+              将“玄学功能”定位为轻松有趣的互动场景，而非严肃占卜；主动规避复杂玄学知识库或算法，
+              保持娱乐属性。UI、交互、音效和彩蛋均融合社群内部文化，服务日活与心理疗愈场景。
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <section class="page" data-page="04">
+        <div class="page-header"><span>Yang Resume / Earlier Experience &amp; Education</span></div>
+        <h2 class="section-title">实习经历<small>用户调研、需求挖掘、0-1 产品设计实现</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2024.10-2025.5</span>
+            <span>静境智能声学</span>
+            <span>产品经理</span>
+          </div>
+          <p class="context">
+            <strong>项目背景：</strong>公司业务为 To B 定向音响，所在部门为内部创业，从 0 到 1 做产品开发。
+            场景为广场舞，希望将线下设备用户迁移至小程序和 App，为后续商业化打基础。
+          </p>
+          <section class="topic">
+            <h3>MVP 设计与试点验证</h3>
+            <ul>
+              <li>
+                通过试点社区实地访谈，识别设备使用权限和 U 盘歌曲管理两大关键瓶颈。
+              </li>
+              <li>
+                设定 MVP 两大目标：验证“扫码用机”和“线上内容管理”是否解决用户痛点；
+                突破“唯领队可用”的增长瓶颈。
+              </li>
+              <li>
+                设计“扫码用机”与权限管理：小程序扫码开锁，领队可在线向队员授予临时使用权。
+              </li>
+              <li>
+                设计“舞队歌曲云盘”：U 盘插入设备后可一键同步至舞队云盘，
+                将产品使用场景从领队操作扩展至全员参与。
+              </li>
+              <li>
+                在桃源居社区成功试点，推动约 800 名用户使用小程序。
+              </li>
+              <li>
+                将 AI 工具融入产品研发全流程，借助 AI 辅助会议纪要、原型生成（Figma MCP）等工具，
+                将典型功能设计研发周期从 2.5 天缩短至 1.5 天，整体效率提升 40%。
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <h2 class="subsection-title">早期经历</h2>
+        <article class="experience">
+          <div class="meta-row">
+            <span>2020.7-2021.3</span>
+            <span>金风科技</span>
+            <span>产品运营</span>
+          </div>
+          <section class="topic">
+            <h3>招投标信息系统与数据运营</h3>
+            <ul>
+              <li>
+                在招投标业务中搭建招投标信息管理系统，整合多个部门的招投标信息，
+                将纸质化、本地文档化流程固化到系统中，为集团数字化转型打基础。
+              </li>
+              <li>
+                在 OA 系统中上线对应流程，并在流程节点进行数据采集；支持根据输入信息检索相似过往项目，
+                为当前投标提供技术标、商务标、报价和部件参数等参考资料。
+              </li>
+              <li>
+                通过需求挖掘和用户调研，发现标书业务人员痛点；对通用标书内容构建并维护数据库，
+                节省重复制作时间，让业务人员将主要精力放在技术部分。
+              </li>
+              <li>
+                日常负责各产品部门招投标情况的数据收集、清洗、可视化分析和月度 PPT 汇报。
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <h2 class="subsection-title">教育背景</h2>
+        <div class="education-grid" aria-label="教育背景">
+          <div class="education-row">
+            <span>2022.9-2025.6</span>
+            <span>西北工业大学（硕）</span>
+            <span>软件工程</span>
+          </div>
+          <div class="education-row">
+            <span>2016.9-2020.7</span>
+            <span>华北科技学院（本）</span>
+            <span>自动化</span>
+          </div>
+        </div>
+
+        <h2 class="subsection-title">证书</h2>
+        <div class="certificate">生成式人工智能证书</div>
+      </section>
+    </main>
+  </body>
+</html>

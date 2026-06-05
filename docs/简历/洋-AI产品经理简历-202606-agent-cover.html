@@ -1,0 +1,1660 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>洋 - AI 产品经理简历</title>
+    <style>
+      :root {
+        --paper: #ffffff;
+        --page-bg: #e9eee5;
+        --ink: #121510;
+        --muted: #5f675d;
+        --soft: #eef4ea;
+        --green: #2f8424;
+        --green-dark: #1f6419;
+        --gold: #b58a35;
+        --line: rgba(47, 132, 36, 0.22);
+        --rule: rgba(18, 21, 16, 0.12);
+        --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC",
+          "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--page-bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .export-toolbar {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(18, 21, 16, 0.14);
+        border-radius: 8px;
+        padding: 8px 10px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 14px 32px rgba(29, 42, 24, 0.14);
+        backdrop-filter: blur(12px);
+      }
+
+      .export-button {
+        min-height: 34px;
+        border: 0;
+        border-radius: 6px;
+        padding: 0 13px;
+        background: var(--green-dark);
+        color: #ffffff;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .export-button:disabled {
+        cursor: wait;
+        opacity: 0.62;
+      }
+
+      .export-status {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 760;
+        white-space: nowrap;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .resume-book {
+        display: grid;
+        gap: 24px;
+        justify-content: center;
+        padding: 28px;
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+        padding: 16mm 17mm 14mm;
+        background: var(--paper);
+        box-shadow: 0 24px 70px rgba(29, 42, 24, 0.18);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page::after {
+        content: attr(data-page);
+        position: absolute;
+        right: 17mm;
+        bottom: 8mm;
+        color: rgba(18, 21, 16, 0.35);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 13px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .page-header::after {
+        content: "";
+        width: 58%;
+        height: 1px;
+        background: var(--rule);
+      }
+
+      .cover {
+        gap: 8mm;
+        padding: 17mm 17mm 14mm;
+        background:
+          linear-gradient(90deg, rgba(47, 132, 36, 0.08), transparent 34%),
+          linear-gradient(155deg, #ffffff 0%, #ffffff 52%, #f2f7ee 100%);
+      }
+
+      .cover::before {
+        content: "AI PRODUCT";
+        position: absolute;
+        right: -18mm;
+        top: 21mm;
+        color: rgba(47, 132, 36, 0.08);
+        font-size: 48px;
+        font-weight: 950;
+        letter-spacing: 0.12em;
+        writing-mode: vertical-rl;
+      }
+
+      .cover::after {
+        display: none;
+      }
+
+      .cover-top {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 0.58fr 1.42fr;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .identity-stack {
+        display: grid;
+        justify-items: start;
+        gap: 8px;
+      }
+
+      .kicker {
+        margin: 0;
+        color: var(--green-dark);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 44px;
+        font-weight: 950;
+        line-height: 0.92;
+        letter-spacing: 0;
+      }
+
+      .role {
+        margin: 0;
+        max-width: 230px;
+        color: #20261d;
+        font-size: 12.8px;
+        font-weight: 850;
+        line-height: 1.42;
+      }
+
+      .portrait-mark {
+        display: grid;
+        place-items: center;
+        width: 27mm;
+        height: 27mm;
+        border: 1.5px solid rgba(47, 132, 36, 0.22);
+        border-radius: 50%;
+        background: rgba(248, 251, 245, 0.72);
+        color: var(--green);
+        font-size: 40px;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .profile-intro {
+        display: block;
+        padding-top: 0;
+      }
+
+      .profile-copy {
+        position: relative;
+        display: grid;
+        gap: 5px;
+        padding-left: 0;
+      }
+
+      .profile-label {
+        color: var(--gold);
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 18px;
+        font-style: italic;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .profile-copy p {
+        margin: 0;
+        color: #293127;
+        font-size: 12.2px;
+        font-weight: 680;
+        line-height: 1.55;
+      }
+
+      .contact-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 0;
+        border-top: 2px solid var(--green);
+        border-bottom: 1px solid var(--rule);
+        padding: 10px 0;
+      }
+
+      .contact-item {
+        display: grid;
+        gap: 2px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .value {
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .cover-statement {
+        position: relative;
+        margin: 3mm 0 5mm;
+        padding: 7mm 10mm;
+        border-left: 6px solid var(--green);
+        background: rgba(238, 244, 234, 0.74);
+      }
+
+      .cover-statement span {
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 950;
+        letter-spacing: 0.18em;
+      }
+
+      .cover-statement h2 {
+        margin: 6px 0 8px;
+        font-size: 30px;
+        font-weight: 950;
+        line-height: 1.18;
+      }
+
+      .cover-statement p {
+        margin: 0;
+        max-width: 650px;
+        color: #283025;
+        font-size: 15.2px;
+        font-weight: 650;
+        line-height: 1.58;
+      }
+
+      .summary-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 10px;
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .summary-title::after {
+        content: "";
+        flex: 1;
+        height: 2px;
+        background: var(--green);
+      }
+
+      .summary-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: summary;
+      }
+
+      .summary-list li {
+        position: relative;
+        min-height: 42px;
+        padding-left: 42px;
+        font-size: 14.3px;
+        font-weight: 750;
+        line-height: 1.5;
+        counter-increment: summary;
+      }
+
+      .summary-list li::before {
+        content: counter(summary) ".";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--green-dark);
+        font-size: 24px;
+        font-weight: 950;
+        line-height: 1.1;
+      }
+
+      .cover-bottom {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding-top: 8px;
+      }
+
+      .keyword-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 9px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 25px;
+        padding: 4px 8px;
+        border: 1px solid var(--line);
+        background: #f7faf5;
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .site-list {
+        display: grid;
+        gap: 5px;
+        margin-top: 9px;
+      }
+
+      .site-list a {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 2px;
+      }
+
+      .site-list strong {
+        color: var(--green-dark);
+        font-size: 12.2px;
+        font-weight: 850;
+      }
+
+      .site-list span {
+        color: var(--muted);
+        font-size: 12.2px;
+        font-weight: 680;
+      }
+
+      .agent-cover {
+        padding: 11mm;
+        background: #fbfdfb;
+      }
+
+      .agent-cover::before,
+      .agent-cover::after {
+        display: none;
+      }
+
+      .agent-frame {
+        position: relative;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 11mm;
+        height: 100%;
+        padding: 10mm;
+        border: 2.4px solid #1175d1;
+        border-radius: 17mm;
+        background:
+          linear-gradient(180deg, rgba(17, 117, 209, 0.045), transparent 30%),
+          linear-gradient(145deg, #ffffff 0%, #ffffff 55%, #f5fbf3 100%);
+      }
+
+      .agent-frame::before {
+        content: "";
+        position: absolute;
+        inset: 4mm;
+        border: 1px solid rgba(17, 117, 209, 0.28);
+        border-radius: 14mm;
+        pointer-events: none;
+      }
+
+      .agent-nav {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .agent-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: #0d1520;
+        font-size: 13px;
+        font-weight: 950;
+      }
+
+      .agent-name strong {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #0d1520;
+        color: #ffffff;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .agent-contact {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 7px;
+      }
+
+      .agent-contact a,
+      .agent-contact span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 27px;
+        border: 1px solid rgba(13, 21, 32, 0.12);
+        border-radius: 999px;
+        padding: 4px 9px;
+        background: rgba(255, 255, 255, 0.76);
+        color: #374033;
+        font-size: 10px;
+        font-weight: 850;
+      }
+
+      .agent-hero {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 18px;
+        align-items: end;
+      }
+
+      .agent-kicker {
+        margin: 0 0 9px;
+        color: #1175d1;
+        font-size: 11px;
+        font-weight: 950;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .agent-hero h1 {
+        margin: 0;
+        color: #0d1520;
+        font-size: 44px;
+        font-weight: 950;
+        line-height: 1.02;
+      }
+
+      .agent-hero p {
+        margin: 10px 0 0;
+        max-width: 410px;
+        color: #4d584a;
+        font-size: 13.2px;
+        font-weight: 720;
+        line-height: 1.55;
+      }
+
+      .agent-definition {
+        border-left: 4px solid #2f8424;
+        padding-left: 13px;
+        color: #20291d;
+        font-size: 15px;
+        font-weight: 900;
+        line-height: 1.55;
+      }
+
+      .agent-map {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 0.82fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 10px 12px;
+        min-height: 132mm;
+      }
+
+      .agent-card {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        gap: 6px;
+        align-content: start;
+        border: 1px solid rgba(17, 117, 209, 0.18);
+        border-radius: 18px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 12px 28px rgba(13, 21, 32, 0.055);
+      }
+
+      .agent-card strong {
+        color: #0d1520;
+        font-size: 15px;
+        font-weight: 950;
+        line-height: 1.18;
+      }
+
+      .agent-card span {
+        color: #2f8424;
+        font-size: 10px;
+        font-weight: 950;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .agent-card p {
+        margin: 0;
+        color: #4b5547;
+        font-size: 11px;
+        font-weight: 690;
+        line-height: 1.48;
+      }
+
+      .agent-core {
+        position: relative;
+        z-index: 3;
+        grid-column: 2;
+        grid-row: 1 / 4;
+        align-self: center;
+        display: grid;
+        place-items: center;
+        min-height: 96mm;
+        border: 1.6px solid rgba(17, 117, 209, 0.34);
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 50% 34%, rgba(47, 132, 36, 0.16), transparent 35%),
+          #ffffff;
+      }
+
+      .agent-core::before,
+      .agent-core::after {
+        content: "";
+        position: absolute;
+        inset: 10mm;
+        border: 1px dashed rgba(17, 117, 209, 0.3);
+        border-radius: 999px;
+      }
+
+      .agent-core::after {
+        inset: 20mm;
+        border-color: rgba(47, 132, 36, 0.25);
+      }
+
+      .agent-core-copy {
+        position: relative;
+        z-index: 1;
+        width: 74%;
+        text-align: center;
+      }
+
+      .agent-core-copy span {
+        color: #1175d1;
+        font-size: 10px;
+        font-weight: 950;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .agent-core-copy h2 {
+        margin: 7px 0;
+        color: #0d1520;
+        font-size: 28px;
+        font-weight: 950;
+        line-height: 1.05;
+      }
+
+      .agent-core-copy p {
+        margin: 0;
+        color: #3f4b3b;
+        font-size: 11.3px;
+        font-weight: 740;
+        line-height: 1.52;
+      }
+
+      .agent-card.model {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .agent-card.tools {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .agent-card.memory {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .agent-card.planner {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .agent-card.hooks {
+        grid-column: 3;
+        grid-row: 2;
+      }
+
+      .agent-card.human {
+        grid-column: 3;
+        grid-row: 3;
+      }
+
+      .agent-foot {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 14px;
+        align-items: end;
+        border-top: 1px solid rgba(17, 117, 209, 0.18);
+        padding-top: 10px;
+      }
+
+      .agent-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .agent-tags span {
+        border: 1px solid rgba(47, 132, 36, 0.18);
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: #2f8424;
+        font-size: 10px;
+        font-weight: 900;
+      }
+
+      .agent-links {
+        display: grid;
+        gap: 5px;
+      }
+
+      .agent-links a {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(17, 117, 209, 0.16);
+        padding-bottom: 4px;
+        color: #1a6818;
+        font-size: 11.8px;
+        font-weight: 950;
+      }
+
+      .agent-links span {
+        color: #566255;
+        font-size: 10px;
+        font-weight: 850;
+      }
+
+      .harness-panel {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 32mm 1fr;
+        gap: 9mm;
+        min-height: 116mm;
+        margin: 0;
+        overflow: hidden;
+        padding: 7mm 5mm 6mm 3mm;
+        background:
+          linear-gradient(90deg, rgba(47, 132, 36, 0.045), transparent 42%),
+          rgba(255, 255, 255, 0.72);
+      }
+
+      .harness-panel::before {
+        display: none;
+      }
+
+      .agent-system-label {
+        position: relative;
+        z-index: 1;
+        align-self: start;
+        padding-top: 10mm;
+        color: #121510;
+      }
+
+      .agent-system-label span {
+        display: block;
+        color: var(--green-dark);
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 20px;
+        font-style: italic;
+        font-weight: 850;
+        line-height: 0.95;
+      }
+
+      .agent-system-label strong {
+        display: block;
+        margin-top: 2px;
+        color: #121510;
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 28px;
+        font-style: italic;
+        font-weight: 900;
+        line-height: 0.98;
+      }
+
+      .agent-system-label::after {
+        content: "";
+        display: block;
+        width: 22mm;
+        margin-top: 5px;
+        border-top: 1px dashed rgba(18, 21, 16, 0.28);
+      }
+
+      .harness-title {
+        margin: 0;
+        color: var(--green-dark);
+        font-size: 19px;
+        font-weight: 950;
+        letter-spacing: 0;
+        line-height: 1.08;
+      }
+
+      .harness-note {
+        margin: 0;
+        color: #3f4b3b;
+        font-size: 11px;
+        font-weight: 720;
+        line-height: 1.48;
+      }
+
+      .agent-system-map {
+        position: relative;
+        z-index: 1;
+        min-height: 100mm;
+      }
+
+      .agent-timeline {
+        position: relative;
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .agent-timeline::before {
+        content: "";
+        position: absolute;
+        left: 31.7mm;
+        top: 5px;
+        bottom: 7px;
+        border-left: 1.4px solid rgba(47, 132, 36, 0.25);
+      }
+
+      .agent-step {
+        position: relative;
+        display: grid;
+        grid-template-columns: 27mm 1fr;
+        gap: 15mm;
+        align-items: start;
+        min-height: 18mm;
+      }
+
+      .agent-step::before {
+        content: "";
+        position: absolute;
+        left: 30.05mm;
+        top: 4px;
+        z-index: 2;
+        width: 3.8mm;
+        height: 3.8mm;
+        border: 1.4px solid #ffffff;
+        border-radius: 50%;
+        background: var(--dot, var(--green));
+        box-shadow: 0 0 0 1px rgba(18, 21, 16, 0.11);
+      }
+
+      .step-label {
+        display: grid;
+        gap: 3px;
+        align-content: start;
+        color: #151a13;
+      }
+
+      .step-label span {
+        color: #151a13;
+        font-size: 12.2px;
+        font-weight: 680;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+      }
+
+      .step-label strong {
+        color: var(--green-dark);
+        font-family: ui-serif, Georgia, "Times New Roman", serif;
+        font-size: 15.6px;
+        font-style: italic;
+        font-weight: 900;
+        line-height: 1.05;
+      }
+
+      .step-card {
+        display: grid;
+        gap: 5px;
+        padding-top: 0;
+      }
+
+      .step-card p {
+        margin: 0;
+        color: #1d241b;
+        font-size: 12.2px;
+        font-weight: 680;
+        line-height: 1.55;
+      }
+
+      .agent-step.plan {
+        --dot: #c69a2f;
+      }
+
+      .agent-step.harness {
+        --dot: #2f8424;
+      }
+
+      .agent-step.llm {
+        --dot: #2f7972;
+      }
+
+      .agent-step.tools {
+        --dot: #8d5a65;
+        min-height: 36mm;
+      }
+
+      .agent-rag-grid {
+        display: grid;
+        grid-template-columns: 0.58fr 1.42fr;
+        gap: 12px;
+        align-items: start;
+        margin-top: 2px;
+      }
+
+      .agent-subblock {
+        display: grid;
+        grid-template-rows: auto auto;
+        align-content: start;
+        gap: 6px;
+      }
+
+      .agent-subblock strong {
+        color: #121510;
+        font-size: 12.2px;
+        font-weight: 680;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .agent-subblock ul {
+        display: grid;
+        gap: 1px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .agent-subblock li {
+        margin: 0;
+        color: #1f271e;
+        font-size: 12.2px;
+        font-weight: 680;
+        line-height: 1.42;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: baseline;
+        gap: 9px;
+        margin: 0 0 11px;
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 950;
+        line-height: 1.12;
+        white-space: nowrap;
+      }
+
+      .section-title::after {
+        display: none;
+      }
+
+      .section-title small {
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 950;
+      }
+
+      .experience {
+        display: grid;
+        gap: 10px;
+      }
+
+      .meta-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        align-items: baseline;
+        color: var(--ink);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .meta-row span:nth-child(2) {
+        text-align: center;
+      }
+
+      .meta-row span:nth-child(3) {
+        text-align: right;
+      }
+
+      .context {
+        margin: 0;
+        color: #171b14;
+        font-size: 13.6px;
+        font-weight: 700;
+        line-height: 1.65;
+      }
+
+      .topic {
+        display: grid;
+        gap: 4px;
+        padding-top: 6px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .topic h3 {
+        margin: 0;
+        color: #141812;
+        font-size: 18px;
+        font-weight: 950;
+        line-height: 1.35;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 21px;
+      }
+
+      li {
+        margin: 3px 0;
+        padding-left: 2px;
+      }
+
+      .topic > ul > li::marker {
+        color: var(--green);
+        font-size: 1.15em;
+      }
+
+      .topic ul ul {
+        margin-top: 3px;
+        padding-left: 18px;
+      }
+
+      .topic ul ul li::marker {
+        color: var(--gold);
+      }
+
+      .compact-list,
+      .topic li {
+        color: #1c2118;
+        font-size: 13.4px;
+        font-weight: 680;
+        line-height: 1.58;
+      }
+
+      .topic strong,
+      .context strong {
+        font-weight: 950;
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .subsection-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 12px 0 8px;
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 950;
+        line-height: 1.2;
+      }
+
+      .subsection-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .mini-block {
+        display: grid;
+        gap: 6px;
+        padding: 9px 0 8px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .mini-block h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 950;
+      }
+
+      .mini-block p {
+        margin: 0;
+        color: #252c22;
+        font-size: 12.6px;
+        font-weight: 660;
+        line-height: 1.58;
+      }
+
+      .education-grid {
+        display: grid;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .education-row {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 1fr;
+        gap: 16px;
+        align-items: baseline;
+        padding-bottom: 7px;
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .education-row span:nth-child(3) {
+        text-align: right;
+      }
+
+      .certificate {
+        display: inline-flex;
+        margin-top: 8px;
+        border-left: 5px solid var(--green);
+        background: var(--soft);
+        padding: 8px 12px;
+        color: #172013;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .note {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 750;
+      }
+
+      .pdf-exporting {
+        background: #ffffff;
+      }
+
+      .pdf-exporting .resume-book {
+        gap: 0;
+        padding: 0;
+      }
+
+      .pdf-exporting .page {
+        box-shadow: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 210mm;
+          margin: 0;
+          background: #ffffff;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .export-toolbar {
+          display: none !important;
+        }
+
+        .resume-book {
+          display: block;
+          padding: 0;
+        }
+
+        .page {
+          width: 210mm;
+          height: 297mm;
+          margin: 0;
+          box-shadow: none;
+          overflow: hidden;
+          break-inside: avoid;
+          page-break-inside: avoid;
+          break-after: page;
+          page-break-after: always;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .page:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .resume-book {
+          justify-content: start;
+          overflow-x: auto;
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="export-toolbar" aria-label="简历导出工具">
+      <button class="export-button" type="button" data-export-pdf>导出 PDF</button>
+      <span class="export-status" data-export-status>生成高清 PDF</span>
+    </div>
+
+    <main class="resume-book" aria-label="洋的 AI 产品经理简历">
+      <section class="page cover" data-page="01">
+        <div class="cover-top">
+          <div class="identity-stack">
+            <div class="portrait-mark" aria-label="姓名首字母">Y</div>
+            <p class="kicker">AI Product Manager / Product Builder</p>
+            <h1>洋</h1>
+            <p class="role">AI 产品经理｜AI 产品架构｜PMF 验证</p>
+          </div>
+          <section class="profile-intro" aria-label="求职定位">
+            <div class="profile-copy">
+              <span class="profile-label">Profile</span>
+              <p>
+                擅长把业务问题拆解为可验证的 AI 产品方案，结合 LLM、RAG、Agent Workflow 与 AI Coding 快速产出 Demo，并通过数据指标验证用户价值与 PMF。
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div class="contact-strip" aria-label="联系方式">
+          <div class="contact-item">
+            <span class="label">Phone</span>
+            <span class="value">18831665919</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Email</span>
+            <a class="value" href="mailto:ywangyangw@163.com">ywangyangw@163.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="label">Website</span>
+            <a class="value" href="https://2young.xin/">https://2young.xin/</a>
+          </div>
+        </div>
+
+        <section class="harness-panel" aria-label="yang's Agent 工作系统">
+          <div class="agent-system-label">
+            <span>yang's</span>
+            <strong>Agent</strong>
+          </div>
+
+          <div class="agent-system-map">
+            <ol class="agent-timeline">
+              <li class="agent-step plan">
+                <div class="step-label">
+                  <span>01</span>
+                  <strong>Plan</strong>
+                </div>
+                <div class="step-card">
+                  <p>AI 快速产出可运行 Demo 做验证 / 北极星指标</p>
+                </div>
+              </li>
+
+              <li class="agent-step harness">
+                <div class="step-label">
+                  <span>02</span>
+                  <strong>Harness</strong>
+                </div>
+                <div class="step-card">
+                  <p>产品管理 / 项目管理 / 评估 AI 产品性能</p>
+                </div>
+              </li>
+
+              <li class="agent-step llm">
+                <div class="step-label">
+                  <span>03</span>
+                  <strong>LLM</strong>
+                </div>
+                <div class="step-card">
+                  <p>构建 AI 产品的技术和产品能力 / 好奇心 / Agency</p>
+                </div>
+              </li>
+
+              <li class="agent-step tools">
+                <div class="step-label">
+                  <span>04</span>
+                  <strong>Tools / RAG</strong>
+                </div>
+                <div class="step-card">
+                  <div class="agent-rag-grid">
+                    <section class="agent-subblock">
+                      <strong>Skill</strong>
+                      <p>Codex / Claude Code / Pencil / Claude Design / 工作流沉淀</p>
+                    </section>
+                    <section class="agent-subblock">
+                      <strong>RAG</strong>
+                      <ul>
+                        <li>AI 学习伴侣：多 Agent 陪伴系统</li>
+                        <li>企业 FDE：企业知识库 + 销售咨询 Demo</li>
+                        <li>内容获客平台：AI 营销 + AI 视频剪辑</li>
+                        <li>KeploreAI：PMF 验证 + 用户激活增长</li>
+                        <li>智蛙面试：AI 教育产品架构 + 数据体系</li>
+                      </ul>
+                    </section>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <div class="cover-bottom">
+          <section aria-label="官网与项目入口">
+            <span class="label">Portfolio Links</span>
+            <div class="site-list">
+              <a href="https://2young.xin/"><strong>2young.xin</strong><span>个人作品集主页</span></a>
+              <a href="https://learn.2young.xin/"><strong>learn.2young.xin</strong><span>AI 学习伴侣</span></a>
+              <a href="https://fde.2young.xin/"><strong>fde.2young.xin</strong><span>企业 AI 赋能 Demo</span></a>
+              <a href="https://xhs.2young.xin/"><strong>xhs.2young.xin</strong><span>内容获客平台</span></a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" data-page="02">
+        <div class="page-header"><span>Yang Resume / Work Experience</span></div>
+        <h2 class="section-title">工作经历 1<small>AI 产品架构设计、AI 工作流编排、数据体系从 0-1 搭建</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2025.11-2026.4</span>
+            <span>智蛙面试</span>
+            <span>AI 产品经理</span>
+          </div>
+
+          <p class="context">
+            <strong>公司背景：</strong>AI 教育产品公司，核心产品“智蛙面试”面向考公考编人群，
+            涵盖 AI 面试模拟、申论批改等功能，同时与老牌教育公司华图教育等进行合作。
+          </p>
+
+          <section class="topic">
+            <h3>从 0 到 1 搭建申论 AI 产品模块</h3>
+            <ul>
+              <li>
+                <strong>项目背景：</strong>原有 AI 面试产品用户生命周期仅数周，LTV 较短。为延展用户价值，
+                沿考公备考全链路（行测、申论、面试）向上游扩展，新增申论模块以覆盖更长备考周期。
+                负责竞品调研、内容定义、AI 工作流设计到最终落地的全流程。
+              </li>
+              <li>
+                <strong>申论题库搭建：</strong>设计自动抓取素材、调用 Dify 工作流、审核答案、自然语言输入
+                批改建议、AI 结合建议重新生成答案等全流程。
+              </li>
+              <li>
+                <strong>申论 AI 批改：</strong>调研专业老师真实批改习惯，包括标注、打勾、评分、
+                评语风格，产出 AI 模拟老师笔迹批改的产品方案，提升用户感知价值。
+              </li>
+              <li>
+                深入拆解申论做题与批改流程，设计 AI 编排工作流模拟老师真实批改，
+                最终产出结构化报告。
+              </li>
+            </ul>
+          </section>
+
+          <section class="topic">
+            <h3>优化 AI 面试模块</h3>
+            <ul>
+              <li>增加“热点生成”功能，根据热点生成练习题，供考生进行针对性练习。</li>
+              <li>增加面试报告中的逐句分析模块，让用户能定位回答中的具体问题。</li>
+            </ul>
+          </section>
+
+          <section class="topic">
+            <h3>搭建产品数据指标体系</h3>
+            <ul>
+              <li>
+                <strong>背景：</strong>原有数据埋点仅记录页面点击等离散事件，无法串联用户行为路径，
+                也无法回答“用户因为什么行为而付费”这一核心问题。
+              </li>
+              <li>
+                设计全链路数据指标体系，追踪用户从进入页面、体验功能、到达付费页到最终下单的完整行为路径。
+              </li>
+              <li>
+                对比付费用户与普通用户的行为路径差异，定位付费驱动因素；设计新注册流程的一次免费面试体验
+                以及各类弹窗引导，推动付费转化率提升 4.2%。
+              </li>
+            </ul>
+          </section>
+        </article>
+      </section>
+
+      <section class="page" data-page="03">
+        <div class="page-header"><span>Yang Resume / AI Product Practice</span></div>
+        <h2 class="section-title">工作经历 2<small>用户调研、需求挖掘、PMF</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2025.6-2025.10</span>
+            <span>KeploreAI</span>
+            <span>产品经理</span>
+          </div>
+
+          <p class="context">
+            <strong>公司背景：</strong>聚焦 AI 算法工程师复现项目时“环境配置复杂、耗时长”的核心痛点，
+            设计面向项目复现与部署的 AI Agent 产品。
+          </p>
+
+          <div class="two-column">
+            <section class="topic">
+              <h3>产品 PMF 验证与商业化增长策略</h3>
+              <ul>
+                <li>
+                  通过内测群运营和深度用户访谈，将核心付费驱动因素定义为：
+                  用户在 3 轮对话内成功将自己的项目一键部署。
+                </li>
+                <li>
+                  基于 Aha Moment 设计以“激活”为核心的邀请裂变机制，奖励“成功启动项目”而非注册；
+                  设计社交督促看板，将邀请来的新用户激活率提升 60%。
+                </li>
+                <li>为实现 21% 付费转化率和早期用户增长奠定基础。</li>
+              </ul>
+            </section>
+
+            <section class="topic">
+              <h3>优化核心 AI 工作流</h3>
+              <ul>
+                <li>
+                  基于用户访谈发现“不知如何开始”的冷启动痛点，将首页从 GitHub 链接输入框重构为
+                  开放式 AI 对话入口。
+                </li>
+                <li>
+                  设计动态灵感用例模块，用户点击后可一键填充高质量 Prompt，
+                  将新用户首次有效操作转化率提升 40%。
+                </li>
+                <li>
+                  规划“成果沉淀”产品矩阵，落地一键提交 PR 至 GitHub，
+                  并规划批量文件下载与项目公开链接分享功能。
+                </li>
+              </ul>
+            </section>
+          </div>
+        </article>
+
+        <h2 class="subsection-title">个人项目：AI 智能学习伴侣</h2>
+        <article class="experience">
+          <div class="meta-row">
+            <span>2026.2-至今</span>
+            <span>多 Agent 架构</span>
+            <span>AI 产品设计</span>
+          </div>
+
+          <p class="context">
+            <strong>项目背景：</strong>为付费社群学员提供增值服务，从 0 到 1 设计高度个性化的
+            AI 智能学习伴侣，覆盖商业咨询、职业规划、日常陪伴和高频互动场景。
+          </p>
+
+          <div class="two-column">
+            <section class="mini-block">
+              <h3>商业咨询 + 职业规划</h3>
+              <p>
+                模拟老师在社群内的主要服务，目标达到老师 40-60% 的服务水准，扩大服务覆盖范围。
+                借鉴 Claude Code 的 Skill 设计思想，设计商业咨询 Skill 与职业规划 Skill。
+              </p>
+              <p>
+                商业咨询 Agent 设计商业计算器（ROI、LTV/CAC 等）和商业分析工具；职业规划侧设计长期记忆，
+                从对话中提取称呼、行业、职业、发展经历等信息，实现千人千面。
+              </p>
+            </section>
+
+            <section class="mini-block">
+              <h3>声音克隆 + 口吻模拟</h3>
+              <p>
+                通过声音克隆和说话口吻模拟提供情感支持，提升用户粘性。借助阿里云 TTS 模型，
+                重点调校克隆声音的语速，保证听感自然、温暖。
+              </p>
+              <p>
+                对比多版本 system prompt 与模型效果，并在 RAG 中尽量使用课程逐字稿，
+                保留口吻、语气词和口头禅。
+              </p>
+            </section>
+          </div>
+
+          <section class="mini-block">
+            <h3>高粘性的互动游戏引擎</h3>
+            <p>
+              将“玄学功能”定位为轻松有趣的互动场景，而非严肃占卜；主动规避复杂玄学知识库或算法，
+              保持娱乐属性。UI、交互、音效和彩蛋均融合社群内部文化，服务日活与心理疗愈场景。
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <section class="page" data-page="04">
+        <div class="page-header"><span>Yang Resume / Earlier Experience &amp; Education</span></div>
+        <h2 class="section-title">实习经历<small>用户调研、需求挖掘、0-1 产品设计实现</small></h2>
+
+        <article class="experience">
+          <div class="meta-row">
+            <span>2024.10-2025.5</span>
+            <span>静境智能声学</span>
+            <span>产品经理</span>
+          </div>
+          <p class="context">
+            <strong>项目背景：</strong>公司业务为 To B 定向音响，所在部门为内部创业，从 0 到 1 做产品开发。
+            场景为广场舞，希望将线下设备用户迁移至小程序和 App，为后续商业化打基础。
+          </p>
+          <section class="topic">
+            <h3>MVP 设计与试点验证</h3>
+            <ul>
+              <li>
+                通过试点社区实地访谈，识别设备使用权限和 U 盘歌曲管理两大关键瓶颈。
+              </li>
+              <li>
+                设定 MVP 两大目标：验证“扫码用机”和“线上内容管理”是否解决用户痛点；
+                突破“唯领队可用”的增长瓶颈。
+              </li>
+              <li>
+                设计“扫码用机”与权限管理：小程序扫码开锁，领队可在线向队员授予临时使用权。
+              </li>
+              <li>
+                设计“舞队歌曲云盘”：U 盘插入设备后可一键同步至舞队云盘，
+                将产品使用场景从领队操作扩展至全员参与。
+              </li>
+              <li>
+                在桃源居社区成功试点，推动约 800 名用户使用小程序。
+              </li>
+              <li>
+                将 AI 工具融入产品研发全流程，借助 AI 辅助会议纪要、原型生成（Figma MCP）等工具，
+                将典型功能设计研发周期从 2.5 天缩短至 1.5 天，整体效率提升 40%。
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <h2 class="subsection-title">早期经历</h2>
+        <article class="experience">
+          <div class="meta-row">
+            <span>2020.7-2021.3</span>
+            <span>金风科技</span>
+            <span>产品运营</span>
+          </div>
+          <section class="topic">
+            <h3>招投标信息系统与数据运营</h3>
+            <ul>
+              <li>
+                在招投标业务中搭建招投标信息管理系统，整合多个部门的招投标信息，
+                将纸质化、本地文档化流程固化到系统中，为集团数字化转型打基础。
+              </li>
+              <li>
+                在 OA 系统中上线对应流程，并在流程节点进行数据采集；支持根据输入信息检索相似过往项目，
+                为当前投标提供技术标、商务标、报价和部件参数等参考资料。
+              </li>
+              <li>
+                通过需求挖掘和用户调研，发现标书业务人员痛点；对通用标书内容构建并维护数据库，
+                节省重复制作时间，让业务人员将主要精力放在技术部分。
+              </li>
+              <li>
+                日常负责各产品部门招投标情况的数据收集、清洗、可视化分析和月度 PPT 汇报。
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <h2 class="subsection-title">教育背景</h2>
+        <div class="education-grid" aria-label="教育背景">
+          <div class="education-row">
+            <span>2022.9-2025.6</span>
+            <span>西北工业大学（硕）</span>
+            <span>软件工程</span>
+          </div>
+          <div class="education-row">
+            <span>2016.9-2020.7</span>
+            <span>华北科技学院（本）</span>
+            <span>自动化</span>
+          </div>
+        </div>
+
+        <h2 class="subsection-title">证书</h2>
+        <div class="certificate">生成式人工智能证书</div>
+      </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" referrerpolicy="no-referrer"></script>
+    <script>
+      (() => {
+        const button = document.querySelector("[data-export-pdf]");
+        const status = document.querySelector("[data-export-status]");
+        const filename = "洋-AI产品经理简历-202606.pdf";
+        const defaultStatus = "生成高清 PDF";
+
+        const setStatus = (message) => {
+          if (status) status.textContent = message;
+        };
+
+        const waitForFrames = () =>
+          new Promise((resolve) => {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+          });
+
+        const waitForFonts = async () => {
+          if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+          }
+        };
+
+        const renderPage = (page) =>
+          window.html2canvas(page, {
+            scale: Math.min(3, Math.max(2.3, window.devicePixelRatio || 2.3)),
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false,
+            removeContainer: true,
+            width: page.offsetWidth,
+            height: page.offsetHeight,
+            windowWidth: document.documentElement.scrollWidth,
+            windowHeight: document.documentElement.scrollHeight,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+          });
+
+        const exportPdf = async () => {
+          if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
+            alert("PDF 导出库还没有加载完成，请稍等几秒后再试。");
+            return;
+          }
+
+          const pages = Array.from(document.querySelectorAll(".page"));
+          if (!pages.length) return;
+
+          const originalScrollTop = window.scrollY;
+          const originalButtonText = button.textContent;
+
+          button.disabled = true;
+          document.body.classList.add("pdf-exporting");
+          window.scrollTo(0, 0);
+
+          try {
+            setStatus("准备页面...");
+            await waitForFonts();
+            await waitForFrames();
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+              orientation: "portrait",
+              unit: "mm",
+              format: "a4",
+              compress: true,
+            });
+
+            for (const [index, page] of pages.entries()) {
+              button.textContent = `生成 ${index + 1}/${pages.length}`;
+              setStatus(`正在处理第 ${index + 1} 页`);
+              const canvas = await renderPage(page);
+              const image = canvas.toDataURL("image/png");
+
+              if (index > 0) {
+                pdf.addPage("a4", "portrait");
+              }
+
+              pdf.addImage(image, "PNG", 0, 0, 210, 297, undefined, "FAST");
+            }
+
+            setStatus("已开始下载");
+            pdf.save(filename);
+          } catch (error) {
+            console.error(error);
+            alert("PDF 导出失败。可以刷新页面后再试一次。");
+            setStatus("导出失败");
+          } finally {
+            document.body.classList.remove("pdf-exporting");
+            button.disabled = false;
+            button.textContent = originalButtonText;
+            window.scrollTo(0, originalScrollTop);
+            window.setTimeout(() => setStatus(defaultStatus), 1800);
+          }
+        };
+
+        button.addEventListener("click", exportPdf);
+      })();
+    </script>
+  </body>
+</html>
