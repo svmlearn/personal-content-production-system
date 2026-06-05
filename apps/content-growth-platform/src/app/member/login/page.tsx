@@ -55,7 +55,7 @@ export default async function MemberLoginPage({
               </p>
               <h1 className="mt-2 text-2xl font-semibold">登录成员端</h1>
               <p className="mt-1 text-sm leading-6 text-black/55">
-                用自己的用户名和密码进入内容日历、图文和视频任务。
+                用自己的用户名和密码进入今日内容，查看图文和视频任务。
               </p>
             </div>
           </div>

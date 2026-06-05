@@ -35,12 +35,12 @@ export function DailyTasksWorkspace() {
         | null;
 
       if (!response.ok || !data?.today) {
-        throw new Error(data?.error?.message ?? "今日任务加载失败");
+        throw new Error(data?.error?.message ?? "今日内容加载失败");
       }
 
       setWorkspace(data);
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "今日任务加载失败");
+      setError(requestError instanceof Error ? requestError.message : "今日内容加载失败");
     } finally {
       setLoading(false);
     }
@@ -95,7 +95,7 @@ export function DailyTasksWorkspace() {
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center text-sm text-[#9b8d84]">
-        正在准备今日任务...
+        正在准备今日内容...
       </div>
     );
   }
@@ -104,7 +104,7 @@ export function DailyTasksWorkspace() {
     return (
       <div className="flex h-full items-center justify-center px-6">
         <div className="max-w-md rounded-3xl border border-rose-500/20 bg-rose-500/10 p-6 text-center">
-          <p className="text-lg text-rose-700">今日任务暂时不可用</p>
+          <p className="text-lg text-rose-700">今日内容暂时不可用</p>
           <p className="mt-3 text-sm leading-7 text-rose-700/75">
             {error ?? "项目内容素材正在补充中，可稍后重试。"}
           </p>
@@ -124,20 +124,14 @@ export function DailyTasksWorkspace() {
   }
 
   const today = workspace.today;
-  const articleHref =
-    workspace.role === "owner"
-      ? `/dashboard/article?source=daily_task&dailyTaskId=${today.id}`
-      : `/member/article/${today.id}`;
-  const videoHref =
-    workspace.role === "owner"
-      ? `/dashboard/video?source=daily_task&dailyTaskId=${today.id}`
-      : `/member/video/${today.id}`;
+  const articleHref = `/member/article/${today.id}`;
+  const videoHref = `/member/video/${today.id}`;
 
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="flex h-16 items-center justify-between border-b border-[#eadfd7] px-6">
         <div>
-          <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">今日任务</h1>
+          <h1 className="text-xl tracking-tight [font-family:var(--font-cormorant)]">今日内容</h1>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#9b8d84]">
             Team content calendar
           </p>
@@ -214,7 +208,7 @@ export function DailyTasksWorkspace() {
             materialHints={today.articleTask.materialHints}
             generationStatus={today.articleTask.generationStatus}
             href={articleHref}
-            actionLabel="生成图文"
+            actionLabel="查看图文"
           />
           <TaskCard
             icon={<Video className="h-5 w-5" />}

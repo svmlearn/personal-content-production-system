@@ -33,7 +33,7 @@ export function MerchantLoginForm({
             登录用户工作台
           </h1>
           <p className="mt-1 text-sm leading-6 text-[#756961]">
-            使用演示账号进入咨询诊断、图文工作台和视频工作台。
+            使用演示账号进入团队选题、营销内容日历和今日内容。
           </p>
         </div>
       </div>

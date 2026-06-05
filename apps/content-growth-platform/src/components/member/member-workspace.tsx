@@ -123,7 +123,7 @@ export function MemberShell({ children }: { children: ReactNode }) {
     { href: "/member", label: "项目", icon: Home, active: pathname === "/member" },
     {
       href: "/member/calendar",
-      label: "日历",
+      label: "今日",
       icon: CalendarDays,
       active:
         pathname.startsWith("/member/calendar") ||
@@ -154,9 +154,9 @@ export function MemberShell({ children }: { children: ReactNode }) {
                 AI
               </span>
               <span>
-                <span className="block text-sm font-semibold">静境成员端</span>
+                <span className="block text-sm font-semibold">今日内容</span>
                 <span className="block text-[10px] uppercase tracking-[0.22em] text-black/45">
-                  Mobile execution
+                  Daily content
                 </span>
               </span>
             </Link>
@@ -251,11 +251,11 @@ export function MemberProjectIntroPage() {
           href="/member/calendar"
           className="inline-flex items-center justify-between rounded-lg bg-[#171717] px-4 py-3 text-sm font-medium text-white"
         >
-          进入内容日历
+          进入今日内容
           <ChevronRight className="size-4" aria-hidden="true" />
         </Link>
         <p className="text-center text-xs leading-5 text-black/45">
-          首页只保留项目文字介绍，不提供成员端聊天入口。
+          项目介绍页保留基础资料，主内容链路从今日内容进入。
         </p>
       </section>
     </div>
@@ -266,11 +266,11 @@ export function MemberCalendarPage() {
   const { workspace, loading, error, reload } = useMemberWorkspace();
 
   if (loading) {
-    return <MemberLoading label="正在准备内容日历" />;
+    return <MemberLoading label="正在准备今日内容" />;
   }
 
   if (error || !workspace) {
-    return <MemberError title="内容日历暂时不可用" message={error} onRetry={reload} />;
+    return <MemberError title="今日内容暂时不可用" message={error} onRetry={reload} />;
   }
 
   const today = workspace.today;
@@ -281,19 +281,20 @@ export function MemberCalendarPage() {
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs text-black/45">{today.taskDate}</p>
-            <h1 className="mt-2 text-xl font-semibold leading-tight">{today.theme}</h1>
+            <h1 className="mt-2 text-xl font-semibold leading-tight">今日内容</h1>
+            <p className="mt-1 text-sm font-medium leading-6 text-black/70">{today.theme}</p>
           </div>
           <button
             type="button"
             onClick={reload}
             className="inline-flex size-9 items-center justify-center rounded-lg border border-black/10 bg-[#f7f4ea]"
-            aria-label="刷新内容日历"
+            aria-label="刷新今日内容"
           >
             <RefreshCw className="size-4" aria-hidden="true" />
           </button>
         </div>
         <p className="mt-3 text-sm leading-7 text-black/60">
-          团队已经把今天的图文和视频脚本准备好。你只需要查看内容、复制发布，或按镜头上传手机素材后发起 AI 剪辑。
+          团队选题和营销内容日历会在这里沉淀成今天要发布的一条图文和一条视频脚本。内容生成完成后，直接查看、复制发布，或按镜头上传素材发起 AI 剪辑。
         </p>
       </section>
 
@@ -321,7 +322,7 @@ export function MemberCalendarPage() {
       <section className="rounded-lg border border-black/10 bg-white">
         <div className="flex items-center gap-2 border-b border-black/10 px-4 py-3">
           <CalendarDays className="size-4 text-black/45" aria-hidden="true" />
-          <p className="text-sm font-semibold">未来 7 天</p>
+          <p className="text-sm font-semibold">未来 7 天内容</p>
         </div>
         <div className="divide-y divide-black/10">
           {workspace.upcoming.map((task) => (
@@ -367,7 +368,7 @@ export function MemberArticleTaskPage({ taskId }: { taskId: string }) {
 
   return (
     <div className="space-y-4 px-4 py-5">
-      <BackLink href="/member/calendar">返回内容日历</BackLink>
+      <BackLink href="/member/calendar">返回今日内容</BackLink>
 
       <section className="rounded-lg border border-black/10 bg-white p-4">
         <p className="text-xs text-black/45">{task.taskDate} · 图文任务</p>
@@ -833,7 +834,7 @@ export function MemberVideoTaskPage({ taskId, jobId = null }: { taskId: string; 
 
   return (
     <div className="space-y-4 px-4 py-5">
-      <BackLink href="/member/calendar">返回内容日历</BackLink>
+      <BackLink href="/member/calendar">返回今日内容</BackLink>
 
       <section className="rounded-lg border border-black/10 bg-white p-4">
         <p className="text-xs text-black/45">{task.taskDate} · 视频任务</p>
@@ -1066,7 +1067,7 @@ export function MemberHistoryPage() {
         </p>
       </section>
 
-      <HistorySection title="图文 / 脚本草稿" emptyText="还没有内容草稿，先从内容日历进入今日任务。">
+      <HistorySection title="图文 / 脚本草稿" emptyText="还没有内容草稿，先从今日内容查看图文和视频任务。">
         {drafts.map((bundle) => (
           <div key={bundle.draft.id} className="rounded-lg border border-black/10 bg-white p-4">
             <p className="text-xs text-black/45">{formatDateTime(bundle.draft.createdAt)}</p>

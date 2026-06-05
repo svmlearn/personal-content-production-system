@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import {
   BookOpen,
@@ -1159,13 +1160,21 @@ function TeamGenerationStatusBanner({
         compact ? "mt-3 text-xs" : "mb-4",
       )}
     >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-        <span>批次 {status.batchStatus}</span>
-        <span>任务 {status.totalJobs}</span>
-        <span>排队 {status.pendingJobs}</span>
-        <span>运行 {status.runningJobs}</span>
-        <span>成功 {status.succeededJobs}</span>
-        <span>失败 {status.failedJobs}</span>
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span>批次 {status.batchStatus}</span>
+          <span>任务 {status.totalJobs}</span>
+          <span>排队 {status.pendingJobs}</span>
+          <span>运行 {status.runningJobs}</span>
+          <span>成功 {status.succeededJobs}</span>
+          <span>失败 {status.failedJobs}</span>
+        </div>
+        <Link
+          href="/member/calendar"
+          className="shrink-0 rounded-full border border-[#22b8a7]/30 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-[#0f766e] transition-colors hover:bg-[#f6fffd]"
+        >
+          进入今日内容
+        </Link>
       </div>
     </div>
   );

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  FileText,
   FolderGit2,
   Library,
   LogOut,
@@ -11,19 +10,16 @@ import {
   Settings,
   Sparkles,
   Users,
-  Video,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard/consultation", label: "团队选题", icon: MessageSquare },
-  { href: "/dashboard/article", label: "生成图文", icon: FileText },
-  { href: "/dashboard/video", label: "生成视频", icon: Video },
+  { href: "/member/calendar", label: "今日内容", icon: Sparkles },
   { href: "/dashboard/content", label: "社媒爆款内容库", icon: Library },
   { href: "/dashboard/history", label: "我的内容", icon: FolderGit2 },
   { href: "/dashboard/team", label: "团队成员", icon: Users },
-  { href: "/member", label: "成员端预览", icon: Sparkles },
   { href: "/dashboard/settings", label: "用户信息", icon: Settings },
 ];
 
