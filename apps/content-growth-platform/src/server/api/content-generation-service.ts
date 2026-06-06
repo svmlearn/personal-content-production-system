@@ -6,7 +6,7 @@ import type {
   MerchantStrategyAssetDto,
   StrategySnapshotDto,
 } from "@/contracts/consultation";
-import type { DailyContentTaskDto } from "@/contracts/daily-task";
+import type { DailyArticleContentPackageDto, DailyContentTaskDto } from "@/contracts/daily-task";
 import type { ContentDraftBundleDto, ContentVariantDto } from "@/contracts/draft";
 import type {
   MaterialLibraryItemDto,
@@ -19,6 +19,7 @@ import {
   buildStrategyAssetMarkdown,
   getMerchantStrategyAssetDocument,
 } from "@/lib/db/merchant-strategy-asset-repository";
+import { updateDailyContentTaskGeneratedContent } from "@/lib/db/daily-content-task-repository";
 import {
   appendContentDraftRevisionTrace,
   appendContentVariantToDraft,
@@ -541,6 +542,190 @@ export async function reviseArticleDraftForUser(input: {
     llmTrace: articleGeneration.trace,
     riskNotes: articleGeneration.riskNotes,
   };
+}
+
+export async function reviseDailyArticleTaskForUser(input: {
+  userId: string;
+  dailyTaskId: string;
+  revisionInstruction: string;
+  toneStyle?: string | null;
+}): Promise<{
+  task: DailyContentTaskDto;
+  article: DailyArticleContentPackageDto;
+  llmTrace: {
+    promptVersion: typeof ARTICLE_PROMPT_VERSION;
+    mode: ArticlePromptTraceMode;
+    model?: string;
+    error?: string;
+  };
+  riskNotes: string[];
+}> {
+  const merchant = await getOperationalMerchantProfileByOwnerUserId(input.userId);
+  const dailyTask = await getDailyContentTaskForUser({
+    userId: input.userId,
+    dailyTaskId: input.dailyTaskId,
+  });
+  const currentArticle =
+    dailyTask.articleTask.generatedArticle ?? buildDailyArticleFallback(dailyTask);
+  const revisionResult = dailyTask.articleTask.contentVariantId
+    ? await reviseArticleDraftForUser({
+        userId: input.userId,
+        contentVariantId: dailyTask.articleTask.contentVariantId,
+        revisionInstruction: input.revisionInstruction,
+        toneStyle: input.toneStyle,
+      })
+    : await reviseStandaloneDailyArticle({
+        merchant,
+        dailyTask,
+        currentArticle,
+        revisionInstruction: input.revisionInstruction,
+        toneStyle: input.toneStyle,
+      });
+  const revised = revisionResult.variant;
+  const nextArticle: DailyArticleContentPackageDto = {
+    ...currentArticle,
+    title: revised.title ?? currentArticle.title,
+    body: revised.bodyText ?? currentArticle.body,
+    hashtags: normalizeDailyArticleHashtags(
+      revised.hashtags.length ? revised.hashtags : currentArticle.hashtags,
+    ),
+    cta: revised.ctaText ?? currentArticle.cta,
+    coverText: (revised.title ?? currentArticle.title).slice(0, 18),
+    generatedAt: new Date().toISOString(),
+  };
+  const nextContentDraftId = revised.draftId || dailyTask.articleTask.contentDraftId || null;
+  const nextContentVariantId = revised.id || dailyTask.articleTask.contentVariantId || null;
+  const updatedTask = await updateDailyContentTaskGeneratedContent({
+    merchantId: dailyTask.merchantId,
+    userId: input.userId,
+    taskId: dailyTask.id,
+    articleTaskPatch: {
+      title: nextArticle.title,
+      generatedArticle: nextArticle,
+      generationStatus: "succeeded",
+      contentDraftId: nextContentDraftId,
+      contentVariantId: nextContentVariantId,
+    },
+  });
+
+  return {
+    task: updatedTask,
+    article: updatedTask.articleTask.generatedArticle ?? nextArticle,
+    llmTrace: revisionResult.llmTrace,
+    riskNotes: revisionResult.riskNotes,
+  };
+}
+
+async function reviseStandaloneDailyArticle(input: {
+  merchant: Awaited<ReturnType<typeof getOperationalMerchantProfileByOwnerUserId>>;
+  dailyTask: DailyContentTaskDto;
+  currentArticle: DailyArticleContentPackageDto;
+  revisionInstruction: string;
+  toneStyle?: string | null;
+}): Promise<{
+  variant: NonNullable<ContentDraftBundleDto["selectedVariant"]>;
+  llmTrace: {
+    promptVersion: typeof ARTICLE_PROMPT_VERSION;
+    mode: ArticlePromptTraceMode;
+    model?: string;
+    error?: string;
+  };
+  riskNotes: string[];
+}> {
+  const strategyAsset = await getMerchantStrategyAssetDocument(input.dailyTask.merchantId).catch(
+    () => null,
+  );
+  const snapshot = strategyAsset?.strategySnapshot ?? null;
+  const articleGeneration = await generateArticleVariantsWithLlm({
+    mode: "revise",
+    context: buildArticlePromptContext({
+      selectedCalendarItem: {
+        taskDate: input.dailyTask.taskDate,
+        theme: input.dailyTask.theme,
+        title: input.dailyTask.articleTask.title,
+        summary: input.dailyTask.articleTask.summary,
+        strategyTag: input.dailyTask.articleTask.strategyTag ?? null,
+        teamCalendarSource: input.dailyTask.teamCalendarSource,
+      },
+      strategySnapshot: snapshot,
+      strategyAssetMarkdown:
+        strategyAsset?.strategyMarkdown?.trim() ||
+        (snapshot ? buildStrategyAssetMarkdown(snapshot) : null),
+      articlePlaybook: "balanced_seed",
+      merchantProfile: buildMerchantSnapshot(input.merchant),
+      materialContext: null,
+      retrievalContext: {
+        copyContextRefs: input.dailyTask.knowledgeRefs,
+        imageAssetRefs: input.dailyTask.materialRefs,
+        imageBrief: null,
+        degradationNotices: [],
+      },
+      contentGoal: input.dailyTask.articleTask.summary,
+      extraRequirement: null,
+      toneStyle: input.toneStyle ?? null,
+    }),
+    currentVariant: {
+      title: input.currentArticle.title,
+      bodyText: input.currentArticle.body,
+      hashtags: input.currentArticle.hashtags,
+      ctaText: input.currentArticle.cta,
+    },
+    revisionInstruction: input.revisionInstruction,
+    expectedVariantCount: "single",
+  });
+  const revised = articleGeneration.variants[0];
+
+  if (!revised) {
+    throw new ApiError(500, "DAILY_ARTICLE_REVISION_EMPTY", "今日图文改写没有返回可用版本。");
+  }
+
+  return {
+    variant: {
+      id: "",
+      draftId: "",
+      platform: "xiaohongshu",
+      variantType: "note",
+      versionNo: 1,
+      title: revised.title,
+      bodyText: revised.bodyText,
+      hashtags: revised.hashtags,
+      ctaText: revised.ctaText,
+      reviewStatus: "review_pending",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    llmTrace: articleGeneration.trace,
+    riskNotes: articleGeneration.riskNotes,
+  };
+}
+
+function buildDailyArticleFallback(task: DailyContentTaskDto): DailyArticleContentPackageDto {
+  return {
+    title: task.articleTask.title,
+    body: `${task.articleTask.summary}\n\n这条图文已经按团队内容日历准备好。发布时可以结合项目实景、户型或配套图片，把客户最关心的问题讲清楚。`,
+    hashtags: normalizeDailyArticleHashtags([
+      task.articleTask.strategyTag,
+      "小红书买房笔记",
+      "本地看房",
+    ]),
+    cta: "想了解适不适合自己，私信我说预算和通勤范围。",
+    coverText: task.articleTask.title,
+    imageAssets: [],
+    imageBriefs: task.articleTask.materialHints.length
+      ? task.articleTask.materialHints.map((hint) => `围绕「${hint}」选择一张项目图片。`)
+      : ["封面图、项目实景图、配套图各准备一张。"],
+    generatedAt: task.updatedAt,
+  };
+}
+
+function normalizeDailyArticleHashtags(values: Array<string | null | undefined>) {
+  return Array.from(
+    new Set(
+      values
+        .map((value) => value?.replace(/^#/, "").trim())
+        .filter((value): value is string => Boolean(value)),
+    ),
+  ).slice(0, 8);
 }
 
 export async function runVideoWorkbenchScriptAgentForUser(input: {

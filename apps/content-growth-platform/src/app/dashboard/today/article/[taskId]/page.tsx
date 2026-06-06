@@ -7,5 +7,9 @@ export default async function DashboardTodayArticleRoute({
 }) {
   const { taskId } = await params;
 
-  return <MemberArticleTaskPage taskId={taskId} backHref="/dashboard/today" />;
+  return (
+    <div className="h-full min-h-0 overflow-y-auto bg-[#fbfaf7]">
+      <MemberArticleTaskPage taskId={taskId} backHref="/dashboard/today" enableArticleRewrite />
+    </div>
+  );
 }

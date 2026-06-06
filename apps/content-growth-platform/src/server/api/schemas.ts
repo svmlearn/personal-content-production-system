@@ -599,6 +599,11 @@ export const reviseArticleDraftSchema = z.object({
   toneStyle: z.string().trim().max(80).nullish(),
 });
 
+export const reviseDailyArticleTaskSchema = z.object({
+  revisionInstruction: z.string().trim().min(1).max(4000),
+  toneStyle: z.string().trim().max(80).nullish(),
+});
+
 export const reviseVideoScriptSchema = z.object({
   contentVariantId: z.uuid(),
   sessionId: z.uuid(),

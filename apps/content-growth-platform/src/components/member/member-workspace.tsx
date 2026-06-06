@@ -344,12 +344,19 @@ export function MemberCalendarPage() {
 export function MemberArticleTaskPage({
   taskId,
   backHref = "/member/calendar",
+  enableArticleRewrite = false,
 }: {
   taskId: string;
   backHref?: string;
+  enableArticleRewrite?: boolean;
 }) {
   const { task, loading, error, reload } = useMemberTask(taskId);
+  const [articleOverride, setArticleOverride] = useState<DailyArticleContentPackageDto | null>(null);
   const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
+  const [rewriteInstruction, setRewriteInstruction] = useState("");
+  const [rewriteBusy, setRewriteBusy] = useState(false);
+  const [rewriteError, setRewriteError] = useState<string | null>(null);
+  const [rewriteNotice, setRewriteNotice] = useState<string | null>(null);
 
   if (loading) {
     return <MemberLoading label="正在打开图文内容包" />;
@@ -359,7 +366,8 @@ export function MemberArticleTaskPage({
     return <MemberError title="图文内容包暂时不可用" message={error} onRetry={reload} />;
   }
 
-  const article = task.articleTask.generatedArticle ?? buildArticleFallback(task);
+  const currentTask = task;
+  const article = articleOverride ?? currentTask.articleTask.generatedArticle ?? buildArticleFallback(currentTask);
   const publishText = buildPublishText(article);
 
   async function copyText(label: string, text: string) {
@@ -370,6 +378,44 @@ export function MemberArticleTaskPage({
     }
 
     setCopiedLabel("复制失败，请手动长按选择文案");
+  }
+
+  async function rewriteArticle() {
+    const instruction = rewriteInstruction.trim();
+
+    if (!instruction) {
+      setRewriteError("请先输入改写建议。");
+      return;
+    }
+
+    setRewriteBusy(true);
+    setRewriteError(null);
+    setRewriteNotice(null);
+
+    try {
+      const response = await fetch(`/api/daily-content-tasks/${currentTask.id}/article-rewrite`, {
+        method: "POST",
+        headers: taskFetchHeaders,
+        body: JSON.stringify({
+          revisionInstruction: instruction,
+        }),
+      });
+      const data = (await response.json().catch(() => null)) as
+        | ({ article?: DailyArticleContentPackageDto; llmTrace?: { mode?: string } } & ApiErrorPayload)
+        | null;
+
+      if (!response.ok || !data?.article) {
+        throw new Error(data?.error?.message ?? "图文一键改写失败");
+      }
+
+      setArticleOverride(data.article);
+      setRewriteInstruction("");
+      setRewriteNotice(data.llmTrace?.mode ? "已按建议生成新版图文。" : "已生成新版图文。");
+    } catch (requestError) {
+      setRewriteError(requestError instanceof Error ? requestError.message : "图文一键改写失败");
+    } finally {
+      setRewriteBusy(false);
+    }
   }
 
   return (
@@ -426,6 +472,49 @@ export function MemberArticleTaskPage({
           </div>
         </div>
       </section>
+
+      {enableArticleRewrite ? (
+        <section className="rounded-lg border border-black/10 bg-white p-4">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold">一键改写</p>
+              <p className="mt-1 text-xs leading-5 text-black/50">
+                输入你想调整的方向，系统会基于当前已生成文案重写标题、正文、标签和行动引导。
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => void rewriteArticle()}
+              disabled={rewriteBusy}
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-[#171717] px-4 py-3 text-sm font-medium text-white disabled:opacity-50 sm:mt-0"
+            >
+              {rewriteBusy ? (
+                <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+              ) : (
+                <WandSparkles className="size-4" aria-hidden="true" />
+              )}
+              {rewriteBusy ? "改写中" : "一键改写"}
+            </button>
+          </div>
+          <textarea
+            value={rewriteInstruction}
+            onChange={(event) => {
+              setRewriteInstruction(event.target.value);
+              setRewriteError(null);
+              setRewriteNotice(null);
+            }}
+            placeholder="例如：标题更像小红书一点，正文少一点房产销售味，多讲真实客户顾虑；结尾改成评论区互动。"
+            rows={4}
+            className="mt-4 w-full resize-y rounded-lg border border-black/10 bg-[#f7f4ea] px-3 py-3 text-sm leading-6 outline-none transition focus:border-[#1f6f68] focus:bg-white"
+          />
+          {rewriteNotice ? (
+            <StatusLine icon={<Check className="size-4" />} text={rewriteNotice} />
+          ) : null}
+          {rewriteError ? (
+            <StatusLine tone="danger" icon={<AlertCircle className="size-4" />} text={rewriteError} />
+          ) : null}
+        </section>
+      ) : null}
 
       <section className="rounded-lg border border-black/10 bg-white">
         <div className="border-b border-black/10 px-4 py-3">

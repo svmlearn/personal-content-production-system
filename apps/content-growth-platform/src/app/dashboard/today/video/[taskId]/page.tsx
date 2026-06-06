@@ -10,5 +10,9 @@ export default async function DashboardTodayVideoRoute({
   const { taskId } = await params;
   const { jobId } = await searchParams;
 
-  return <MemberVideoTaskPage taskId={taskId} jobId={jobId ?? null} backHref="/dashboard/today" />;
+  return (
+    <div className="h-full min-h-0 overflow-y-auto bg-[#fbfaf7]">
+      <MemberVideoTaskPage taskId={taskId} jobId={jobId ?? null} backHref="/dashboard/today" />
+    </div>
+  );
 }
