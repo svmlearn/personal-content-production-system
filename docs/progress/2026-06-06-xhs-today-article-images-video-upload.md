@@ -60,6 +60,32 @@
 2. 视频详情页选择两个视频后是否仍正常显示文件名 / 大小。
 3. 点击 `AI 剪辑` 后，在 OSS 未配置的当前环境下应显示中文错误，不应白屏，不应切换脚本内容。
 
+## 线上验证结果
+
+代码 commit：
+
+- `bde583f fix: stabilize today media upload detail views`
+
+服务器部署：
+
+- 服务器 `/opt/personal-website` 已 fast-forward 到 `bde583f`。
+- `pnpm --dir apps/content-growth-platform build` 通过。
+- PM2 `content-growth-platform` 已重启并保持 `online`，当时 pid 为 `716478`。
+
+Playwright 线上复测：
+
+- 图文详情页：
+  - `已匹配图片` 在 DOM 文本中的位置早于 `已生成文案`，顺序符合预期。
+  - 截图留存：`/tmp/xhs-article-image-order.png`。
+- 视频详情页：
+  - 选择两个本地测试 `.mp4` 文件后，页面仍显示 `镜头脚本与素材上传`。
+  - 两个文件名均显示，且出现 `已选择` 状态。
+  - 点击 `AI 剪辑` 后，页面无 `pageerror`。
+  - `/api/media/upload-intents` 按当前环境返回 `503`。
+  - 页面显示中文错误 `视频素材上传服务暂未配置好...`。
+  - 页面没有再出现提前切换脚本版本的现象；验证项 `after_click_no_variant_script_jump=true`。
+  - 截图留存：`/tmp/xhs-video-upload-error-fixed.png`。
+
 ## 未覆盖与风险
 
 1. 本轮没有配置 OSS，因此不能验证真实视频素材上传成功和 AI 剪辑成片。
