@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const entryCards = [
   {
     title: "用户登录",
-    description: "使用演示账号进入咨询诊断和内容工作台，适合外部访客快速查看。",
+    description: "使用演示账号进入团队选题、营销内容日历和今日内容，适合外部访客快速查看。",
     href: "/login?demo=1&next=%2Fdashboard",
     icon: KeyRound,
     primary: true,

@@ -1170,7 +1170,7 @@ function TeamGenerationStatusBanner({
           <span>失败 {status.failedJobs}</span>
         </div>
         <Link
-          href="/member/calendar"
+          href="/dashboard/today"
           className="shrink-0 rounded-full border border-[#22b8a7]/30 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-[#0f766e] transition-colors hover:bg-[#f6fffd]"
         >
           进入今日内容

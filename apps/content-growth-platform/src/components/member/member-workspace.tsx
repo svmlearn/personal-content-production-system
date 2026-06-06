@@ -341,7 +341,13 @@ export function MemberCalendarPage() {
   );
 }
 
-export function MemberArticleTaskPage({ taskId }: { taskId: string }) {
+export function MemberArticleTaskPage({
+  taskId,
+  backHref = "/member/calendar",
+}: {
+  taskId: string;
+  backHref?: string;
+}) {
   const { task, loading, error, reload } = useMemberTask(taskId);
   const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
 
@@ -368,7 +374,7 @@ export function MemberArticleTaskPage({ taskId }: { taskId: string }) {
 
   return (
     <div className="space-y-4 px-4 py-5">
-      <BackLink href="/member/calendar">返回今日内容</BackLink>
+      <BackLink href={backHref}>返回今日内容</BackLink>
 
       <section className="rounded-lg border border-black/10 bg-white p-4">
         <p className="text-xs text-black/45">{task.taskDate} · 图文任务</p>
@@ -472,7 +478,15 @@ export function MemberArticleTaskPage({ taskId }: { taskId: string }) {
   );
 }
 
-export function MemberVideoTaskPage({ taskId, jobId = null }: { taskId: string; jobId?: string | null }) {
+export function MemberVideoTaskPage({
+  taskId,
+  jobId = null,
+  backHref = "/member/calendar",
+}: {
+  taskId: string;
+  jobId?: string | null;
+  backHref?: string;
+}) {
   const { task, loading, error, reload } = useMemberTask(taskId);
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
   const [selectedVoiceAudioFile, setSelectedVoiceAudioFile] = useState<File | null>(null);
@@ -834,7 +848,7 @@ export function MemberVideoTaskPage({ taskId, jobId = null }: { taskId: string; 
 
   return (
     <div className="space-y-4 px-4 py-5">
-      <BackLink href="/member/calendar">返回今日内容</BackLink>
+      <BackLink href={backHref}>返回今日内容</BackLink>
 
       <section className="rounded-lg border border-black/10 bg-white p-4">
         <p className="text-xs text-black/45">{task.taskDate} · 视频任务</p>

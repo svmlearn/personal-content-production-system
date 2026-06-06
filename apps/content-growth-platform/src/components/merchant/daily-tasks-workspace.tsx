@@ -124,8 +124,8 @@ export function DailyTasksWorkspace() {
   }
 
   const today = workspace.today;
-  const articleHref = `/member/article/${today.id}`;
-  const videoHref = `/member/video/${today.id}`;
+  const articleHref = `/dashboard/today/article/${today.id}`;
+  const videoHref = `/dashboard/today/video/${today.id}`;
 
   return (
     <div className="flex h-full min-h-0 flex-col">

@@ -26,7 +26,7 @@ test("isVideoChainTestDraftEnabled allows local development and explicit staging
   );
 });
 
-test("buildVideoChainTestDraftFixture creates an approved placeholder video script", () => {
+test("buildVideoChainTestDraftFixture creates an approved today content video script", () => {
   const fixture = buildVideoChainTestDraftFixture({
     merchantName: "静境普拉提",
     serviceItems: ["普拉提私教", "体态评估"],
@@ -41,9 +41,9 @@ test("buildVideoChainTestDraftFixture creates an approved placeholder video scri
   assert.equal(fixture.variant.variantType, "video_script");
   assert.equal(fixture.variant.reviewStatus, "approved");
   assert.equal(fixture.variant.ctaText, "预约 1 次到店体验课");
-  assert.deepEqual(fixture.variant.hashtags, ["视频链路测试", "素材上传测试"]);
-  assert.match(fixture.variant.title, /链路验证/);
-  assert.match(fixture.variant.scriptText, /链路测试占位脚本/);
+  assert.deepEqual(fixture.variant.hashtags, ["今日内容", "团队素材", "普拉提私教"]);
+  assert.match(fixture.variant.title, /今日视频/);
+  assert.match(fixture.variant.scriptText, /今日内容脚本/);
   assert.match(fixture.variant.scriptText, /Scene 1 \| 00:00-00:05/);
   assert.match(fixture.variant.scriptText, /Scene 2 \| 00:05-00:18/);
   assert.match(fixture.variant.scriptText, /Scene 3 \| 00:18-00:35/);
@@ -60,7 +60,7 @@ test("buildVideoChainTestDraftFixture does not invent service or CTA defaults", 
   });
 
   assert.equal(fixture.variant.ctaText, null);
-  assert.match(fixture.variant.scriptText, /展示用户已提供的可用测试素材/);
+  assert.match(fixture.variant.scriptText, /展示团队已准备好的今日内容素材/);
   assert.doesNotMatch(fixture.variant.scriptText, /核心服务|私信咨询|预约体验/);
   assert.doesNotMatch(JSON.stringify(fixture.variant.productionScenes), /核心服务|私信咨询|预约体验/);
 });

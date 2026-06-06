@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard/consultation", label: "团队选题", icon: MessageSquare },
-  { href: "/member/calendar", label: "今日内容", icon: Sparkles },
+  { href: "/dashboard/today", label: "今日内容", icon: Sparkles },
   { href: "/dashboard/content", label: "社媒爆款内容库", icon: Library },
   { href: "/dashboard/history", label: "我的内容", icon: FolderGit2 },
   { href: "/dashboard/team", label: "团队成员", icon: Users },
