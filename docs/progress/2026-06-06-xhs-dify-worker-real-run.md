@@ -178,7 +178,7 @@ lint 仍有 2 个既有 warning：
 
 Dify app key 已配置到服务器，worker 可以启动并调用 Dify workflow。
 
-真实内容生成闭环仍未完成，当前阻塞点是 Dify 控制台内模型供应商 API key 无效。
+真实内容生成闭环已在远期测试日期 `2026-08-02` 跑通。当前剩余闭环缺口是 PRD 中的视频 `AI 剪辑 -> 成片` 演示闭环。
 
 代码侧已修复 Dify streaming 提前终止 bug，并已提交、推送、部署到服务器。
 
@@ -236,14 +236,88 @@ req_id: 5d66d10312 PluginInvokeError: {"args":{"description":"[models] Error: AP
 - deleted batch：`1`
 - deleted daily task：`1`
 
+## 2026-06-06 13:26 复测成功
+
+用户再次修复 Dify 模型供应商 API key 后，重新执行真实链路验证。本次 Dify workflow 长时间运行后成功返回，并完成应用侧写库。
+
+复测前只读检查：
+
+- 服务器 commit：`420e01f`
+- `content-growth-platform`：online，pid `605026`
+- `content_generation_jobs`：无积压
+- `failed_retryable` 且未达最大重试次数的 job：无
+
+复测 batch：
+
+- 测试日期：`2026-08-02`
+- `memberScope=self`
+- `days=1`
+- `extraRequirement=codex-real-dify-20260606-1326`
+- batch id：`5723d841-d469-48af-b6d7-24315b5c6027`
+- job id：`de917686-c662-4f01-8815-27d124e29e21`
+- daily task id：`5aeb1f23-4f06-4eab-a719-0161325dfac5`
+
+worker run-once 结果：
+
+- `processed=true`
+- job status：`succeeded`
+- current stage：`persisted`
+- elapsed：`185794ms`
+
+数据库验证：
+
+- batch status：`completed`
+- batch total jobs：`1`
+- batch succeeded jobs：`1`
+- batch failed jobs：`0`
+- job `dify_workflow_run_id`：`3afc18a8-1234-4d98-bc0d-7981939274bb`
+- job `output_json` keys：`video` / `status` / `article` / `quality`
+- job article title：`预算有限想住好点？这个项目我替你看过了`
+- job article body length：`285`
+- job video scene count：`9`
+- job quality status：`needs_review`
+- job content draft id：`97cef56f-b49a-40d2-b16c-9c0ba95d4a9c`
+- article variant id：`544cd7c1-5f92-49db-8eca-205cd5261737`
+- video variant id：`1057b908-8f44-4258-bd0a-67bd68f81adf`
+
+`daily_content_tasks` 写回验证：
+
+- task status：`generated`
+- article generation status：`succeeded`
+- video generation status：`succeeded`
+- article generation job id：`de917686-c662-4f01-8815-27d124e29e21`
+- video generation job id：`de917686-c662-4f01-8815-27d124e29e21`
+- article title：`预算有限想住好点？这个项目我替你看过了`
+- article body length：`285`
+- article content draft id：`97cef56f-b49a-40d2-b16c-9c0ba95d4a9c`
+- article content variant id：`544cd7c1-5f92-49db-8eca-205cd5261737`
+- video title：`今日视频：真人口播讲项目机会 · 本地客户视角`
+- video scene count：`9`
+- video content draft id：`97cef56f-b49a-40d2-b16c-9c0ba95d4a9c`
+- video content variant id：`1057b908-8f44-4258-bd0a-67bd68f81adf`
+
+成员端 API 验证：
+
+- login status：`303`
+- API：`GET http://127.0.0.1:3001/api/member/tasks/today?date=2026-08-02`
+- API task id：`5aeb1f23-4f06-4eab-a719-0161325dfac5`
+- API article generation status：`succeeded`
+- API video generation status：`succeeded`
+- API article title：`预算有限想住好点？这个项目我替你看过了`
+- API article body length：`285`
+- API video title：`今日视频：真人口播讲项目机会 · 本地客户视角`
+- API video scene count：`9`
+- API article / video content draft id：`97cef56f-b49a-40d2-b16c-9c0ba95d4a9c`
+
+判断：
+
+- `Dify workflow -> content_generation_jobs.output_json -> daily_content_tasks.generatedArticle/generatedVideoScript -> /api/member/tasks/today` 已跑通。
+- 这次不是 `DIFY_MOCK_FINAL_RESULT_JSON`，服务器该变量仍为 missing。
+- 远期测试数据暂未清理，保留用于用户或后续 Agent 检查这次成功样本。
+- 本次只验证内容生成闭环，不等同于视频 `AI 剪辑 -> 成片` 闭环。
+
 ## 下一步
 
-1. 在 Dify 控制台修复该 workflow 使用的模型供应商 API key。
-2. 重新创建一个低污染测试 batch。
-3. run-once 执行 `content-generation worker`。
-4. 验证：
-   - `content_generation_jobs.status=succeeded`
-   - `dify_workflow_run_id` 有真实值
-   - `output_json` 有 Dify `final_result_json`
-   - `daily_content_tasks` 写入 Dify 生成的 `generatedArticle` / `generatedVideoScript`
-   - `/api/member/tasks/today?date=<测试日期>` 返回同一份内容
+1. 用户可在远期测试日期 `2026-08-02` 检查这条成功样本；如不再需要，可清理对应 batch/job/daily task。
+2. 若希望演示现场点击后自动生成，需要把 `content-generation worker` 配成 PM2 常驻进程，而不是手动 run-once。
+3. 继续实现 PRD 的视频 `AI 剪辑 -> 成片` 演示闭环。
