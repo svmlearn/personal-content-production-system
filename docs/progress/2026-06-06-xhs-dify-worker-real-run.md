@@ -190,6 +190,52 @@ Dify app key 已配置到服务器，worker 可以启动并调用 Dify workflow�
 - 服务器 build：`pnpm --dir apps/content-growth-platform build` 通过
 - PM2：`content-growth-platform` 已重启，pid `605026`
 
+## 2026-06-06 13:10 复测
+
+用户反馈已更换 Dify 模型供应商 API key 后，重新执行了一次真实链路验证。
+
+复测前只读检查：
+
+- 服务器 commit：`b213963`
+- `content-growth-platform`：online，pid `605026`
+- `content_generation_jobs`：无积压
+- `failed_retryable` 且未达最大重试次数的 job：无
+
+复测 batch：
+
+- 测试日期：`2026-08-01`
+- `memberScope=self`
+- `days=1`
+- `extraRequirement=codex-real-dify-20260606-1310`
+- batch id：`726fcd22-4b78-4fc8-a241-73e4ddd3dd8a`
+- job id：`6db5f574-2176-4123-812b-e1d56631680c`
+- daily task id：`5f82eedc-3898-4c28-92c3-c94bb16379f1`
+
+worker run-once 结果：
+
+- `processed=true`
+- job status：`failed_retryable`
+- current stage：`failed`
+- elapsed：`2976ms`
+
+job 错误：
+
+```text
+req_id: 5d66d10312 PluginInvokeError: {"args":{"description":"[models] Error: API request failed with status code 401: \"Api key is invalid\""},"error_type":"InvokeError","message":"[models] Error: API request failed with status code 401: \"Api key is invalid\""}
+```
+
+判断：
+
+- 本轮代码修复已生效，错误不再是提前截断 stream 后的 `final_result_json missing`。
+- Dify workflow 仍在模型节点失败，错误仍是模型供应商 API key invalid。
+- 如果用户已经更换 key，可能改的是另一个供应商凭据、另一个 workspace/app 的凭据、或者 workflow 节点仍绑定旧凭据。
+
+清理动作：
+
+- deleted jobs：`1`
+- deleted batch：`1`
+- deleted daily task：`1`
+
 ## 下一步
 
 1. 在 Dify 控制台修复该 workflow 使用的模型供应商 API key。
