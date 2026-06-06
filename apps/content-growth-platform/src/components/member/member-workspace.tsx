@@ -47,6 +47,7 @@ import {
   type DraftMediaUploadStage,
   getVideoEditJobDetail,
   listVideoEditJobsByQuery,
+  formatAssetSize,
   type VideoEditJob,
   uploadDraftMediaFile,
   uploadVoiceProfileAudioFile,
@@ -369,6 +370,55 @@ export function MemberArticleTaskPage({
   const currentTask = task;
   const article = articleOverride ?? currentTask.articleTask.generatedArticle ?? buildArticleFallback(currentTask);
   const publishText = buildPublishText(article);
+  const matchedImageSection = (
+    <section className="rounded-lg border border-black/10 bg-white">
+      <div className="border-b border-black/10 px-4 py-3">
+        <p className="text-sm font-semibold">已匹配图片</p>
+      </div>
+      <div className="grid gap-3 p-4">
+        {article.imageAssets.length ? (
+          article.imageAssets.map((asset) => (
+            <div key={asset.id} className="overflow-hidden rounded-lg border border-black/10 bg-[#f7f4ea]">
+              <div
+                className="flex aspect-[4/3] items-end bg-[#d6ded8] bg-cover bg-center p-3"
+                style={asset.url ? { backgroundImage: `url(${asset.url})` } : undefined}
+              >
+                <span className="rounded-lg bg-black/65 px-2 py-1 text-xs text-white">{asset.title}</span>
+              </div>
+              <div className="p-3">
+                <p className="text-xs leading-5 text-black/55">
+                  {asset.description ?? "团队素材库匹配图片。"}
+                </p>
+                {asset.url ? (
+                  <a
+                    href={asset.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#1f6f68]"
+                  >
+                    打开图片
+                    <Download className="size-3" aria-hidden="true" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed border-black/15 bg-[#f7f4ea] p-4">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <ImageIcon className="size-4" aria-hidden="true" />
+              图片 brief
+            </div>
+            <div className="mt-3 space-y-2 text-sm leading-6 text-black/65">
+              {article.imageBriefs.map((brief) => (
+                <p key={brief}>{brief}</p>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 
   async function copyText(label: string, text: string) {
     if (await writeClipboardText(text)) {
@@ -427,6 +477,8 @@ export function MemberArticleTaskPage({
         <h1 className="mt-2 text-xl font-semibold leading-tight">{article.title}</h1>
         <p className="mt-3 text-sm leading-7 text-black/60">{task.articleTask.summary}</p>
       </section>
+
+      {matchedImageSection}
 
       <section className="rounded-lg border border-black/10 bg-white">
         <div className="border-b border-black/10 px-4 py-3">
@@ -516,53 +568,6 @@ export function MemberArticleTaskPage({
         </section>
       ) : null}
 
-      <section className="rounded-lg border border-black/10 bg-white">
-        <div className="border-b border-black/10 px-4 py-3">
-          <p className="text-sm font-semibold">已匹配图片</p>
-        </div>
-        <div className="grid gap-3 p-4">
-          {article.imageAssets.length ? (
-            article.imageAssets.map((asset) => (
-              <div key={asset.id} className="overflow-hidden rounded-lg border border-black/10 bg-[#f7f4ea]">
-                <div
-                  className="flex aspect-[4/3] items-end bg-[#d6ded8] bg-cover bg-center p-3"
-                  style={asset.url ? { backgroundImage: `url(${asset.url})` } : undefined}
-                >
-                  <span className="rounded-lg bg-black/65 px-2 py-1 text-xs text-white">{asset.title}</span>
-                </div>
-                <div className="p-3">
-                  <p className="text-xs leading-5 text-black/55">
-                    {asset.description ?? "团队素材库匹配图片。"}
-                  </p>
-                  {asset.url ? (
-                    <a
-                      href={asset.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#1f6f68]"
-                    >
-                      打开图片
-                      <Download className="size-3" aria-hidden="true" />
-                    </a>
-                  ) : null}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="rounded-lg border border-dashed border-black/15 bg-[#f7f4ea] p-4">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <ImageIcon className="size-4" aria-hidden="true" />
-                图片 brief
-              </div>
-              <div className="mt-3 space-y-2 text-sm leading-6 text-black/65">
-                {article.imageBriefs.map((brief) => (
-                  <p key={brief}>{brief}</p>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
     </div>
   );
 }
@@ -743,7 +748,7 @@ export function MemberVideoTaskPage({
     );
 
     if (requiredSceneCount > 0 && !uploadEntries.length) {
-      setActionError("请先至少上传一段手机素材，再发起 AI 剪辑。");
+      setActionError("请先至少选择一段手机素材，再发起 AI 剪辑。");
       return;
     }
 
@@ -778,7 +783,6 @@ export function MemberVideoTaskPage({
 
       setBusyState({ stage: "confirming_script" });
       const approvedVariant = await approveVariantIfNeeded(selectedVariant);
-      setScriptVariant(approvedVariant);
 
       const uploadTotal = uploadEntries.length;
       const uploadedInputAssetIds: string[] = [];
@@ -842,8 +846,9 @@ export function MemberVideoTaskPage({
 
       setJob(nextJob);
       setRestoredJobMode("in_flight");
+      setScriptVariant(approvedVariant);
     } catch (requestError) {
-      setActionError(requestError instanceof Error ? requestError.message : "AI 剪辑任务创建失败");
+      setActionError(formatMemberVideoActionError(requestError));
     } finally {
       setBusyState(null);
     }
@@ -950,6 +955,18 @@ export function MemberVideoTaskPage({
         <p className="mt-2 text-sm leading-7">{script.hook}</p>
       </section>
 
+      {actionError ? (
+        <section className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+          <div className="flex items-start gap-2">
+            <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            <div>
+              <p className="text-sm font-semibold">视频素材处理失败</p>
+              <p className="mt-1 text-sm leading-6">{actionError}</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="rounded-lg border border-black/10 bg-white">
         <div className="border-b border-black/10 px-4 py-3">
           <p className="text-sm font-semibold">镜头脚本与素材上传</p>
@@ -978,20 +995,27 @@ export function MemberVideoTaskPage({
                 <label className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-black/20 bg-[#f7f4ea] px-3 py-3 text-sm">
                   <span className="min-w-0 truncate">
                     {selectedFiles[scene.id]?.name ?? scene.materialSlot}
+                    {selectedFiles[scene.id] ? (
+                      <span className="ml-2 text-xs text-black/45">
+                        {formatAssetSize(selectedFiles[scene.id]!.size)}
+                      </span>
+                    ) : null}
                   </span>
                   <span className="inline-flex items-center gap-1 text-[#1f6f68]">
                     <Upload className="size-4" aria-hidden="true" />
-                    上传
+                    {selectedFiles[scene.id] ? "已选择" : "选择"}
                   </span>
                   <input
                     type="file"
                     accept="video/*,image/*"
                     className="sr-only"
                     onChange={(event) => {
+                      const file = event.target.files?.[0] ?? null;
                       setSelectedFiles((current) => ({
                         ...current,
-                        [scene.id]: event.target.files?.[0] ?? null,
+                        [scene.id]: file,
                       }));
+                      setActionError(null);
                     }}
                   />
                 </label>
@@ -2029,6 +2053,19 @@ function normalizeUploadPercent(value: number) {
 
   const percent = value > 0 && value <= 1 ? value * 100 : value;
   return normalizeProgressPct(percent);
+}
+
+function formatMemberVideoActionError(error: unknown) {
+  const message = error instanceof Error ? error.message : "AI 剪辑任务创建失败";
+
+  if (
+    /Aliyun OSS environment variables are not configured/i.test(message) ||
+    /OSS|对象存储|upload-intents/i.test(message)
+  ) {
+    return "视频素材上传服务暂未配置好，当前不能完成 AI 剪辑。已选择的视频不会丢失，请稍后再试或联系管理员配置素材存储。";
+  }
+
+  return message;
 }
 
 function normalizeProgressPct(value: number) {
