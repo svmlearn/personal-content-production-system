@@ -113,13 +113,23 @@ WebKit 验证：
     - `/tmp/xhs-video-scenes-fixed-production-after-select.png`
     - `/tmp/xhs-video-scenes-fixed-production-after-select-full.png`
 
-第二次线上验证待部署 DashboardShell 单渲染修复后补充：
+第二次线上验证：
 
-1. 打开 `/dashboard/today/video/7765283b-df5e-4946-b8e4-6db11b52ef7b`。
-2. 选择镜头 1 的测试视频文件。
-3. 确认页面只有 12 个 `[data-video-scene-id]`。
-4. 确认镜头 2 / 镜头 3 文案可见。
-5. 确认没有 pageerror / console error。
+- commit `1ac8bbc` 已部署到服务器。
+- 服务器 build 通过，PM2 `content-growth-platform` online，当时 pid 为 `733540`。
+- 使用生产 demo 登录态打开：
+  - `/dashboard/today/video/7765283b-df5e-4946-b8e4-6db11b52ef7b?verify=1ac8bbc`
+- 给镜头 1 选择本地测试文件 `CleanShot 2026-06-01 at 00.07.57.mp4`。
+- Playwright 断言通过：
+  - `[data-video-scene-id]` 数量为 12。
+  - 镜头 2 文案 `说实话，很多客户看了几十套房还是拿不定主意。` 存在。
+  - 镜头 3 文案 `问题不在房子本身，而在成交逻辑没搞懂。` 存在。
+  - 已选择文件状态存在。
+  - `pageerror` 为空。
+  - console error 为空。
+- 截图留存：
+  - `/tmp/xhs-video-scenes-single-render-production-after-select.png`
+  - `/tmp/xhs-video-scenes-single-render-production-after-select-full.png`
 
 ## 未覆盖与风险
 
