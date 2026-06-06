@@ -28,8 +28,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-[#f8f5f1] text-[#1f2328]">
-      <div className="hidden h-screen overflow-hidden lg:flex">
-        <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-[#eadfd7] bg-[#fffaf6]">
+      <div className="flex min-h-screen flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
+        <aside className="hidden h-screen w-64 shrink-0 flex-col border-r border-[#eadfd7] bg-[#fffaf6] lg:flex">
           <div className="flex h-16 items-center gap-4 border-b border-[#eadfd7] px-6">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f2556b]">
               <span className="text-xs font-bold tracking-tight text-white">AI</span>
@@ -97,15 +97,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </aside>
-        <main className="flex h-screen min-w-0 flex-1 flex-col overflow-hidden p-6 lg:p-10">
-          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-[#eadfd7] bg-white shadow-[0_24px_90px_rgba(77,53,43,0.08)]">
-            {children}
-          </div>
-        </main>
-      </div>
-
-      <div className="lg:hidden">
-        <header className="border-b border-[#eadfd7] bg-[#fffaf6] px-4 py-4">
+        <header className="border-b border-[#eadfd7] bg-[#fffaf6] px-4 py-4 lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <p className="text-lg font-semibold tracking-tight text-[#1f2328] [font-family:var(--font-cormorant)]">
               内容日历工作台
@@ -142,8 +134,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
         </header>
-        <main className="p-4">
-          <div className="min-h-[calc(100vh-8rem)] overflow-hidden rounded-lg border border-[#eadfd7] bg-white">
+        <main className="min-w-0 flex-1 p-4 lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:p-10">
+          <div className="relative flex min-h-[calc(100vh-8rem)] flex-col overflow-hidden rounded-lg border border-[#eadfd7] bg-white lg:min-h-0 lg:flex-1 lg:shadow-[0_24px_90px_rgba(77,53,43,0.08)]">
             {children}
           </div>
         </main>

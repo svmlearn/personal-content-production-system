@@ -15,6 +15,8 @@
 - `apps/content-growth-platform/src/app/dashboard/today/video/[taskId]/page.tsx`
   - dashboard 视频详情页使用 `h-full min-h-0 overflow-y-auto` 作为滚动容器。
 - `apps/content-growth-platform/src/components/app/dashboard-shell.tsx`
+  - 修复前桌面分支和移动分支各渲染一次 `{children}`。
+  - 这会让同一个详情页在 DOM 中挂载两份：桌面可见一份、移动隐藏一份；隐藏分支仍会执行 client component effect。
   - 桌面 dashboard 外层是 `h-screen overflow-hidden`，内容卡片也是 `overflow-hidden`。
 - `apps/content-growth-platform/src/components/member/member-workspace.tsx`
   - `MemberVideoTaskPage` 同时服务 `/member/video/[taskId]` 和 `/dashboard/today/video/[taskId]`。
@@ -39,14 +41,23 @@ Chromium 复现验证：
   - `/tmp/xhs-layout-repro-chromium-current-after-select.png`
 - 这说明这次不是 React 崩溃、接口失败或数据丢失，而是布局/浏览器渲染兼容问题。
 
+第一次部署后回归时发现：
+
+- 页面已经改成独立镜头卡片，但线上 DOM 中 `[data-video-scene-id]` 数量为 24。
+- 原因是 `DashboardShell` 把 `{children}` 同时渲染进桌面布局和移动布局。
+- 可见桌面分支里有 12 个镜头，隐藏移动分支里也有 12 个镜头。
+- 这会导致同一个视频详情 client component 挂载两次，并重复请求任务、任务草稿、进行中剪辑任务和音色 profile。
+- 该问题不一定单独造成截图空白，但它是这次“手机端页面迁进网页端 dashboard”留下的结构性风险，必须一并修掉，否则后续所有 dashboard 详情页都会保留隐藏副本。
+
 ## 根因判断
 
-核心原因是 dashboard 详情页把原成员端手机页面直接放进桌面 dashboard 的嵌套滚动结构里，又把 12 个镜头连续塞进同一个超长白色 section。
+核心原因是 dashboard 详情页把原成员端手机页面直接放进桌面 dashboard 的嵌套滚动结构里，并且 dashboard shell 同时渲染桌面/移动两份内容；视频详情内部又把 12 个镜头连续塞进同一个超长白色 section。
 
-这造成两个风险叠加：
+这造成三个风险叠加：
 
 1. 外层 dashboard 有多层 `overflow-hidden`，真正滚动只发生在详情 route wrapper。
-2. 内层镜头列表是一个单一超长 section；文件选择后 React 状态更新会让这整张大 section 重新计算和重绘。
+2. DashboardShell 中同一个 `{children}` 被渲染两次，隐藏移动分支仍会执行详情页 effect 和 DOM 挂载。
+3. 内层镜头列表是一个单一超长 section；文件选择后 React 状态更新会让这整张大 section 重新计算和重绘。
 
 在 Chromium 下滚动高度和绘制正常，但用户截图呈现为“后续 DOM 存在、可视区域被白色 section 截断/未重绘”的形态。结合截图和代码结构，判断是嵌套滚动 + 超长单 section + file input 状态更新导致的浏览器绘制/滚动高度兼容问题。
 
@@ -59,6 +70,11 @@ Chromium 复现验证：
   - 每个镜头卡片增加 `data-video-scene-id`，方便后续浏览器验证和问题定位。
   - 对 `spokenText / subtitle / camera / shootingGuide` 增加前端兜底，避免 Dify 草稿字段缺失时出现只有标题、正文区域像空白的情况。
   - 上传行的文件名区域改为 `min-w-0 flex-1 truncate`，右侧状态改为 `shrink-0`，避免长文件名挤压按钮或撑乱布局。
+- `apps/content-growth-platform/src/components/app/dashboard-shell.tsx`
+  - 将 dashboard 布局改为“导航响应式、内容只渲染一次”。
+  - 桌面侧栏保留为 `hidden ... lg:flex`。
+  - 移动 header 保留为 `lg:hidden`。
+  - 统一的 `<main>` / 内容卡片只包含一份 `{children}`，避免隐藏分支重复挂载页面组件。
 
 ## 本地验证
 
@@ -83,16 +99,27 @@ WebKit 验证：
 - 尝试运行 `python3 -m playwright install webkit` 补装 WebKit。
 - 该进程长时间无输出，已终止，未能完成 Safari/WebKit 引擎复测。
 
-## 待线上验证
+## 线上验证
 
-部署后需要用生产 demo 登录态复测：
+第一次线上验证：
+
+- commit `8b53c18` 已部署到服务器。
+- 服务器 build 通过，PM2 `content-growth-platform` online。
+- 生产 Playwright 复测选择镜头 1 视频后：
+  - 镜头 2 / 镜头 3 文案可见。
+  - 没有 pageerror 和 console error。
+  - 但 `[data-video-scene-id]` 数量为 24，暴露 DashboardShell 双渲染问题。
+  - 截图留存：
+    - `/tmp/xhs-video-scenes-fixed-production-after-select.png`
+    - `/tmp/xhs-video-scenes-fixed-production-after-select-full.png`
+
+第二次线上验证待部署 DashboardShell 单渲染修复后补充：
 
 1. 打开 `/dashboard/today/video/7765283b-df5e-4946-b8e4-6db11b52ef7b`。
 2. 选择镜头 1 的测试视频文件。
-3. 确认页面出现 12 个 `[data-video-scene-id]`。
-4. 确认镜头 2 文案 `说实话，很多客户看了几十套房还是拿不定主意。` 可见。
-5. 确认镜头 3 文案 `问题不在房子本身，而在成交逻辑没搞懂。` 可见。
-6. 截图留存部署后的页面状态。
+3. 确认页面只有 12 个 `[data-video-scene-id]`。
+4. 确认镜头 2 / 镜头 3 文案可见。
+5. 确认没有 pageerror / console error。
 
 ## 未覆盖与风险
 
