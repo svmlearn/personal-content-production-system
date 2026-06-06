@@ -180,18 +180,24 @@ Dify app key 已配置到服务器，worker 可以启动并调用 Dify workflow�
 
 真实内容生成闭环仍未完成，当前阻塞点是 Dify 控制台内模型供应商 API key 无效。
 
-代码侧已修复 Dify streaming 提前终止 bug，但截至本文档记录，本地改动尚未提交 / 推送 / 部署到服务器。
+代码侧已修复 Dify streaming 提前终止 bug，并已提交、推送、部署到服务器。
+
+部署状态：
+
+- commit：`2ea7476 fix: wait for dify workflow terminal events`
+- Gitee `main`：已推送到 `2ea7476`
+- 服务器 `/opt/personal-website`：已 fast-forward 到 `2ea7476`
+- 服务器 build：`pnpm --dir apps/content-growth-platform build` 通过
+- PM2：`content-growth-platform` 已重启，pid `605026`
 
 ## 下一步
 
 1. 在 Dify 控制台修复该 workflow 使用的模型供应商 API key。
-2. 将本轮 `dify-workflow-client.ts` 修复提交、推送并部署到服务器。
-3. 重新创建一个低污染测试 batch。
-4. run-once 执行 `content-generation worker`。
-5. 验证：
+2. 重新创建一个低污染测试 batch。
+3. run-once 执行 `content-generation worker`。
+4. 验证：
    - `content_generation_jobs.status=succeeded`
    - `dify_workflow_run_id` 有真实值
    - `output_json` 有 Dify `final_result_json`
    - `daily_content_tasks` 写入 Dify 生成的 `generatedArticle` / `generatedVideoScript`
    - `/api/member/tasks/today?date=<测试日期>` 返回同一份内容
-
