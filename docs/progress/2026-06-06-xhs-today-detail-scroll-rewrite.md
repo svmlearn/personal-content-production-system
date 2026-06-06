@@ -77,14 +77,33 @@ member 详情组件原本按独立移动端页面写，没有在 dashboard 子�
   - 修复前 `windowScrollY` 可到 `1200`，根文档 `scrollHeight=3711`。
   - 动态验证 dashboard 内容卡加 `relative` 后，`windowScrollY=0`，根文档 `scrollHeight=900`，内层滚动容器仍可滚动。
 
+最终线上复测：
+
+- 服务器代码最终在 `4875d7e`。
+- PM2 `content-growth-platform` 已重启并保持 `online`，当时 pid 为 `699680`。
+- 复测图文详情页：
+  - `windowScrollY=0`
+  - `document.documentElement.scrollHeight=900`
+  - 内层滚动容器 `scrollHeight=1324`，滚到底 `scrollTop=506`
+- 复测视频详情页：
+  - `windowScrollY=0`
+  - `document.documentElement.scrollHeight=900`
+  - 内层滚动容器 `scrollHeight=3823`，滚到底 `scrollTop=3005`
+- `POST /api/daily-content-tasks/7765283b-df5e-4946-b8e4-6db11b52ef7b/article-rewrite` 使用空 payload 返回预期 `400 VALIDATION_FAILED`，证明新 API 在线上生效，且该验证没有触发真实 LLM 改写。
+- `GET /api/health` 仍返回 `503`，但 app/db 正常，失败项为历史已记录的 Aliyun OSS 环境变量缺失，不是本次改动引入。
+
+## 提交与发布状态
+
+- `d2c3f04 fix: improve today detail scrolling and article rewrite`
+- `4875d7e fix: prevent dashboard detail root scrolling`
+- 两个 commit 均已推送到 Gitee `origin/main`。
+- 代码已部署到服务器；本次后续如仅补充本文档，不需要再次推服务器。
+
 ## 隐性风险与未覆盖范围
 
 1. 新增改写按钮会触发真实 LLM 改写；本地没有登录态，因此未实际调用线上模型完成端到端文案改写。
 2. standalone revise 分支会写回 `daily_content_tasks`，但不会创建新的 `content_drafts` 版本；只有今日任务本身已有关联 `contentVariantId` 时，才进入旧图文工作台版本链。
-3. 线上部署后需要用真实 demo 登录态检查：
-   - 图文详情页底部图片区能否完整滚动到。
-   - 视频脚本详情页镜头列表能否完整滚动到。
-   - 图文“一键改写”输入建议后是否返回新版内容并持久化。
+3. 本轮没有实际提交一条非空改写建议，因此没有消耗真实 LLM 去验证“生成新版文案”的端到端结果；只验证了新 API 在线上可达、schema 校验正常、页面入口可见。
 
 ## 回滚路径
 
