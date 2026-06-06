@@ -14,6 +14,10 @@ const serviceSource = readFileSync(
   new URL("./content-generation-batch-service.ts", import.meta.url),
   "utf8",
 );
+const difyWorkflowClientSource = readFileSync(
+  new URL("./dify-workflow-client.ts", import.meta.url),
+  "utf8",
+);
 
 test("content generation worker only drives the run-next single-job route", () => {
   assert.match(workerSource, /CONTENT_GENERATION_WORKER_RUN_ONCE/);
@@ -44,4 +48,13 @@ test("Dify workflow inputs are compacted before reaching Start node limits", () 
   assert.match(serviceSource, /calendar_task_json: stringifyDifyJsonInput\(difyCalendarTask\)/);
   assert.match(serviceSource, /fallback_knowledge_text: clampDifyInputText\(fallbackKnowledgeText\)/);
   assert.doesNotMatch(serviceSource, /calendar_task_json: JSON\.stringify\(calendarTask\)/);
+});
+
+test("Dify streaming waits for workflow terminal events instead of node status", () => {
+  assert.match(difyWorkflowClientSource, /eventName === "workflow_finished"/);
+  assert.match(difyWorkflowClientSource, /eventName === "message_end"/);
+  assert.match(difyWorkflowClientSource, /DIFY_WORKFLOW_FAILED/);
+  assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "succeeded"/);
+  assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "failed"/);
+  assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "stopped"/);
 });

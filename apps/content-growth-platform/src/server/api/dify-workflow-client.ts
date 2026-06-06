@@ -139,15 +139,23 @@ async function parseDifyStreamingResponse(response: Response): Promise<DifyWorkf
         finalResultJson = currentFinalJson;
       }
 
-      if (
-        finalResultJson !== undefined &&
-        isDifyStreamingTerminalEvent({ eventName, status: eventStatus })
-      ) {
-        return {
-          finalResultJson,
-          workflowRunId,
-          rawOutputs,
-        };
+      if (isDifyStreamingTerminalEvent({ eventName, status: eventStatus })) {
+        if (finalResultJson !== undefined) {
+          return {
+            finalResultJson,
+            workflowRunId,
+            rawOutputs,
+          };
+        }
+
+        if (eventStatus === "failed" || eventStatus === "stopped") {
+          const errorMessage =
+            readString(eventData.error) ||
+            readString(event.error) ||
+            "Dify workflow finished without outputs.final_result_json.";
+
+          throw new ApiError(502, "DIFY_WORKFLOW_FAILED", errorMessage);
+        }
       }
     }
 
@@ -186,13 +194,9 @@ function isDifyStreamingTerminalEvent(input: {
   eventName: string | null;
   status: string | null;
 }) {
-  return (
-    input.eventName === "workflow_finished" ||
-    input.eventName === "message_end" ||
-    input.status === "succeeded" ||
-    input.status === "failed" ||
-    input.status === "stopped"
-  );
+  void input.status;
+
+  return input.eventName === "workflow_finished" || input.eventName === "message_end";
 }
 
 function parsePositiveInt(value: string | undefined, fallback: number) {
