@@ -967,43 +967,66 @@ export function MemberVideoTaskPage({
         </section>
       ) : null}
 
-      <section className="rounded-lg border border-black/10 bg-white">
-        <div className="border-b border-black/10 px-4 py-3">
-          <p className="text-sm font-semibold">镜头脚本与素材上传</p>
+      <section className="rounded-lg border border-black/10 bg-white p-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold">镜头脚本与素材上传</p>
+            <p className="mt-1 text-xs text-black/50">
+              共 {script.scenes.length} 个镜头，成员需上传 {requiredSceneCount} 段素材。
+            </p>
+          </div>
+          <span className="w-fit rounded-lg bg-[#ece8dc] px-2 py-1 text-[11px] text-black/55">
+            已选择 {selectedFileCount}
+          </span>
         </div>
-        <div className="divide-y divide-black/10">
-          {script.scenes.map((scene) => (
-            <div key={scene.id} className="space-y-3 p-4">
+      </section>
+
+      <div className="grid gap-3">
+        {script.scenes.map((scene) => {
+          const selectedFile = selectedFiles[scene.id] ?? null;
+          const sceneSpokenText = scene.spokenText.trim() || scene.subtitle.trim() || scene.materialSlot;
+          const sceneSubtitle = scene.subtitle.trim() || sceneSpokenText;
+          const sceneCamera = scene.camera.trim() || "使用团队素材或项目实拍素材。";
+          const sceneShootingGuide =
+            scene.shootingGuide.trim() ||
+            (scene.required ? "按口播内容拍摄一段清晰素材。" : "使用团队素材或项目实拍素材。");
+
+          return (
+            <section
+              key={scene.id}
+              className="space-y-3 rounded-lg border border-black/10 bg-white p-4"
+              data-video-scene-id={scene.id}
+            >
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0">
                   <p className="text-xs text-black/45">
                     镜头 {scene.order} · {scene.durationSeconds}s
                   </p>
-                  <h2 className="mt-1 text-base font-semibold">{scene.title}</h2>
+                  <h2 className="mt-1 text-base font-semibold leading-6">{scene.title}</h2>
                 </div>
-                <span className="rounded-lg bg-[#ece8dc] px-2 py-1 text-[11px] text-black/55">
+                <span className="shrink-0 rounded-lg bg-[#ece8dc] px-2 py-1 text-[11px] text-black/55">
                   {scene.required ? "必传" : "可选"}
                 </span>
               </div>
-              <p className="whitespace-pre-wrap text-sm leading-7 text-black/72">{scene.spokenText}</p>
+              <p className="whitespace-pre-wrap text-sm leading-7 text-black/72">{sceneSpokenText}</p>
               <div className="grid gap-2 text-xs leading-5 text-black/55">
-                <p>字幕：{scene.subtitle}</p>
-                <p>拍法：{scene.camera}</p>
-                <p>提示：{scene.shootingGuide}</p>
+                <p>字幕：{sceneSubtitle}</p>
+                <p>拍法：{sceneCamera}</p>
+                <p className="whitespace-pre-wrap">提示：{sceneShootingGuide}</p>
               </div>
               {scene.required ? (
                 <label className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-black/20 bg-[#f7f4ea] px-3 py-3 text-sm">
-                  <span className="min-w-0 truncate">
-                    {selectedFiles[scene.id]?.name ?? scene.materialSlot}
-                    {selectedFiles[scene.id] ? (
+                  <span className="min-w-0 flex-1 truncate">
+                    {selectedFile?.name ?? scene.materialSlot}
+                    {selectedFile ? (
                       <span className="ml-2 text-xs text-black/45">
-                        {formatAssetSize(selectedFiles[scene.id]!.size)}
+                        {formatAssetSize(selectedFile.size)}
                       </span>
                     ) : null}
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[#1f6f68]">
+                  <span className="inline-flex shrink-0 items-center gap-1 text-[#1f6f68]">
                     <Upload className="size-4" aria-hidden="true" />
-                    {selectedFiles[scene.id] ? "已选择" : "选择"}
+                    {selectedFile ? "已选择" : "选择"}
                   </span>
                   <input
                     type="file"
@@ -1021,17 +1044,17 @@ export function MemberVideoTaskPage({
                 </label>
               ) : (
                 <div className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-[#f7f4ea] px-3 py-3 text-sm">
-                  <span className="min-w-0 truncate">{scene.materialSlot}</span>
-                  <span className="inline-flex items-center gap-1 text-[#1f6f68]">
+                  <span className="min-w-0 flex-1 truncate">{scene.materialSlot}</span>
+                  <span className="inline-flex shrink-0 items-center gap-1 text-[#1f6f68]">
                     <Check className="size-4" aria-hidden="true" />
                     团队素材
                   </span>
                 </div>
               )}
-            </div>
-          ))}
-        </div>
-      </section>
+            </section>
+          );
+        })}
+      </div>
 
       <section className="rounded-lg border border-black/10 bg-white p-4">
         <div className="flex items-start justify-between gap-3">
