@@ -98,7 +98,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </div>
         </aside>
         <main className="flex h-screen min-w-0 flex-1 flex-col overflow-hidden p-6 lg:p-10">
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-[#eadfd7] bg-white shadow-[0_24px_90px_rgba(77,53,43,0.08)]">
+          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-[#eadfd7] bg-white shadow-[0_24px_90px_rgba(77,53,43,0.08)]">
             {children}
           </div>
         </main>

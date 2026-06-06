@@ -32,6 +32,8 @@ member 详情组件原本按独立移动端页面写，没有在 dashboard 子�
   - `MemberArticleTaskPage` 增加可选 `enableArticleRewrite`。
   - dashboard 今日图文详情页显示“一键改写”输入框和按钮。
   - 改写成功后直接替换当前页面展示的标题、正文、标签和 CTA。
+- `apps/content-growth-platform/src/components/app/dashboard-shell.tsx`
+  - dashboard 主内容卡增加 `relative`，防止长视频详情子树继续撑高根文档滚动区域。
 - `apps/content-growth-platform/src/app/api/daily-content-tasks/[taskId]/article-rewrite/route.ts`
   - 新增今日图文改写 API。
 - `apps/content-growth-platform/src/server/api/schemas.ts`
@@ -65,6 +67,15 @@ member 详情组件原本按独立移动端页面写，没有在 dashboard 子�
 - 本地服务可启动：`http://127.0.0.1:3100`。
 - 使用历史 demo 账号 `demo@jingjing.local / jingjing-demo` 登录本地库返回 `invalid-credentials`，与此前 handoff 中“本地没有 seed demo owner”的记录一致。
 - 因 dashboard layout 必须真实登录并查商家档案，本轮未在本地完成鉴权后截图验证。
+
+线上补充验证：
+
+- 使用生产 demo 登录态和 Playwright 检查 `https://xhs.2young.xin/dashboard/today/article/7765283b-df5e-4946-b8e4-6db11b52ef7b`：
+  - `windowScrollY` 保持 `0`。
+  - 内层滚动容器：`clientHeight=818`，`scrollHeight=1324`，滚到底 `scrollTop=506`。
+- 使用生产 demo 登录态和 Playwright 检查 `https://xhs.2young.xin/dashboard/today/video/7765283b-df5e-4946-b8e4-6db11b52ef7b`：
+  - 修复前 `windowScrollY` 可到 `1200`，根文档 `scrollHeight=3711`。
+  - 动态验证 dashboard 内容卡加 `relative` 后，`windowScrollY=0`，根文档 `scrollHeight=900`，内层滚动容器仍可滚动。
 
 ## 隐性风险与未覆盖范围
 
