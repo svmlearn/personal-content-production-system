@@ -89,18 +89,51 @@
 - 大小约 `85KB`
 - H.264 / AAC MP4，可由浏览器 video 标签播放。
 
-## 待线上验证
+## 线上部署与验证
 
-部署后使用生产 demo 账号复测：
+部署：
 
-1. 打开今日视频任务详情。
-2. 选择 2 段素材。
-3. 点击 `AI 剪辑`。
-4. 预期：
-   - 不再出现“视频素材上传服务暂未配置好”。
-   - Network 中不应调用 `/api/media/upload-intents`。
-   - 页面展示 demo 进度模块。
-   - 约 5 秒后展示 `/demo/member-video-final.mp4` 成片预览与下载入口。
+- commit：`bd28af8`
+- 服务器 `/opt/personal-website` 已 fast-forward 到 `origin/main`。
+- 生产构建命令通过：
+  - `pnpm --dir apps/content-growth-platform build`
+- PM2 已重启：
+  - app：`content-growth-platform`
+  - pid：`921740`
+  - status：`online`
+
+生产复测：
+
+- 使用生产 demo 账号真实登录。
+- 打开：
+  - `/dashboard/today/video/ee026522-5c16-4300-b1a3-166fcb49fc2b?verify=bd28af8-demo-flow-compact`
+- 使用 Playwright 真实 `filechooser` 事件选择 2 个测试视频文件。
+- 点击 `AI 剪辑`。
+- 等待 demo 状态机完成。
+
+关键复测结果：
+
+- 页面没有出现 `视频素材上传服务暂未配置好`。
+- `uploadIntentRequestCount: 0`
+  - 没有调用 `/api/media/upload-intents`
+  - 说明 demo 链路不再尝试真实 OSS 上传。
+- `videoEditJobPostCount: 0`
+  - 没有 `POST /api/video-edit-jobs`
+  - 说明 demo 链路没有写真实 `video_edit_jobs`。
+- 页面最终状态：
+  - `hasDemoCompleted: true`
+  - `hasSucceeded: true`
+  - `hasDownload: true`
+  - `videoSrc: https://xhs.2young.xin/demo/member-video-final.mp4`
+- `pageerror` 为空。
+- console error 为空。
+
+截图留存：
+
+- `/tmp/xhs-20260607-demo-video-flow/before-ai-edit.png`
+- `/tmp/xhs-20260607-demo-video-flow/during-demo-progress.png`
+- `/tmp/xhs-20260607-demo-video-flow/after-demo-completed.png`
+- `/tmp/xhs-20260607-demo-video-flow/after-demo-completed-compact.png`
 
 ## 未覆盖与风险
 
