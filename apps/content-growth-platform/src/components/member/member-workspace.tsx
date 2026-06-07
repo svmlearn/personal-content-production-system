@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowLeft,
@@ -583,6 +583,7 @@ export function MemberVideoTaskPage({
 }) {
   const { task, loading, error, reload } = useMemberTask(taskId);
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
+  const sceneFileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [selectedVoiceAudioFile, setSelectedVoiceAudioFile] = useState<File | null>(null);
   const [draftBundle, setDraftBundle] = useState<ContentDraftBundleDto | null>(null);
   const [job, setJob] = useState<VideoEditJob | null>(null);
@@ -1015,7 +1016,7 @@ export function MemberVideoTaskPage({
                 <p className="whitespace-pre-wrap">提示：{sceneShootingGuide}</p>
               </div>
               {scene.required ? (
-                <label className="flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed border-black/20 bg-[#f7f4ea] px-3 py-3 text-sm">
+                <div className="flex items-center justify-between gap-3 rounded-lg border border-dashed border-black/20 bg-[#f7f4ea] px-3 py-3 text-sm">
                   <span className="min-w-0 flex-1 truncate">
                     {selectedFile?.name ?? scene.materialSlot}
                     {selectedFile ? (
@@ -1024,14 +1025,30 @@ export function MemberVideoTaskPage({
                       </span>
                     ) : null}
                   </span>
-                  <span className="inline-flex shrink-0 items-center gap-1 text-[#1f6f68]">
+                  <button
+                    type="button"
+                    className="inline-flex shrink-0 items-center gap-1 text-[#1f6f68] transition hover:text-[#185650] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1f6f68]/30"
+                    aria-label={`选择${scene.title}素材`}
+                    onClick={() => {
+                      sceneFileInputRefs.current[scene.id]?.click();
+                    }}
+                  >
                     <Upload className="size-4" aria-hidden="true" />
                     {selectedFile ? "已选择" : "选择"}
-                  </span>
+                  </button>
                   <input
+                    ref={(node) => {
+                      if (node) {
+                        sceneFileInputRefs.current[scene.id] = node;
+                      } else {
+                        delete sceneFileInputRefs.current[scene.id];
+                      }
+                    }}
                     type="file"
                     accept="video/*,image/*"
-                    className="sr-only"
+                    className="hidden"
+                    tabIndex={-1}
+                    aria-hidden="true"
                     onChange={(event) => {
                       const file = event.target.files?.[0] ?? null;
                       setSelectedFiles((current) => ({
@@ -1041,7 +1058,7 @@ export function MemberVideoTaskPage({
                       setActionError(null);
                     }}
                   />
-                </label>
+                </div>
               ) : (
                 <div className="flex items-center justify-between gap-3 rounded-lg border border-black/10 bg-[#f7f4ea] px-3 py-3 text-sm">
                   <span className="min-w-0 flex-1 truncate">{scene.materialSlot}</span>
