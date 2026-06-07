@@ -112,18 +112,68 @@
     - `src/server/api/video-job-payload.ts` 的 `buildMissingVideoAssetHints` 未使用。
 - `pnpm --dir apps/content-growth-platform build`
 
-## 待线上验证
+## 线上部署与验证
 
-代码部署后需要用同一生产任务复测：
+部署：
 
-- CSS 视口：`1024x630`
-- `deviceScaleFactor: 2`
-- 打开 `/dashboard/today/video/ee026522-5c16-4300-b1a3-166fcb49fc2b`
-- 点击镜头 1 上传按钮并选择测试文件。
-- 预期：
-  - 文件名能展示为已选择。
-  - 内容容器 rect 不再被 focus 触发到 `top: -500`。
-  - 视口下半部分不再命中外层白色容器。
+- commit：`8cd60b9`
+- 服务器 `/opt/personal-website` 已 fast-forward 到 `origin/main`。
+- 生产构建命令通过：
+  - `pnpm --dir apps/content-growth-platform build`
+- PM2 已重启：
+  - app：`content-growth-platform`
+  - pid：`914342`
+  - status：`online`
+
+生产复测：
+
+- 使用生产 demo 账号真实登录。
+- 打开：
+  - `/dashboard/today/video/ee026522-5c16-4300-b1a3-166fcb49fc2b?verify=8cd60b9-upload-focus-2`
+- 视口：
+  - CSS `1024x630`
+  - `deviceScaleFactor=2`
+- 使用 Playwright 真实 `filechooser` 事件点击镜头 1 上传按钮，并选择测试文件：
+  - `/tmp/xhs-20260607-upload-focus-fixed/upload-test-fixed.mp4`
+
+关键复测指标：
+
+- 线上 DOM 已切换到新结构：
+  - `sceneCount: 7`
+  - `buttonCount: 2`
+  - `fileInputCount: 2`
+  - 镜头 file input：`display: none`
+  - file input rect：`0x0`
+- 上传按钮滚入可视区后：
+  - `window.scrollY: 0`
+  - 内容滚动容器 `scrollTop: 517`
+  - 内容滚动容器 rect 仍为 `top: 17, bottom: 613`
+  - 这说明滚动进入了正确的内部滚动容器，而不是 document 级整体上移。
+- 选择文件后：
+  - 上传行显示 `upload-test-fixed.mp4 9.3 MB 已选择`
+  - active element 是可见上传按钮，不再是隐藏 file input。
+  - `window.scrollY` 仍为 `0`
+  - 内容滚动容器 rect 仍为 `top: 17, bottom: 613`
+  - 视口 `y=520` 到 `y=610` 命中镜头 2 section，不再命中外层白色容器。
+- 强制尝试 `input.focus()` 后：
+  - active element 仍是可见按钮。
+  - 隐藏 input 没有成为焦点目标。
+  - `window.scrollY` 仍为 `0`
+  - 内容滚动容器 rect 仍稳定。
+- `pageerror` 为空。
+- console error 为空。
+
+截图留存：
+
+- `/tmp/xhs-20260607-upload-focus-fixed/before-initial.png`
+- `/tmp/xhs-20260607-upload-focus-fixed/before-click-visible.png`
+- `/tmp/xhs-20260607-upload-focus-fixed/after-filechooser-set-files.png`
+- `/tmp/xhs-20260607-upload-focus-fixed/after-hidden-input-focus-attempt.png`
+
+结论：
+
+- 用户截图中的“点击上传后白色挡板遮住下半部分”核心触发点已消除。
+- 上传后页面会停留在正常的内部滚动位置，镜头 2 内容可见。
 
 ## 未覆盖与风险
 
