@@ -134,7 +134,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
         </header>
-        <main className="min-w-0 flex-1 p-4 lg:flex lg:h-screen lg:flex-col lg:overflow-hidden lg:p-10">
+        <main className="min-w-0 flex-1 p-4 lg:flex lg:h-screen lg:flex-col lg:overflow-hidden xl:p-6 2xl:p-10">
           <div className="relative flex min-h-[calc(100vh-8rem)] flex-col overflow-hidden rounded-lg border border-[#eadfd7] bg-white lg:min-h-0 lg:flex-1 lg:shadow-[0_24px_90px_rgba(77,53,43,0.08)]">
             {children}
           </div>
