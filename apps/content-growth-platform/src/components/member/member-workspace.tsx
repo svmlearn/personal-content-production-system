@@ -85,6 +85,102 @@ type AiEditBusyState = {
 };
 
 const memberVideoRenderMaxDurationSeconds = 600;
+const memberVideoDemoEditEnabled =
+  process.env.NEXT_PUBLIC_MEMBER_VIDEO_DEMO_EDIT_ENABLED !== "false";
+const memberVideoDemoResultUrl = "/demo/member-video-final.mp4";
+
+const memberVideoDemoProgressModules = [
+  { key: "material_preparation", label: "素材准备" },
+  { key: "material_match", label: "素材匹配" },
+  { key: "voiceover", label: "配音生成" },
+  { key: "subtitles_timeline", label: "字幕与时间线" },
+  { key: "render", label: "合成渲染" },
+  { key: "save_result", label: "保存成片" },
+] as const;
+
+type MemberVideoDemoStep = {
+  delayMs: number;
+  status: VideoEditJob["status"];
+  currentStage: string;
+  progressPct: number;
+  runningModuleIndex: number | null;
+  moduleProgressPct?: number;
+  includeResultAsset?: boolean;
+};
+
+const memberVideoDemoTimeline = [
+  {
+    delayMs: 0,
+    status: "queued",
+    currentStage: "local_demo_pending_worker",
+    progressPct: 5,
+    runningModuleIndex: null,
+  },
+  {
+    delayMs: 450,
+    status: "preparing",
+    currentStage: "local_demo_preparing_inputs",
+    progressPct: 14,
+    runningModuleIndex: 0,
+    moduleProgressPct: 36,
+  },
+  {
+    delayMs: 1050,
+    status: "running",
+    currentStage: "local_demo_preparing_inputs",
+    progressPct: 24,
+    runningModuleIndex: 0,
+    moduleProgressPct: 92,
+  },
+  {
+    delayMs: 1650,
+    status: "running",
+    currentStage: "local_demo_material_match",
+    progressPct: 38,
+    runningModuleIndex: 1,
+    moduleProgressPct: 78,
+  },
+  {
+    delayMs: 2300,
+    status: "running",
+    currentStage: "local_demo_voiceover",
+    progressPct: 54,
+    runningModuleIndex: 2,
+    moduleProgressPct: 82,
+  },
+  {
+    delayMs: 2950,
+    status: "running",
+    currentStage: "local_demo_timeline",
+    progressPct: 70,
+    runningModuleIndex: 3,
+    moduleProgressPct: 88,
+  },
+  {
+    delayMs: 3600,
+    status: "running",
+    currentStage: "local_demo_rendering",
+    progressPct: 86,
+    runningModuleIndex: 4,
+    moduleProgressPct: 74,
+  },
+  {
+    delayMs: 4300,
+    status: "running",
+    currentStage: "local_demo_saving_result",
+    progressPct: 96,
+    runningModuleIndex: 5,
+    moduleProgressPct: 90,
+  },
+  {
+    delayMs: 5000,
+    status: "succeeded",
+    currentStage: "local_demo_completed",
+    progressPct: 100,
+    runningModuleIndex: null,
+    includeResultAsset: true,
+  },
+] as const satisfies readonly MemberVideoDemoStep[];
 
 type VoiceProfileCreateState = {
   displayName: string;
@@ -587,6 +683,7 @@ export function MemberVideoTaskPage({
   const [selectedVoiceAudioFile, setSelectedVoiceAudioFile] = useState<File | null>(null);
   const [draftBundle, setDraftBundle] = useState<ContentDraftBundleDto | null>(null);
   const [job, setJob] = useState<VideoEditJob | null>(null);
+  const demoEditTimerIds = useRef<number[]>([]);
   const [restoredJobMode, setRestoredJobMode] = useState<"in_flight" | "history" | null>(null);
   const [scriptVariant, setScriptVariant] = useState<ContentVariantDto | null>(null);
   const [busyState, setBusyState] = useState<AiEditBusyState | null>(null);
@@ -598,6 +695,13 @@ export function MemberVideoTaskPage({
     progressPct: 0,
     profile: null,
   });
+
+  useEffect(() => {
+    return () => {
+      demoEditTimerIds.current.forEach((timerId) => window.clearTimeout(timerId));
+      demoEditTimerIds.current = [];
+    };
+  }, []);
 
   useEffect(() => {
     if (!job || isTerminalJob(job.status)) {
@@ -754,6 +858,17 @@ export function MemberVideoTaskPage({
     }
 
     setActionError(null);
+
+    if (memberVideoDemoEditEnabled) {
+      startMemberVideoDemoEdit({
+        taskId: currentTask.id,
+        contentVariantId: getDifyVideoDraftReference(currentTask)?.contentVariantId ?? null,
+        title: script.title,
+        targetDurationSeconds: script.targetDurationSeconds,
+      });
+      return;
+    }
+
     setBusyState({ stage: "preparing_script" });
 
     try {
@@ -852,6 +967,53 @@ export function MemberVideoTaskPage({
       setActionError(formatMemberVideoActionError(requestError));
     } finally {
       setBusyState(null);
+    }
+  }
+
+  function startMemberVideoDemoEdit(input: {
+    taskId: string;
+    contentVariantId?: string | null;
+    title: string;
+    targetDurationSeconds: number;
+  }) {
+    demoEditTimerIds.current.forEach((timerId) => window.clearTimeout(timerId));
+    demoEditTimerIds.current = [];
+
+    const jobId = `member-demo-video-${input.taskId}-${Date.now()}`;
+    const createdAt = new Date().toISOString();
+    setBusyState(null);
+    setRestoredJobMode(null);
+    setJob(
+      buildMemberVideoDemoJob({
+        jobId,
+        taskId: input.taskId,
+        contentVariantId: input.contentVariantId,
+        title: input.title,
+        targetDurationSeconds: input.targetDurationSeconds,
+        createdAt,
+        step: memberVideoDemoTimeline[0]!,
+      }),
+    );
+
+    for (const step of memberVideoDemoTimeline.slice(1)) {
+      const timerId = window.setTimeout(() => {
+        setJob((currentJob) => {
+          if (!currentJob || currentJob.id !== jobId) {
+            return currentJob;
+          }
+
+          return buildMemberVideoDemoJob({
+            jobId,
+            taskId: input.taskId,
+            contentVariantId: input.contentVariantId,
+            title: input.title,
+            targetDurationSeconds: input.targetDurationSeconds,
+            createdAt,
+            step,
+          });
+        });
+      }, step.delayMs);
+      demoEditTimerIds.current.push(timerId);
     }
   }
 
@@ -1981,6 +2143,90 @@ function AiEditProgressStatus({
   );
 }
 
+function buildMemberVideoDemoJob(input: {
+  jobId: string;
+  taskId: string;
+  contentVariantId?: string | null;
+  title: string;
+  targetDurationSeconds: number;
+  createdAt: string;
+  step: MemberVideoDemoStep;
+}): VideoEditJob {
+  const now = new Date().toISOString();
+
+  return {
+    id: input.jobId,
+    draftId: `member-demo-draft-${input.taskId}`,
+    contentVariantId: input.contentVariantId ?? `member-demo-variant-${input.taskId}`,
+    dailyTaskId: input.taskId,
+    status: input.step.status,
+    currentStage: input.step.currentStage,
+    progressPct: input.step.progressPct,
+    failureReason: null,
+    instructionText: `成员端演示 AI 剪辑：${input.title}`,
+    progressModules: buildMemberVideoDemoProgressModules(input.step, now),
+    resultAssets: input.step.includeResultAsset
+      ? [buildMemberVideoDemoResultAsset(input)]
+      : [],
+    createdAt: input.createdAt,
+    updatedAt: now,
+    startedAt: input.createdAt,
+    finishedAt: input.step.includeResultAsset ? now : null,
+  };
+}
+
+function buildMemberVideoDemoProgressModules(
+  step: MemberVideoDemoStep,
+  timestamp: string,
+): VideoEditProgressModuleDto[] {
+  return memberVideoDemoProgressModules.map((module, index) => {
+    const isFinal = step.includeResultAsset;
+    const isSucceeded = isFinal || (step.runningModuleIndex !== null && index < step.runningModuleIndex);
+    const isRunning = step.runningModuleIndex === index && !isFinal;
+    const status: VideoEditProgressModuleDto["status"] = isSucceeded
+      ? "succeeded"
+      : isRunning
+        ? "running"
+        : "pending";
+
+    return {
+      key: module.key,
+      label: module.label,
+      status,
+      progressPct: isSucceeded ? 100 : isRunning ? normalizeProgressPct(step.moduleProgressPct ?? 15) : 0,
+      startedAt: isSucceeded || isRunning ? timestamp : null,
+      finishedAt: isSucceeded ? timestamp : null,
+      detail: null,
+    };
+  });
+}
+
+function buildMemberVideoDemoResultAsset(input: {
+  jobId: string;
+  taskId: string;
+  contentVariantId?: string | null;
+  targetDurationSeconds: number;
+  createdAt: string;
+}) {
+  return {
+    id: `${input.jobId}-result-video`,
+    ownerType: "content_variant",
+    ownerId: input.contentVariantId ?? `member-demo-variant-${input.taskId}`,
+    assetType: "video",
+    storageProvider: "aliyun_oss",
+    bucketName: "local-demo",
+    storageKey: "demo/member-video-final.mp4",
+    mimeType: "video/mp4",
+    fileSizeBytes: 0,
+    etag: "member-video-demo",
+    sortOrder: 0,
+    originUrl: memberVideoDemoResultUrl,
+    signedPreviewUrl: memberVideoDemoResultUrl,
+    signedDownloadUrl: memberVideoDemoResultUrl,
+    createdAt: input.createdAt,
+  } satisfies VideoEditJob["resultAssets"][number];
+}
+
 function getBusyProgressView(state: AiEditBusyState): AiEditProgressView {
   if (state.stage === "preparing_script") {
     return {
@@ -2018,13 +2264,13 @@ function getBusyProgressView(state: AiEditBusyState): AiEditProgressView {
 }
 
 function getJobProgressView(job: VideoEditJob): AiEditProgressView {
-  const currentModule = isOpenStorylineProgressStage(job.currentStage) ? getCurrentVideoProgressModule(job) : null;
+  const currentModule = isMemberVideoProgressStage(job.currentStage) ? getCurrentVideoProgressModule(job) : null;
   const currentStageLabel = getVideoJobStageLabel(job.currentStage, job.status);
   const rawProgressPct = normalizeProgressPct(job.progressPct ?? 0);
 
   return {
     statusLabel: renderJobStatus(job.status),
-    progressPct: isOpenStorylineProgressStage(job.currentStage) || job.status === "succeeded" ? rawProgressPct : null,
+    progressPct: isMemberVideoProgressStage(job.currentStage) || job.status === "succeeded" ? rawProgressPct : null,
     stageLabel: currentStageLabel,
     moduleLabel: currentModule?.label ?? null,
     moduleDetail: currentModule ? getMemberProgressModuleDetail(currentModule.label) : null,
@@ -2035,8 +2281,11 @@ function getJobProgressView(job: VideoEditJob): AiEditProgressView {
   };
 }
 
-function isOpenStorylineProgressStage(stage?: string | null) {
-  return Boolean(stage?.startsWith("openstoryline_") && !stage.endsWith("_failed"));
+function isMemberVideoProgressStage(stage?: string | null) {
+  return Boolean(
+    (stage?.startsWith("openstoryline_") && !stage.endsWith("_failed")) ||
+      stage?.startsWith("local_demo_"),
+  );
 }
 
 function getCurrentVideoProgressModule(job: VideoEditJob) {

@@ -33,6 +33,11 @@ const videoJobStageLabels: Record<string, string> = {
   local_demo_pending_worker: "演示模式等待开始",
   local_demo_claimed: "演示模式已接单",
   local_demo_preparing_inputs: "演示模式准备素材中",
+  local_demo_material_match: "演示模式匹配镜头素材中",
+  local_demo_voiceover: "演示模式生成配音中",
+  local_demo_timeline: "演示模式生成字幕和时间线中",
+  local_demo_rendering: "演示模式合成成片中",
+  local_demo_saving_result: "演示模式保存成片中",
   local_demo_rendering_placeholder: "演示模式生成占位结果中",
   local_demo_completed: "演示模式已完成",
 };
