@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { CalendarDays, FileText, Loader2, RefreshCw, Sparkles, Video } from "lucide-react";
 
-import type { DailyContentWorkspaceDto } from "@/contracts/daily-task";
+import type { DailyContentTaskDto, DailyContentTaskItemDto, DailyContentWorkspaceDto } from "@/contracts/daily-task";
 import type { ContentGenerationBatchDto } from "@/contracts/content-generation";
 
 type ApiErrorPayload = {
@@ -229,23 +229,76 @@ export function DailyTasksWorkspace() {
           </div>
           <div className="grid gap-3 p-5 md:grid-cols-2 xl:grid-cols-4">
             {workspace.upcoming.map((task) => (
-              <div key={task.id} className="rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
-                  {task.taskDate}
-                </p>
-                <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-[#3d332f]">
-                  {task.theme}
-                </p>
-                <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#9b8d84]">
-                  {task.articleTask.title}
-                </p>
-                <GenerationStatusBadge status={task.articleTask.generationStatus} />
-              </div>
+              <FutureTaskCard key={task.id} task={task} />
             ))}
           </div>
         </section>
       </div>
     </div>
+  );
+}
+
+function FutureTaskCard({ task }: { task: DailyContentTaskDto }) {
+  const articleReady = isGeneratedContentItem(task.articleTask);
+  const videoReady = isGeneratedContentItem(task.videoTask);
+
+  return (
+    <article className="flex min-h-[180px] flex-col rounded-2xl border border-[#eadfd7] bg-[#fffaf7] p-4 transition hover:border-[#f2556b]/25 hover:bg-white">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-[#9b8d84]">
+        {task.taskDate}
+      </p>
+      <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-[#3d332f]">
+        {task.theme}
+      </p>
+      <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#9b8d84]">
+        {task.articleTask.title}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <GenerationStatusBadge status={task.articleTask.generationStatus} />
+        {task.videoTask.generationStatus && task.videoTask.generationStatus !== task.articleTask.generationStatus ? (
+          <GenerationStatusBadge status={task.videoTask.generationStatus} labelPrefix="视频" />
+        ) : null}
+      </div>
+      <div className="mt-auto flex flex-wrap gap-2 pt-4">
+        <FutureTaskAction
+          href={`/dashboard/today/article/${task.id}`}
+          label="查看图文"
+          ready={articleReady}
+        />
+        <FutureTaskAction
+          href={`/dashboard/today/video/${task.id}`}
+          label="看脚本"
+          ready={videoReady}
+        />
+      </div>
+    </article>
+  );
+}
+
+function FutureTaskAction({
+  href,
+  label,
+  ready,
+}: {
+  href: string;
+  label: string;
+  ready: boolean;
+}) {
+  if (!ready) {
+    return (
+      <span className="rounded-full border border-[#eadfd7] bg-white/60 px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-[#b7aaa2]">
+        {label}
+      </span>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className="rounded-full border border-[#f2556b]/25 bg-[#fff0ef] px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-[#f2556b] transition hover:border-[#f2556b]/40 hover:bg-[#ffe8e5]"
+    >
+      {label}
+    </Link>
   );
 }
 
@@ -286,7 +339,9 @@ function TaskCard({
       </div>
       <h3 className="mt-5 text-xl leading-7 text-[#1f2328]">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-[#7f7067]">{summary}</p>
-      <GenerationStatusBadge status={generationStatus} />
+      <div className="mt-4">
+        <GenerationStatusBadge status={generationStatus} />
+      </div>
       {materialHints.length ? (
         <div className="mt-5 flex flex-wrap gap-2">
           {materialHints.slice(0, 4).map((item) => (
@@ -302,8 +357,10 @@ function TaskCard({
 
 function GenerationStatusBadge({
   status,
+  labelPrefix,
 }: {
   status?: DailyContentWorkspaceDto["today"]["articleTask"]["generationStatus"];
+  labelPrefix?: string;
 }) {
   if (!status || status === "not_started") {
     return null;
@@ -317,9 +374,19 @@ function GenerationStatusBadge({
   };
 
   return (
-    <span className="mt-4 inline-flex rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1 text-xs text-[#8b7b72]">
+    <span className="inline-flex rounded-full border border-[#eadfd7] bg-[#fffaf7] px-3 py-1 text-xs text-[#8b7b72]">
+      {labelPrefix ? `${labelPrefix} · ` : ""}
       {labels[status]}
     </span>
+  );
+}
+
+function isGeneratedContentItem(item: DailyContentTaskItemDto) {
+  return (
+    item.generationStatus === "succeeded" ||
+    Boolean(item.generatedArticle) ||
+    Boolean(item.generatedVideoScript) ||
+    Boolean(item.contentDraftId && item.contentVariantId)
   );
 }
 

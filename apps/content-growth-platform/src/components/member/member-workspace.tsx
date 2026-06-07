@@ -29,6 +29,7 @@ import {
 
 import type {
   DailyArticleContentPackageDto,
+  DailyContentTaskItemDto,
   DailyContentTaskDto,
   DailyContentWorkspaceDto,
   DailyVideoScriptPackageDto,
@@ -422,16 +423,33 @@ export function MemberCalendarPage() {
           <p className="text-sm font-semibold">未来 7 天内容</p>
         </div>
         <div className="divide-y divide-black/10">
-          {workspace.upcoming.map((task) => (
-            <div key={task.id} className="px-4 py-3">
-              <p className="text-xs text-black/45">{task.taskDate}</p>
-              <p className="mt-1 text-sm font-medium leading-6">{task.theme}</p>
-              <div className="mt-1 flex items-center justify-between gap-3">
-                <p className="min-w-0 text-xs leading-5 text-black/50">{task.articleTask.title}</p>
-                <GenerationStatusPill status={task.articleTask.generationStatus} />
+          {workspace.upcoming.map((task) => {
+            const articleReady = isGeneratedDailyContentItem(task.articleTask);
+            const videoReady = isGeneratedDailyContentItem(task.videoTask);
+
+            return (
+              <div key={task.id} className="px-4 py-3">
+                <p className="text-xs text-black/45">{task.taskDate}</p>
+                <p className="mt-1 text-sm font-medium leading-6">{task.theme}</p>
+                <div className="mt-1 flex items-center justify-between gap-3">
+                  <p className="min-w-0 text-xs leading-5 text-black/50">{task.articleTask.title}</p>
+                  <GenerationStatusPill status={task.articleTask.generationStatus} />
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <MemberFutureTaskAction
+                    href={`/member/article/${task.id}`}
+                    label="查看图文"
+                    ready={articleReady}
+                  />
+                  <MemberFutureTaskAction
+                    href={`/member/video/${task.id}`}
+                    label="查看脚本"
+                    ready={videoReady}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>
@@ -1934,6 +1952,41 @@ function GenerationStatusPill({
     >
       {labelMap[status]}
     </span>
+  );
+}
+
+function MemberFutureTaskAction({
+  href,
+  label,
+  ready,
+}: {
+  href: string;
+  label: string;
+  ready: boolean;
+}) {
+  const className = "rounded-lg px-2.5 py-1.5 text-[11px]";
+
+  if (!ready) {
+    return (
+      <span className={cn(className, "bg-[#ece8dc] text-black/38")}>
+        {label}
+      </span>
+    );
+  }
+
+  return (
+    <Link className={cn(className, "bg-[#e6f1ee] text-[#1f6f68]")} href={href}>
+      {label}
+    </Link>
+  );
+}
+
+function isGeneratedDailyContentItem(item: DailyContentTaskItemDto) {
+  return (
+    item.generationStatus === "succeeded" ||
+    Boolean(item.generatedArticle) ||
+    Boolean(item.generatedVideoScript) ||
+    Boolean(item.contentDraftId && item.contentVariantId)
   );
 }
 
