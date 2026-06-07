@@ -94,15 +94,38 @@
     - `scripts/migrate-factory-source-items-to-merchant-media.mjs` 的 `sourceItem` 未使用。
     - `src/server/api/video-job-payload.ts` 的 `buildMissingVideoAssetHints` 未使用。
 
-## 待线上验证
+## 线上验证
 
-部署后需要复测：
+部署：
 
-1. 用生产 demo 登录。
-2. 打开 `/dashboard/today/video/ee026522-5c16-4300-b1a3-166fcb49fc2b`。
-3. 使用 `1024x630 / DPR 2` 视口复测。
-4. 确认滚动容器 bottom 接近视口底部，不再在页面中段被 `MAIN` 接管。
-5. 截图留存修复后同视口状态。
+- commit：`ca76890`
+- 服务器 `/opt/personal-website` 已 fast-forward。
+- `pnpm --dir apps/content-growth-platform build` 通过。
+- PM2 `content-growth-platform` 已重启并保持 `online`，当时 pid 为 `902522`。
+
+生产复测：
+
+- 使用生产 demo 登录。
+- 打开：
+  - `/dashboard/today/video/ee026522-5c16-4300-b1a3-166fcb49fc2b?verify=ca76890`
+- 视口：
+  - CSS `1024x630`
+  - `deviceScaleFactor=2`
+- 复测结果：
+  - `[data-video-scene-id]` 数量为 7。
+  - 滚动容器高度从修复前的 `548px` 提升到 `596px`。
+  - 滚动容器 bottom 从修复前的 `589` 提升到 `613`，接近 `630px` 视口底部。
+  - `y=600` 命中镜头 1 section，不再在页面中段命中外层 `MAIN`。
+  - `pageerror` 为空。
+  - console error 为空。
+- 截图留存：
+  - `/tmp/xhs-20260607-video-occlusion/narrow-1024-fixed-ca76890.png`
+  - `/tmp/xhs-20260607-video-occlusion/narrow-1024-fixed-ca76890-full.png`
+
+说明：
+
+- `y=614` 以后仍会命中 `MAIN`，这是底部约 16px 的正常外边距，不再是中段遮挡。
+- 修复后的页面仍需要滚动查看后续镜头，这是详情页内容超过视口高度的正常行为。
 
 ## 未覆盖与风险
 
