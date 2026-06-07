@@ -62,15 +62,44 @@
     - `src/server/api/video-job-payload.ts` 的 `buildMissingVideoAssetHints` 未使用。
 - `pnpm --dir apps/content-growth-platform build`
 
-## 待线上验证
+## 线上部署与验证
 
-部署后使用生产 demo 账号验证：
+代码提交：
 
-1. 打开 `/dashboard/today`。
-2. 滚动到 `未来 7 天`。
-3. 确认已生成卡片出现 `查看图文` 和 `看脚本`。
-4. 点击未来任务的 `查看图文`，应进入 `/dashboard/today/article/:taskId` 并显示对应任务内容。
-5. 返回后点击未来任务的 `看脚本`，应进入 `/dashboard/today/video/:taskId` 并显示对应视频脚本。
+- `58b4422 fix: link generated future content tasks`
+
+服务器部署：
+
+- 服务器：`ubuntu@43.129.207.237`
+- 路径：`/opt/personal-website`
+- 操作：`git fetch origin main && git merge --ff-only origin/main && pnpm --dir apps/content-growth-platform build && pm2 restart content-growth-platform --update-env`
+- 结果：服务器从 `bd28af8` fast-forward 到 `58b4422`，生产构建通过，`pm2` 中 `content-growth-platform` 为 `online`，重启后 pid 为 `994492`。
+
+生产 demo 链路验证：
+
+- 登录入口：`https://xhs.2young.xin/login?demo=1&next=%2Fdashboard%2Ftoday%3Fverify%3D58b4422-future-links`
+- 验证页面：`https://xhs.2young.xin/dashboard/today`
+- `未来 7 天` 区域存在。
+- 该区域共检测到 `14` 个详情入口：
+  - `7` 个 `查看图文`
+  - `7` 个 `看脚本`
+- 点击第一条未来任务的 `查看图文` 后进入：
+  - `https://xhs.2young.xin/dashboard/today/article/62a2b444-720e-4fff-96f8-ee90d84202fd`
+  - 页面显示 `已生成文案`
+  - 页面存在 `一键改写`
+  - 未出现错误提示。
+- 点击第一条未来任务的 `看脚本` 后进入：
+  - `https://xhs.2young.xin/dashboard/today/video/62a2b444-720e-4fff-96f8-ee90d84202fd`
+  - 页面检测到 `8` 个 `[data-video-scene-id]` 镜头节点。
+  - 页面存在 `AI 剪辑`
+  - 未出现错误提示。
+- Playwright 未捕获页面错误和 console error。
+
+截图留存：
+
+- `/tmp/xhs-20260607-future-links/dashboard-future-links.png`
+- `/tmp/xhs-20260607-future-links/future-article-detail.png`
+- `/tmp/xhs-20260607-future-links/future-video-detail.png`
 
 ## 未覆盖与风险
 
