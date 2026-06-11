@@ -1,84 +1,435 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>洋 | AI 产品作品集</title>
-    <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main class="labs-shell" aria-label="洋的 AI 产品作品集">
-      <header class="topbar" aria-label="作品集导航">
-        <a class="brand" href="#top" aria-label="回到首页">
-          <span class="brand-mark" aria-hidden="true">Y</span>
-          <strong>Yang Labs</strong>
-        </a>
-        <nav class="nav-links" aria-label="页面章节">
-          <a href="#projects">Projects</a>
-          <a href="#project-detail">Details</a>
-        </nav>
-        <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">
-          BGM OFF
-        </button>
-      </header>
+<!DOCTYPE html>
 
-      <section class="hero-lab" id="top" aria-label="AI 产品项目轮播">
-        <div class="hero-copy">
-          <p class="eyebrow">AI Product Manager / Project Builder</p>
-          <h1>
-            <span>Be the first</span>
-            <span>to build</span>
-          </h1>
-        </div>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yang Labs | Be the first to build</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;700;800;900&amp;family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#ffc329",
+                      "outline": "#8f6f6d",
+                      "surface-container": "#f1eee6",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#5870c3",
+                      "on-primary-fixed": "#410004",
+                      "tertiary-fixed": "#dce1ff",
+                      "background": "#fcf9f1",
+                      "secondary-fixed-dim": "#f9bd22",
+                      "on-primary": "#ffffff",
+                      "straw-hat": "#FCD34D",
+                      "surface-bright": "#fcf9f1",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#b6c4ff",
+                      "rubber-red": "#B91C1C",
+                      "on-secondary-fixed": "#261a00",
+                      "surface-dim": "#dcdad2",
+                      "on-primary-fixed-variant": "#930013",
+                      "on-surface": "#1c1c17",
+                      "primary-container": "#da3437",
+                      "secondary": "#795900",
+                      "on-tertiary-fixed": "#00164e",
+                      "secondary-fixed": "#ffdf9f",
+                      "surface": "#fcf9f1",
+                      "surface-container-high": "#ebe8e0",
+                      "on-secondary-container": "#6f5100",
+                      "on-background": "#1c1c17",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#5b403e",
+                      "primary": "#b61722",
+                      "inverse-on-surface": "#f3f1e9",
+                      "parchment-dark": "#D9C5A3",
+                      "ocean-deep": "#0F172A",
+                      "primary-fixed-dim": "#ffb3ad",
+                      "on-secondary-fixed-variant": "#5c4300",
+                      "on-tertiary-fixed-variant": "#264191",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#b91a24",
+                      "on-primary-container": "#fffbff",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#ffb3ad",
+                      "surface-container-highest": "#e5e2da",
+                      "tertiary": "#3e57a8",
+                      "primary-fixed": "#ffdad7",
+                      "on-error": "#ffffff",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-variant": "#e5e2da",
+                      "inverse-surface": "#31312b",
+                      "surface-container-low": "#f6f3eb",
+                      "outline-variant": "#e4beba"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-md": "40px",
+                      "margin-lg": "80px",
+                      "margin-sm": "16px",
+                      "base": "8px",
+                      "gutter": "24px",
+                      "section-gap": "120px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "inter"
+                      ],
+                      "caption": [
+                              "inter"
+                      ],
+                      "display-lg": [
+                              "anybody"
+                      ],
+                      "label-bold": [
+                              "spaceGrotesk"
+                      ],
+                      "body-md": [
+                              "inter"
+                      ],
+                      "headline-lg": [
+                              "anybody"
+                      ],
+                      "headline-xl": [
+                              "anybody"
+                      ],
+                      "display-lg-mobile": [
+                              "anybody"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "84px",
+                              {
+                                      "lineHeight": "90px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "900"
+                              }
+                      ],
+                      "label-bold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "900"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Custom styles for parchment texture and block shadows to augment Tailwind */
+        .bg-parchment-texture {
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+        }
+        .wanted-poster-shadow {
+            box-shadow: 8px 8px 0px 0px theme('colors.ocean-deep');
+        }
+        .straw-hat-btn {
+            box-shadow: 6px 6px 0px 0px theme('colors.ocean-deep');
+            transition: all 0.1s ease;
+        }
+        .straw-hat-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 2px 2px 0px 0px theme('colors.ocean-deep');
+        }
+        .wood-board-bg {
+            background-color: #8B5A2B;
+            background-image: radial-gradient(circle, transparent 20%, #8B5A2B 20%, #8B5A2B 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #8B5A2B 20%, #8B5A2B 80%, transparent 80%, transparent) 25px 25px, linear-gradient(#5C3A21 2px, transparent 2px) 0 -1px, linear-gradient(90deg, #5C3A21 2px, #8B5A2B 2px) -1px 0;
+            background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+        }
+        .poster-hover-layer {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .group:hover .poster-hover-layer {
+            opacity: 1;
+        }
+        @media (pointer: fine) {
+            body.voyage-cursor-ready,
+            body.voyage-cursor-ready * {
+                cursor: none !important;
+            }
+            .voyage-cursor {
+                --x: -120px;
+                --y: -120px;
+                --angle: 0deg;
+                --scale: 1;
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 9999;
+                width: 44px;
+                height: 44px;
+                pointer-events: none;
+                opacity: 0;
+                transform: translate3d(var(--x), var(--y), 0) translate(-50%, -50%) rotate(var(--angle)) scale(var(--scale));
+                transform-origin: 50% 50%;
+                transition: opacity 0.12s ease;
+                will-change: transform, opacity;
+                filter: drop-shadow(2px 3px 0 rgba(15, 23, 42, 0.35));
+            }
+            .voyage-cursor.is-visible {
+                opacity: 1;
+            }
+            .voyage-cursor.is-hovering {
+                --scale: 1.16;
+            }
+            .voyage-cursor svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        @media (pointer: coarse) {
+            .voyage-cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md relative overflow-x-hidden min-h-screen pb-24 md:pb-0 bg-parchment-texture">
+<!-- TopNavBar (Web) -->
+<header class="hidden md:flex flex-col z-50 w-full full-width top-0 sticky border-b-2 border-ocean-deep bg-background/90 bg-surface-container-low backdrop-blur-md shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
+<div class="relative flex justify-between items-center w-full px-margin-lg py-base max-w-[1440px] mx-auto">
+<!-- Brand -->
+<div class="flex items-center gap-4">
+<img alt="Yang Labs Adventurous Tech Logo" class="w-12 h-12 border-2 border-ocean-deep rounded-DEFAULT shadow-[2px_2px_0px_0px_rgba(15,23,42,1)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF3VUTqAGldmM3CDKL-sin52SItJLRcKtnKqNg_1CbWaOvYPXtv4GVAOOYDg6FqeTpem2vjqQl0KMgOsK42oj48PaKgw1Va7_NDFKcwic8YDDSbidcwNLWMJHtN19IyTtl5CM1Ws9cYamfb9EQB42UFGMNggBoV8poLNmbXrjkWh12_2L-nA459JHGspRyIkomL1NvixLGatzcCX5OQm79GJEsIJbfdjRg0iKlilYfwRfsPcNpcWmDEKgTnx31uPsvk8cCFVztmsSk"/>
+<span class="font-display-lg text-headline-lg font-black text-rubber-red tracking-tighter">Yang Labs</span>
+</div>
+<!-- Navigation -->
+<nav class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-12">
+<a class="text-primary font-bold border-b-4 border-rubber-red pb-1 font-spaceGrotesk text-label-bold tracking-[0.2em]" href="#">首页</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors font-spaceGrotesk text-label-bold tracking-[0.2em] hover:scale-105 hover:bg-secondary-container/20 px-4 py-2 rounded-DEFAULT" href="#bounties">项目</a>
+</nav>
+<!-- Action -->
+<a class="straw-hat-btn bg-rubber-red text-on-primary font-spaceGrotesk text-label-bold px-8 py-3 rounded-DEFAULT border-2 border-ocean-deep tracking-widest" href="mailto:ywangyangw@163.com">
+                联系我
+            </a>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative w-full overflow-hidden bg-background">
+<div class="pointer-events-none absolute inset-0 z-0">
+<img alt="A tall anime ocean voyage background with a pirate ship, wanted posters, a gull messenger, bright blue sea, and a foamy wake extending downward for a two-screen website hero." class="w-full h-full object-cover object-top" src="./assets/images/voyage-long-background-posters-gull.png"/>
+</div>
+<!-- Hero Section -->
+<section class="relative z-10 w-full min-h-[90vh] flex items-center justify-center overflow-hidden">
+<!-- Content -->
+<div class="relative z-20 container mx-auto px-margin-sm md:px-margin-lg text-center max-w-[1440px]">
+</div>
+</section>
+<!-- Projects (Bounties) Section -->
+<section class="relative z-10 w-full py-section-gap px-margin-sm md:px-margin-lg max-w-[1440px] mx-auto overflow-hidden" id="bounties">
+<!-- Dynamic Bounty Gallery -->
+<div class="relative min-h-[800px] flex justify-center items-center flex-wrap gap-8 py-12">
+<!-- Zhiwa AI Interview -->
+<div class="group relative w-64 md:w-80 transform -rotate-6 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10 hover:z-50 cursor-pointer wanted-poster-shadow">
+<img alt="Zhiwa AI Interview Wanted Poster" class="w-full h-auto border-4 border-ocean-deep shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbM9XO2CEM_0PMD7TzSVL_iSH6_UvQS0hLO_wbQqnDH4bfZBkESdFYg-guSUYzx9GW62pRbi4YtzpkgckLtk7gFDI03xf68n6s4geEUugtNiI1eHe74vIJyvttCsUITlOAqDsF3Fk39zmXJqK9Gfyo0HZSNH4W2SAiLdkNJLE_P2DwSsn7v_QsUhio9z8h_XPUHF6hAmWi-LjBxmRX0AzaPxLFOXPzh4K3lFJnSDyYVpSso1dxSKN4kvpTDgXOJDPGkF_fMG_n2faA"/>
+<div class="absolute inset-0 bg-ocean-deep/90 poster-hover-layer flex flex-col justify-center items-center p-6 text-center border-4 border-ocean-deep">
+<h3 class="font-headline-lg text-white font-black mb-4 text-2xl leading-tight">智蛙 AI 面试</h3>
+<p class="font-body-md text-surface-variant mb-6">从 AI 面试延展到申论备考，搭建题库、AI 批改、热点生成、逐句分析和付费转化指标体系。</p>
+<a aria-label="View 智蛙 AI 面试 project" class="bg-rubber-red text-white font-spaceGrotesk px-6 py-2 border-2 border-white hover:bg-white hover:text-rubber-red transition-colors uppercase tracking-wider text-sm" href="./projects/zhiwa-ai-interview/index.html" rel="noreferrer" target="_blank">View Project</a>
+</div>
+<div class="absolute -top-3 -left-3 w-6 h-6 bg-gray-400 rounded-full border-2 border-ocean-deep shadow-inner z-20"></div>
+</div>
+<!-- AI Learning Companion -->
+<div class="group relative w-64 md:w-80 transform rotate-3 hover:rotate-0 hover:scale-110 transition-all duration-500 z-20 hover:z-50 cursor-pointer wanted-poster-shadow md:-ml-12 mt-12 md:mt-0">
+<img alt="AI Learning Companion Wanted Poster" class="w-full h-auto border-4 border-ocean-deep shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFYcDZ0JAoRPKju3gVuyAOxS1NrlnQAQzhr0ZKpYR8cmn5zd598dqB4V7jgszTiBPRwdzNRpUZguMZy6u0zuGMTbXd1emSoPRlCrAXijznlsJbFvq0YIyD1ASeNhpym1xNlGZDb4yNOHVPQiuxIynA0517zB53SodcO-jW62Xm9tuQ8q6h2mQY65HMrTQsXUANwYcl97FH44SbITnZEi5h5-onZD1kXqSyS6YLT7XSM3KWmKmdrDW8ol5QQPD1cEYjSS4R7XzanI8Z"/>
+<div class="absolute inset-0 bg-ocean-deep/90 poster-hover-layer flex flex-col justify-center items-center p-6 text-center border-4 border-ocean-deep">
+<h3 class="font-headline-lg text-white font-black mb-4 text-2xl leading-tight">AI 学习伴侣</h3>
+<p class="font-body-md text-surface-variant mb-6">把社群老师能力拆成 Agent、记忆、语音和互动游戏，做商业咨询、职业规划和长期陪伴体验。</p>
+<a aria-label="View AI 学习伴侣 project" class="bg-rubber-red text-white font-spaceGrotesk px-6 py-2 border-2 border-white hover:bg-white hover:text-rubber-red transition-colors uppercase tracking-wider text-sm" href="https://learn.2young.xin/" rel="noreferrer" target="_blank">View Project</a>
+</div>
+<div class="absolute -top-3 right-4 w-6 h-6 bg-gray-400 rounded-full border-2 border-ocean-deep shadow-inner z-20"></div>
+</div>
+<!-- Matrix Growth Platform -->
+<div class="group relative w-64 md:w-80 transform -rotate-2 hover:rotate-0 hover:scale-110 transition-all duration-500 z-30 hover:z-50 cursor-pointer wanted-poster-shadow md:-ml-12 mt-12 md:mt-32">
+<img alt="Matrix Growth Platform Wanted Poster" class="w-full h-auto border-4 border-ocean-deep shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbO-zV587OQdAScfOJucujc8T2zeXrBzgAZCavLDpZV6eKu7vdeavQPqPxsNLxaG-lbaULQiVvvhfLquChrGG-Bh5Sb_B8BoM2G8_aqalre9Wm4IWvzmafeBOk6GvP6Yq1J_mvp1SZAxjOTQ-N6VSP8C7qN2cNKS3Z6p-gv_myt89g6aNkShmeGHudRMymVZil5j3HJVhZUF3vkWvQXEUMksK00VgftcCkLUFjdmtOo7N92C1oBVQACByMj4M8oDUuyhk14YuNSZ-m"/>
+<div class="absolute inset-0 bg-ocean-deep/90 poster-hover-layer flex flex-col justify-center items-center p-6 text-center border-4 border-ocean-deep">
+<h3 class="font-headline-lg text-white font-black mb-4 text-2xl leading-tight">内容获客平台</h3>
+<p class="font-body-md text-surface-variant mb-6">围绕商家内容生产、素材库、咨询 Agent、图文视频工作台和内容队列搭建完整产品系统。</p>
+<a aria-label="View 内容获客平台 project" class="bg-rubber-red text-white font-spaceGrotesk px-6 py-2 border-2 border-white hover:bg-white hover:text-rubber-red transition-colors uppercase tracking-wider text-sm" href="https://xhs.2young.xin/login?demo=1&amp;next=%2Fdashboard" rel="noreferrer" target="_blank">View Project</a>
+</div>
+<div class="absolute -top-4 left-1/2 w-6 h-6 bg-gray-400 rounded-full border-2 border-ocean-deep shadow-inner z-20 transform -translate-x-1/2"></div>
+</div>
+<!-- FDE Enterprise AI -->
+<div class="group relative w-64 md:w-80 transform rotate-6 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10 hover:z-50 cursor-pointer wanted-poster-shadow md:-ml-12 mt-12 md:-mt-12">
+<img alt="FDE Enterprise AI Wanted Poster" class="w-full h-auto border-4 border-ocean-deep shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyFHRMf6qNTLpZsjMcXWG14IAciVml9n-gDM8YdgAsKQTNf07U6JHpo1mo0dL9Is3PUMNmKV49JaM9w006vC8lVFJOyFGukbYqF99wiqN-7ccq9RDHMvWFcVgqr8bUCzCd7SbX36pYi9H0ORi8786i0sV8ML_bptYgoK8vTBa-JiH7ba9wHAYZ-ObFIs0LVk8mqaGh-uAvyUuqnhO75cLc9txhK-4hd38jFqFqE7gbHSydQp7wIs1p-xbXQjTyWOCVioZo3w7Xh-kX"/>
+<div class="absolute inset-0 bg-ocean-deep/90 poster-hover-layer flex flex-col justify-center items-center p-6 text-center border-4 border-ocean-deep">
+<h3 class="font-headline-lg text-white font-black mb-4 text-2xl leading-tight">FDE 企业 AI</h3>
+<p class="font-body-md text-surface-variant mb-6">面向企业的大模型转型范式集合，把销售、客服、知识库、会议、BI 和流程 Agent 做成可体验样例。</p>
+<a aria-label="View FDE 企业 AI project" class="bg-rubber-red text-white font-spaceGrotesk px-6 py-2 border-2 border-white hover:bg-white hover:text-rubber-red transition-colors uppercase tracking-wider text-sm" href="https://fde.2young.xin/" rel="noreferrer" target="_blank">View Project</a>
+</div>
+<div class="absolute top-4 -right-2 w-6 h-6 bg-gray-400 rounded-full border-2 border-ocean-deep shadow-inner z-20"></div>
+</div>
+<!-- Harness Engineering -->
+<div class="group relative w-64 md:w-80 transform -rotate-4 hover:rotate-0 hover:scale-110 transition-all duration-500 z-20 hover:z-50 cursor-pointer wanted-poster-shadow mt-12 md:mt-16 md:ml-8">
+<img alt="Harness Engineering Wanted Poster" class="w-full h-auto border-4 border-ocean-deep shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD55joe9mB93GOvWZzxTdtTcKm_H2r3_wJeoKdiUkT7X1VBxExd9gqeYUmEFzS2SjCvw4vd9Re23aNQROulEqvtrJ2pP8afb7f6qu9H5ZJJY3hxnWuma0VBSsB1oRpXfTxsG5M8VHih-upj9MiQI15ZplPrii5HhGxJvT3K0ew4CRlpFmixHz7-qjJYvg_BecPj0mx210oj9leAcX-H3N2oUjAhVzd-XN8kPBLzwWI1jieDj7Wd7qVjCn1ml9coLVb3PFFYGz1cy0Q1"/>
+<div class="absolute inset-0 bg-ocean-deep/90 poster-hover-layer flex flex-col justify-center items-center p-6 text-center border-4 border-ocean-deep">
+<h3 class="font-headline-lg text-white font-black mb-4 text-2xl leading-tight">Agent Harness</h3>
+<p class="font-body-md text-surface-variant mb-6">把 Vibe Coding 推到可靠交付：需求、设计、开发、审查、修复、验证和经验沉淀组成闭环。</p>
+<a aria-label="View Agent Harness on GitHub" class="bg-rubber-red text-white font-spaceGrotesk px-6 py-2 border-2 border-white hover:bg-white hover:text-rubber-red transition-colors uppercase tracking-wider text-sm" href="https://github.com/svmlearn/codex-agent-harness" rel="noreferrer" target="_blank">View Project</a>
+</div>
+<div class="absolute -top-3 left-4 w-6 h-6 bg-gray-400 rounded-full border-2 border-ocean-deep shadow-inner z-20"></div>
+</div>
+</div>
+</section>
+<section class="relative z-10 w-full px-margin-sm md:px-margin-lg pb-16 -mt-10">
+<div class="max-w-[1440px] mx-auto flex justify-center">
+<p class="inline-flex items-center border-2 border-ocean-deep bg-surface-container-low/80 backdrop-blur px-5 py-3 font-spaceGrotesk text-label-bold text-ocean-deep shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] uppercase tracking-widest">
+Yang Labs · Be the First to Build
+</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-end px-margin-sm pb-4 md:hidden bg-surface-container-high rounded-t-full border-t-2 border-ocean-deep shadow-[0_-4px_10px_rgba(0,0,0,0.1)] bg-parchment-dark">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full p-3 -translate-y-4 border-2 border-ocean-deep shadow-[4px_4px_0_#0F172A] scale-110 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-spaceGrotesk text-caption mt-1">首页</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors group" href="#bounties">
+<span class="material-symbols-outlined text-2xl group-hover:-translate-y-1 transition-transform">workspace_premium</span>
+<span class="font-spaceGrotesk text-caption mt-1">项目</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors group" href="mailto:ywangyangw@163.com">
+<span class="material-symbols-outlined text-2xl group-hover:-translate-y-1 transition-transform">mail</span>
+<span class="font-spaceGrotesk text-caption mt-1">联系</span>
+</a>
+</nav>
+<script>
+(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
-        <div class="shape shape-one" aria-hidden="true"></div>
-        <div class="shape shape-two" aria-hidden="true"></div>
+    const cursor = document.createElement("div");
+    cursor.className = "voyage-cursor";
+    cursor.setAttribute("aria-hidden", "true");
+    cursor.innerHTML = `
+        <svg viewBox="0 0 64 64" role="img" aria-label="">
+            <path d="M32 4 C45 11 52 23 53 37 C45 33 38 31 32 31 C26 31 19 33 11 37 C12 23 19 11 32 4Z" fill="#FCD34D" opacity="0.18"/>
+            <path d="M33 7 L50 36 L34 30 Z" fill="#FCF9F1" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M31 8 L15 38 L31 31 Z" fill="#F6E4B8" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M32 6 L32 45" fill="none" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M35 11 C42 7 47 13 53 10 L53 20 C47 23 42 17 35 21 Z" fill="#B91C1C" stroke="#0F172A" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M16 42 C22 48 42 48 49 42 L44 53 H22 Z" fill="#0F172A" stroke="#0F172A" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M23 45 C29 49 38 49 44 45" fill="none" stroke="#FCD34D" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="32" cy="46" r="3.5" fill="#FCF9F1" stroke="#0F172A" stroke-width="2"/>
+        </svg>
+    `;
 
-        <section class="arcade-carousel" id="projects" aria-label="项目卡片滑动区">
-          <p class="sr-only" id="carouselHint">
-            使用左右按钮、键盘方向键、鼠标滚轮或拖拽切换项目卡片。
-          </p>
-          <div class="carousel-stage" id="carouselStage" aria-describedby="carouselHint"></div>
-          <div class="carousel-controls" aria-label="项目卡片控制">
-            <button class="circle-button" id="prevProject" type="button" aria-label="Previous card">
-              <span aria-hidden="true">‹</span>
-            </button>
-            <button class="circle-button is-primary" id="nextProject" type="button" aria-label="Next card">
-              <span aria-hidden="true">›</span>
-            </button>
-          </div>
-        </section>
-      </section>
+    document.body.appendChild(cursor);
+    document.body.classList.add("voyage-cursor-ready");
 
-      <section class="project-detail" id="project-detail" aria-label="项目详情">
-        <div class="detail-inner">
-          <div class="detail-toolbar">
-            <div>
-              <p class="detail-kicker" id="detailKicker">PROJECT DETAIL</p>
-              <h2 id="detailTitle">项目详情</h2>
-            </div>
-            <div class="detail-switches" id="detailSwitches" aria-label="切换项目详情"></div>
-          </div>
+    const interactiveSelector = "a, button, [role='button'], .group, input, textarea, select";
 
-          <div class="detail-layout">
-            <aside class="detail-aside" aria-label="项目概览">
-              <span class="detail-code" id="detailCode"></span>
-              <p class="detail-intro" id="detailIntro"></p>
-              <div class="detail-proof" id="detailProof" aria-label="项目关键词"></div>
-              <div class="detail-actions" id="detailActions"></div>
-            </aside>
+    let targetX = -120;
+    let targetY = -120;
+    let lastX = null;
+    let lastY = null;
+    let angle = 0;
+    let visible = false;
 
-            <div class="detail-main">
-              <div class="detail-flow" id="detailFlow" aria-label="项目链路"></div>
-              <div class="detail-sections" id="detailSections"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    function updateHoverState(event) {
+        const target = event.target instanceof Element
+            ? event.target
+            : document.elementFromPoint(targetX, targetY);
+        cursor.classList.toggle("is-hovering", Boolean(target && target.closest(interactiveSelector)));
+    }
 
-    <audio id="bgm" src="./assets/audio/daoxiang.mp3" preload="none" loop></audio>
-    <script src="./script.js?v=20260604-fde-entry"></script>
-  </body>
-</html>
+    window.addEventListener("pointermove", (event) => {
+        targetX = event.clientX;
+        targetY = event.clientY;
+
+        if (lastX !== null && lastY !== null) {
+            const dx = targetX - lastX;
+            const dy = targetY - lastY;
+            if (Math.hypot(dx, dy) > 0.5) {
+                angle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+            }
+        }
+
+        lastX = targetX;
+        lastY = targetY;
+        visible = true;
+        cursor.style.setProperty("--x", `${targetX}px`);
+        cursor.style.setProperty("--y", `${targetY}px`);
+        cursor.style.setProperty("--angle", `${angle}deg`);
+        cursor.classList.add("is-visible");
+        updateHoverState(event);
+    }, { passive: true });
+
+    document.addEventListener("pointerover", updateHoverState, { passive: true });
+    document.addEventListener("pointerout", updateHoverState, { passive: true });
+    document.addEventListener("mouseleave", () => {
+        visible = false;
+        cursor.classList.remove("is-visible");
+        lastX = null;
+        lastY = null;
+    }, { passive: true });
+    document.addEventListener("mouseenter", () => {
+        if (visible) cursor.classList.add("is-visible");
+    }, { passive: true });
+})();
+</script>
+</body></html>
