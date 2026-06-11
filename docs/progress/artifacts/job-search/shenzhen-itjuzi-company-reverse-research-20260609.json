@@ -1,0 +1,285 @@
+{
+  "collectedAt": "2026-06-09 23:12 CST",
+  "purpose": "Reverse-research Shenzhen and nearby high-growth companies from Chinagazelle and ITjuzi for the user's AI product manager job search.",
+  "sources": [
+    {
+      "name": "Chinagazelle 2024 China Unicorn list",
+      "url": "https://www.chinagazelle.cn/directory/detail/af8d1deff6f744f68ce00e0498603f13",
+      "note": "Public page exposed only limited Guangdong rows without deeper login access."
+    },
+    {
+      "name": "Chinagazelle 2024 China Potential Unicorn list",
+      "url": "https://www.chinagazelle.cn/directory/detail/827c6d03f48d4bc388c51aefc89bc592",
+      "note": "Public page exposed only limited Guangdong rows without deeper login access."
+    },
+    {
+      "name": "ITjuzi Unicorn Club",
+      "url": "https://www.itjuzi.com/unicorn",
+      "note": "Logged-in ordinary account showed total 510 companies. Region filtering and page turning required VIP."
+    },
+    {
+      "name": "ITjuzi Generative AI filing collection",
+      "url": "https://www.itjuzi.com/sp_collection/generativeai",
+      "note": "Keyword '深圳' returned total 65 companies. Page 1 exposed 50; page 2 required VIP."
+    }
+  ],
+  "limitations": [
+    "ITjuzi ordinary account blocks unicorn region filters and generative-AI page 2+ with '需要开通VIP'.",
+    "Chinagazelle unauthenticated/public access exposed only top rows, not full Shenzhen lists.",
+    "Founder/team fields are reported only when ITjuzi detail pages displayed them; missing founder data is marked as missing rather than inferred."
+  ],
+  "priorityCompanies": [
+    {
+      "company": "小鹅通",
+      "registeredName": "深圳小鹅网络技术有限公司",
+      "location": "广东-深圳",
+      "type": "Content monetization / creator SaaS / marketing SaaS",
+      "companySize": "100-300人",
+      "founded": "2016-12",
+      "financing": "2021-06-09 D轮 7778.28万美元; IDG资本领投, 启明创投, 纪源资本, 高瓴创投, 腾讯投资, 高成投资",
+      "leaderBackground": "鲍春健, 创始人/CEO, 原腾讯数据平台部总监、T4级专家; 王良虎, 联合创始人, 曾负责腾讯QQ空间产品设计研发; 曾勇军, 联合创始人, 原腾讯T3高级工程师。",
+      "jobSearchPriority": "高",
+      "reason": "内容付费、创作者工具、营销、SaaS 与用户的内容营销系统叙事高度相关。适合反查 AI 产品、SaaS 产品、内容增长、智能营销岗位。",
+      "sourceUrl": "https://www.itjuzi.com/company/58597"
+    },
+    {
+      "company": "追一科技",
+      "registeredName": "深圳追一科技有限公司",
+      "location": "广东-深圳",
+      "type": "AI数字员工 / AIGC / 企业服务",
+      "companySize": "50-100人",
+      "founded": "2016-01",
+      "financing": "2023-08-29 战略投资 数亿人民币; 中国互联网投资基金, 中移创新产业基金, 五源资本, 高榕创投",
+      "leaderBackground": "吴悦, 创始人/CEO, 前腾讯人工智能平台部负责人、腾讯T4专家工程师; 刘云峰, 联合创始人/CTO, 原腾讯技术总监/T4; 汶林丁, 联合创始人/CPO, 原腾讯技术总监。",
+      "jobSearchPriority": "高",
+      "reason": "AI数字员工覆盖客服、营销、运营、办公，和 AI Agent / B端自动化 / 工作流产品最接近。",
+      "sourceUrl": "https://www.itjuzi.com/company/83537"
+    },
+    {
+      "company": "软牛科技",
+      "registeredName": "深圳软牛科技集团股份有限公司",
+      "location": "广东-深圳",
+      "type": "AI creative software / image-video tools / office tools",
+      "companySize": "50-100人",
+      "founded": "2014-06",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "林锦帮, 创始人。工商页另显示法定代表人李盛。",
+      "jobSearchPriority": "高",
+      "reason": "图像/视频媒体、AI创意、AI办公和全球软件用户，与 AIGC 产品、AI工具、创作者工具岗位强相关。",
+      "sourceUrl": "https://www.itjuzi.com/company/38312"
+    },
+    {
+      "company": "行云集团",
+      "registeredName": "深圳市天行云供应链有限公司",
+      "location": "广东-深圳",
+      "type": "Cross-border ecommerce / digital supply chain / platform SaaS",
+      "companySize": "1000-5000人",
+      "founded": "2015-05",
+      "financing": "2021-04-19 C+轮 6亿美元; 云锋基金、Crescent Point、嘉实投资领投, 经纬创投, 五源资本等参投",
+      "leaderBackground": "王维, 董事长, 南京大学本科、墨尔本大学硕士、香港城市大学博士, 早稻田大学客座教授。",
+      "jobSearchPriority": "高",
+      "reason": "跨境电商、供应链SaaS、商户赋能和全球履约与用户的电商增长/内容营销叙事可连接。需重点反查是否有 AI 产品、商业化工具、供应链智能化岗位。",
+      "sourceUrl": "https://www.itjuzi.com/company/36025"
+    },
+    {
+      "company": "inSai Hilight营赛",
+      "registeredName": "珠海市营赛人工智能科技有限公司",
+      "location": "广东-珠海",
+      "type": "AI-native ecommerce video generation / multi-agent marketing tool",
+      "companySize": "10-50人",
+      "founded": "2024-07",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "ITjuzi暂未收录团队信息; 工商页显示法定代表人刘杨。",
+      "jobSearchPriority": "高",
+      "reason": "虽不在深圳, 但'全AI原创电商视频多智能体平台'、出海/跨境电商、营销链路提效与用户目标高度贴合。适合作为广东强相关补充公司。",
+      "sourceUrl": "https://www.itjuzi.com/company/43189396"
+    },
+    {
+      "company": "湾驱人工智能",
+      "registeredName": "湾驱人工智能工业设计（深圳）有限公司",
+      "location": "广东-深圳",
+      "type": "Agent-driven multimodal design model / industrial design",
+      "companySize": "10-50人",
+      "founded": "2024-07",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "ITjuzi暂未收录团队信息; 工商页显示法定代表人封昌红。",
+      "jobSearchPriority": "中",
+      "reason": "Agent、多模态设计、AIGC 方向贴, 但公司极早期、未收融资、工业设计/3C数码垂直会稀释匹配度。",
+      "sourceUrl": "https://www.itjuzi.com/company/43171722"
+    },
+    {
+      "company": "夸夸菁领",
+      "registeredName": "深圳夸夸菁领科技有限公司",
+      "location": "广东-深圳",
+      "type": "AI数字员工 / 政务助理 / 法律助理",
+      "companySize": "10-50人",
+      "founded": "2023-07",
+      "financing": "2025-12-11 A+轮 未透露; 中金资本",
+      "leaderBackground": "ITjuzi暂未收录团队信息。",
+      "jobSearchPriority": "中",
+      "reason": "数字员工、工作台、记忆系统贴 Agent 产品, 但政务/法务垂直和团队信息缺失需降权。",
+      "sourceUrl": "https://www.itjuzi.com/company/42989202"
+    },
+    {
+      "company": "幻影未来",
+      "registeredName": "深圳幻影未来信息科技有限公司",
+      "location": "广东-深圳",
+      "type": "AI数字人 / 智慧营销",
+      "companySize": "10-50人",
+      "founded": "2020-06",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "ITjuzi暂未收录团队信息。",
+      "jobSearchPriority": "中",
+      "reason": "AI数字人、智慧营销和企业效率相关, 但融资与团队信息缺失。",
+      "sourceUrl": "https://www.itjuzi.com/company/43237094"
+    },
+    {
+      "company": "货拉拉",
+      "registeredName": "深圳依时货拉拉科技有限公司",
+      "location": "广东-深圳",
+      "type": "Logistics platform / intelligent dispatch / enterprise logistics",
+      "companySize": "5000-30000人",
+      "founded": "2015-02",
+      "financing": "2021-01-20 F轮 15亿美元; 红杉中国、高瓴投资领投, 博裕资本, C Capital, Tiger基金等参投",
+      "leaderBackground": "周胜馥, 创始人/CEO, Stanford经济系毕业, 曾任贝恩顾问。",
+      "jobSearchPriority": "中",
+      "reason": "大厂型平台和AI调度/物流SaaS有空间, 但物流垂直较重。只看 AI调度、企业版、效率工具、增长产品岗位。",
+      "sourceUrl": "https://www.itjuzi.com/company/16184"
+    },
+    {
+      "company": "云网万店",
+      "registeredName": "深圳市云网万店科技有限公司",
+      "location": "广东-深圳",
+      "type": "Retail cloud / ecommerce full-scenario transaction service",
+      "companySize": "300-1000人",
+      "founded": "2020-11",
+      "financing": "2020-12-01 A轮 60亿人民币; 深创投, 商汤科技, 深圳市罗湖引导基金",
+      "leaderBackground": "ITjuzi暂未收录团队信息; 相关组织显示苏宁控股。",
+      "jobSearchPriority": "中",
+      "reason": "零售云、电商供应链和本地互联网服务可连接 SaaS/增长, 但不是 AI-first, 且团队信息缺失。",
+      "sourceUrl": "https://www.itjuzi.com/company/37254117"
+    },
+    {
+      "company": "KLOOK客路旅行",
+      "registeredName": "深圳市客路网络科技有限公司",
+      "location": "广东-深圳",
+      "type": "Travel experience booking platform",
+      "companySize": "100-300人",
+      "founded": "2014-11",
+      "financing": "2025-02-12 F轮 1亿美元; Vitruvian Partners领投, 霸菱亚洲, Aspex, 红杉中国",
+      "leaderBackground": "林照围, 创始人, 曾任花旗与渣打投行部门, 负责亚太酒店与地产并购/上市; 王志豪, COO, 曾任摩根士丹利投行和对冲基金。",
+      "jobSearchPriority": "中",
+      "reason": "平台产品和旅游AI/增长可能有机会, 但不如电商/AIGC/Agent直接。",
+      "sourceUrl": "https://www.itjuzi.com/company/12203"
+    },
+    {
+      "company": "趣推",
+      "registeredName": "深圳市趣推科技有限公司",
+      "location": "广东-深圳",
+      "type": "Short video marketing templates / social marketing tool",
+      "companySize": "10-50人",
+      "founded": "2017-06",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "严华培, 总经理; 郭海兴, 董事长。",
+      "jobSearchPriority": "低到中",
+      "reason": "营销短视频方向贴, 但公司规模小、无融资记录、产品可能偏传统模板工具。",
+      "sourceUrl": "https://www.itjuzi.com/company/32346146"
+    },
+    {
+      "company": "水杉智算",
+      "registeredName": "水杉智算（深圳）技术有限公司",
+      "location": "广东-深圳",
+      "type": "Industry LLM / multi-role AI assistant",
+      "companySize": "10-50人",
+      "founded": "2023-12",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "ITjuzi暂未收录团队信息; 工商页显示法定代表人张光旭。",
+      "jobSearchPriority": "低到中",
+      "reason": "AI Agent/行业大模型字面贴合, 但过早期、无融资、团队信息不足。",
+      "sourceUrl": "https://www.itjuzi.com/company/43140175"
+    },
+    {
+      "company": "百麒晟",
+      "registeredName": "深圳市百麒晟科技有限公司",
+      "location": "广东-深圳",
+      "type": "AI assistant / AI application development",
+      "companySize": "10-50人",
+      "founded": "2022-01",
+      "financing": "ITjuzi暂未收录投融资信息",
+      "leaderBackground": "ITjuzi暂未收录团队信息。",
+      "jobSearchPriority": "低",
+      "reason": "AI助手方向可看, 但系统集成商/技术服务色彩强, 规模与融资弱。",
+      "sourceUrl": "https://www.itjuzi.com/company/43207577"
+    },
+    {
+      "company": "喜茶HEYTEA",
+      "registeredName": "深圳美西西餐饮管理有限公司",
+      "location": "广东-深圳",
+      "type": "Consumer brand / new tea retail",
+      "companySize": "300-1000人",
+      "founded": "2012-01",
+      "financing": "2021-07-13 D轮 5亿美元; 红杉中国, 高瓴投资, 腾讯投资, 淡马锡等",
+      "leaderBackground": "聂云宸, 创始人兼CEO。",
+      "jobSearchPriority": "低到中",
+      "reason": "除非有会员、营销、数据化增长或AI内容岗位, 否则本质是消费品牌, 与AI PM目标间接。",
+      "sourceUrl": "https://www.itjuzi.com/company/43681"
+    },
+    {
+      "company": "微众银行",
+      "registeredName": "深圳前海微众银行股份有限公司",
+      "location": "广东-深圳",
+      "type": "Online banking / fintech",
+      "companySize": "300-1000人",
+      "founded": "2014-12",
+      "financing": "2016-01-28 A轮 12亿人民币; 腾讯投资, 图灵资管",
+      "leaderBackground": "顾敏, 董事长, 此前在中国平安集团任执行董事兼副总经理, 香港中文大学工商管理学士。",
+      "jobSearchPriority": "低到中",
+      "reason": "平台强但金融垂直重。只看 AI应用、知识助手、营销自动化、效率工具岗位。",
+      "sourceUrl": "https://www.itjuzi.com/company/16575"
+    },
+    {
+      "company": "大疆创新",
+      "registeredName": "深圳市大疆创新科技有限公司",
+      "location": "广东-深圳",
+      "type": "Drone / hardware / robotics",
+      "companySize": "300-1000人",
+      "founded": "2006-11",
+      "financing": "2015-05-06 C轮 7500万美元; Accel Partners",
+      "leaderBackground": "汪滔, 创始人/CEO, 曾在哈尔滨工业大学和香港科技大学学习, 2006年本科毕业后创业。",
+      "jobSearchPriority": "低",
+      "reason": "公司强但硬件/机器人/无人机核心明显。按用户偏好强降权。",
+      "sourceUrl": "https://www.itjuzi.com/company/10886"
+    },
+    {
+      "company": "荣耀终端",
+      "registeredName": "荣耀终端股份有限公司",
+      "location": "广东-深圳",
+      "type": "Smartphone / consumer electronics / IoT",
+      "companySize": "300-1000人",
+      "founded": "2020-04",
+      "financing": "2024-10-31 战略投资 数十亿人民币; 中国电信, 中金资本, 基石资本等",
+      "leaderBackground": "李健, CEO, 2001年加入华为, 曾进入华为监事会; 赵明为前总裁。",
+      "jobSearchPriority": "低",
+      "reason": "硬件和终端生态核心明显。除非是纯软件AI生态/开发者平台/创作工具岗位, 否则不优先。",
+      "sourceUrl": "https://www.itjuzi.com/company/37145884"
+    },
+    {
+      "company": "引望智能",
+      "registeredName": "引望智能技术有限公司",
+      "location": "广东-深圳",
+      "type": "Automotive intelligent driving systems",
+      "companySize": "100-300人",
+      "founded": "2024-01",
+      "financing": "2024-08-25 战略投资 115亿人民币; 赛力斯",
+      "leaderBackground": "ITjuzi暂未收录团队信息。",
+      "jobSearchPriority": "无到低",
+      "reason": "自动驾驶/汽车智能系统垂直过强, 与用户 AI应用层/Agent/内容营销目标不匹配。",
+      "sourceUrl": "https://www.itjuzi.com/company/43051139"
+    }
+  ],
+  "nextActions": [
+    "Use BOSS keywords with company names: 小鹅通 AI产品经理, 追一科技 AI产品经理, 软牛科技 AIGC产品经理, 行云集团 AI产品经理, 营赛 AI产品经理.",
+    "For high-priority companies, prioritize AI product, AIGC tool, AI marketing, Agent workflow, SaaS platform, content growth, creator tool roles.",
+    "Do not spend resume customization time on hardware/robotics/auto-driving companies unless the JD is clearly software AI workflow or creator-tool oriented."
+  ]
+}

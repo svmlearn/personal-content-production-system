@@ -1,0 +1,999 @@
+{
+  "generatedAt": "2026-06-10",
+  "baseToken": "BzxLbGP1TaUDIcs7RKec7bwIn9b",
+  "tableId": "tbl2J8PrdS7lRuuq",
+  "fieldName": "打招呼术语",
+  "fieldId": "fldWFE73Pj",
+  "count": 109,
+  "notes": [
+    "v4 根据用户补充口径重写：区分网站展示与经历能力，不写“里面放了”泛化事实。",
+    "教育类强调用户访谈、专业老师访谈、申论批改流程抽取、Dify评测优化skill。",
+    "营销类强调0-1营销Agent、上下文工程、工具调用、意图识别、权限控制、产品原型和客户沟通。",
+    "不再使用ToB定向音响/扫码用机作为打招呼卖点。",
+    "Codex/Harness表达为Codex/Claude Code + Harness Engineering + skill/sub-agent/验收流程能力。"
+  ],
+  "rows": [
+    {
+      "seq": 1,
+      "intent": "低",
+      "company": "半岛医疗",
+      "job": "AI产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 2,
+      "intent": "中",
+      "company": "龙品",
+      "job": "AI产品经理/AI极客/AI狂热开发者",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 3,
+      "intent": "低",
+      "company": "纽尔",
+      "job": "AI产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 4,
+      "intent": "中",
+      "company": "Shopee",
+      "job": "【T&C】AI产品经理（电商搜索与推荐方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 5,
+      "intent": "低",
+      "company": "深圳市听好智能科技",
+      "job": "Ai产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 6,
+      "intent": "低",
+      "company": "恒丰汇金",
+      "job": "AI 应用产品经理（GEO 方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 7,
+      "intent": "低",
+      "company": "镜玩科技有限公司",
+      "job": "产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 8,
+      "intent": "高",
+      "company": "明略科技",
+      "job": "AI产品经理（AI Native）",
+      "category": "rag",
+      "preview20": "这是我的作品集网站，有Agent和知识库",
+      "greeting": "这是我的作品集网站，有Agent和知识库项目：https://2young.xin/ 你好，我是洋。我做过 AI 学习伴侣和内容营销 Agent，涉及上下文工程、长期记忆、意图识别、工具调用和 Agent 产品性能测试。看到岗位关注知识库/RAG、Copilot、SaaS 或企业效率工具，我能从用户场景、知识/上下文结构、工作流和指标迭代一起推进。"
+    },
+    {
+      "seq": 9,
+      "intent": "无",
+      "company": "某大型互联网公司",
+      "job": "ai产品经理",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 10,
+      "intent": "低",
+      "company": "小红书",
+      "job": "AI搜索产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 11,
+      "intent": "中",
+      "company": "开源中国",
+      "job": "AI大模型托管平台产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 12,
+      "intent": "无",
+      "company": "Anker",
+      "job": "ai agent 工程师",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 13,
+      "intent": "低",
+      "company": "腾讯",
+      "job": "音频数据治理产品专家（语音大模型方向）",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 14,
+      "intent": "中",
+      "company": "超线性",
+      "job": "AI产品经理（秋招+社招）",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 15,
+      "intent": "无",
+      "company": "LEAPZERO",
+      "job": "AI产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 16,
+      "intent": "中",
+      "company": "同花顺",
+      "job": "AI产品经理（初级/中级/高级）",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 17,
+      "intent": "中",
+      "company": "幻境游戏",
+      "job": "大模型应用产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 18,
+      "intent": "低",
+      "company": "熵基律动",
+      "job": "AI策略产品经理（大模型方向）",
+      "category": "rag",
+      "preview20": "这是我的作品集网站，有Agent和知识库",
+      "greeting": "这是我的作品集网站，有Agent和知识库项目：https://2young.xin/ 你好，我是洋。我做过 AI 学习伴侣和内容营销 Agent，涉及上下文工程、长期记忆、意图识别、工具调用和 Agent 产品性能测试。看到岗位关注知识库/RAG、Copilot、SaaS 或企业效率工具，我能从用户场景、知识/上下文结构、工作流和指标迭代一起推进。"
+    },
+    {
+      "seq": 19,
+      "intent": "低",
+      "company": "某中型互联网金融上市公司（猎头代招）",
+      "job": "AI产品经理（大模型应用）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 20,
+      "intent": "高",
+      "company": "深圳市天裳科技",
+      "job": "AI Agent 产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 21,
+      "intent": "高",
+      "company": "Shoplazza",
+      "job": "资深 AI Agent 产品经理(A163332)",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 22,
+      "intent": "中",
+      "company": "望船夫",
+      "job": "AI Agent 产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 23,
+      "intent": "低",
+      "company": "深圳某中型知识产权风控公司（猎头代招）",
+      "job": "ai产品经理/AI Agent 产品 深挖 B 端业务",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 24,
+      "intent": "无",
+      "company": "南方网通",
+      "job": "AI Agent研发产品总监",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 25,
+      "intent": "低",
+      "company": "为爱觉醒",
+      "job": "AI agent 产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 26,
+      "intent": "中",
+      "company": "明途知产",
+      "job": "AI产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 27,
+      "intent": "高",
+      "company": "店小秘",
+      "job": "AI产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 28,
+      "intent": "无",
+      "company": "同行者科技",
+      "job": "AI产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 29,
+      "intent": "无",
+      "company": "伟文",
+      "job": "AI产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 30,
+      "intent": "中",
+      "company": "进门",
+      "job": "AI产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 31,
+      "intent": "低",
+      "company": "深圳市宝德软通科技",
+      "job": "AI产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 32,
+      "intent": "低",
+      "company": "摩赞智能",
+      "job": "AI 产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 33,
+      "intent": "高",
+      "company": "风行",
+      "job": "AI产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 34,
+      "intent": "中",
+      "company": "赋风科技",
+      "job": "ai产品经理",
+      "category": "education",
+      "preview20": "这是我的作品集网站，有AI教育项目：ht",
+      "greeting": "这是我的作品集网站，有AI教育项目：https://2young.xin/ 你好，我是洋。我做过智蛙面试的申论/面试 AI 产品模块，也做过 AI 学习伴侣。前者经过用户访谈和专业老师访谈，把老师批改申论的流程拆成 AI 工作流，并搭过数据指标、good case / bad case 和 Dify 评测优化 skill；和AI题库/批改、学习产品、教研工具或教育场景落地比较贴。"
+    },
+    {
+      "seq": 35,
+      "intent": "无",
+      "company": "北京某中型智能硬件/消费电子公司",
+      "job": "AI产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 36,
+      "intent": "中",
+      "company": "极视角",
+      "job": "智能体平台产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 37,
+      "intent": "高",
+      "company": "云智达创",
+      "job": "产品经理（AI 营销智能体）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AI图像/素材生成、内容生产链路和营销投放，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 38,
+      "intent": "中",
+      "company": "深度赋智",
+      "job": "AI Native全栈产品经理",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 39,
+      "intent": "高",
+      "company": "兔展",
+      "job": "AI Agent产品经理（AI视频方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 40,
+      "intent": "中",
+      "company": "十方融海",
+      "job": "AIGC产品经理（纯自研 | vibe coding）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 41,
+      "intent": "中",
+      "company": "深圳茉莉语境科技",
+      "job": "AI Agent 产品经理（AI Native方向）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 42,
+      "intent": "无",
+      "company": "深圳某大型互联网社交平台上市公司",
+      "job": "智能体-产品ld-CodeBuddy/WorkBuddy(深圳)",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 43,
+      "intent": "低",
+      "company": "逸文科技",
+      "job": "AI 产品经理-端侧主动式 AI / Agent 体验",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 44,
+      "intent": "高",
+      "company": "歪麦",
+      "job": "产品经理（本地生活O2O与AI智能体）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 45,
+      "intent": "低",
+      "company": "码上光年",
+      "job": "AI 智能体产品经理",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 46,
+      "intent": "中",
+      "company": "与析科技",
+      "job": "AI Agent 产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 47,
+      "intent": "中",
+      "company": "深圳市数海云擎网...",
+      "job": "ai产品经理（跨境电商行业）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 48,
+      "intent": "中",
+      "company": "龙品",
+      "job": "AI产品经理（AIGC/跨境电商方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 49,
+      "intent": "低",
+      "company": "泰韦斯科技",
+      "job": "Ai产品经理（跨境电商）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 50,
+      "intent": "低",
+      "company": "广州长湾创新技术",
+      "job": "AI 产品运营（内容应用方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 51,
+      "intent": "无",
+      "company": "图拉斯",
+      "job": "AI产品经理（智能客服/头部电商）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 52,
+      "intent": "高",
+      "company": "",
+      "job": "AI产品经理-聚焦欧美AdTech/AIGC市场--双休",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 53,
+      "intent": "高",
+      "company": "",
+      "job": "AI 产品经理（营销方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 54,
+      "intent": "高",
+      "company": "",
+      "job": "AI工具产品经理（即梦）-剪映CapCut",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 55,
+      "intent": "高",
+      "company": "",
+      "job": "AI 应用产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 56,
+      "intent": "低",
+      "company": "",
+      "job": "AI应用产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 57,
+      "intent": "高",
+      "company": "",
+      "job": "AI PM 产品经理 | AI Product Manager",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 58,
+      "intent": "中",
+      "company": "",
+      "job": "AIGC产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 59,
+      "intent": "高",
+      "company": "",
+      "job": "产品经理（web端+AI）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 60,
+      "intent": "高",
+      "company": "",
+      "job": "产品经理（AI工具/AI视频）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 61,
+      "intent": "低",
+      "company": "蓝青教育集团",
+      "job": "智能体产品经理（Coze/Dify/FastGPT方向）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 62,
+      "intent": "无",
+      "company": "Shopee",
+      "job": "【实习】产品经理-内容生成策略（AIGC）-SZ",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 63,
+      "intent": "中",
+      "company": "银河星尘",
+      "job": "AI产品经理（Agent/ Aigc）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 64,
+      "intent": "中",
+      "company": "博思纵横",
+      "job": "AI 产品经理（商业化方向）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 65,
+      "intent": "中",
+      "company": "熵基律动",
+      "job": "AI产品经理（AI Agent B端）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 66,
+      "intent": "中",
+      "company": "百达屋",
+      "job": "AI产品/运营（AI Native）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 67,
+      "intent": "低",
+      "company": "深圳守正不出奇教育科技",
+      "job": "AI Native 技术产品负责人 / 全栈 Owner",
+      "category": "education",
+      "preview20": "这是我的作品集网站，有AI教育项目：ht",
+      "greeting": "这是我的作品集网站，有AI教育项目：https://2young.xin/ 你好，我是洋。我做过智蛙面试的申论/面试 AI 产品模块，也做过 AI 学习伴侣。前者经过用户访谈和专业老师访谈，把老师批改申论的流程拆成 AI 工作流，并搭过数据指标、good case / bad case 和 Dify 评测优化 skill；和AI题库/批改、学习产品、教研工具或教育场景落地比较贴。"
+    },
+    {
+      "seq": 68,
+      "intent": "中",
+      "company": "光速动力",
+      "job": "AI产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 69,
+      "intent": "中",
+      "company": "Fastlane",
+      "job": "AIGC 产品专员(A55066)",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 70,
+      "intent": "中",
+      "company": "六度人和",
+      "job": "AI SaaS产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 71,
+      "intent": "高",
+      "company": "TCL雷鸟科技",
+      "job": "AIGC产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 72,
+      "intent": "低",
+      "company": "能信安",
+      "job": "AI智能体产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 73,
+      "intent": "中",
+      "company": "火把公司",
+      "job": "AI SaaS产品经理",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 74,
+      "intent": "高",
+      "company": "东信时代",
+      "job": "出海AI产品经理（出海AI视频生成平台）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 75,
+      "intent": "中",
+      "company": "腾讯",
+      "job": "Agent产品经理——WorkBuddy",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、知识库/RAG、Copilot 和业务流程自动化，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 76,
+      "intent": "中",
+      "company": "深圳光魔科技有限公司",
+      "job": "AI内容产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 77,
+      "intent": "中",
+      "company": "兆珑科技",
+      "job": "AI智能体产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 78,
+      "intent": "低",
+      "company": "星源开物",
+      "job": "AI智能体产品经理",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 79,
+      "intent": "低",
+      "company": "鸿普森",
+      "job": "AI产品经理（智能体）",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 80,
+      "intent": "中",
+      "company": "腾讯",
+      "job": "AI产品经理-智能营销(深圳)",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 81,
+      "intent": "高",
+      "company": "腾讯",
+      "job": "智能体策划产品经理",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 82,
+      "intent": "低",
+      "company": "深圳市晚睡晚起科技",
+      "job": "AI SaaS产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 83,
+      "intent": "中",
+      "company": "视壮科技",
+      "job": "AIGC产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC 视频/短剧生产、内容工业化和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 84,
+      "intent": "中",
+      "company": "法狗狗",
+      "job": "产品经理（AI SaaS）",
+      "category": "rag",
+      "preview20": "这是我的作品集网站，有Agent和知识库",
+      "greeting": "这是我的作品集网站，有Agent和知识库项目：https://2young.xin/ 你好，我是洋。我做过 AI 学习伴侣和内容营销 Agent，涉及上下文工程、长期记忆、意图识别、工具调用和 Agent 产品性能测试。看到岗位关注知识库/RAG、Copilot、SaaS 或企业效率工具，我能从用户场景、知识/上下文结构、工作流和指标迭代一起推进。"
+    },
+    {
+      "seq": 85,
+      "intent": "中",
+      "company": "深度赋智",
+      "job": "Agent产品经理-技术/效果方向",
+      "category": "coding",
+      "preview20": "这是我的作品集网站，有AI工具实践：ht",
+      "greeting": "这是我的作品集网站，有AI工具实践：https://2young.xin/ 你好，我是洋。我深度使用 Codex / Claude Code 做产品原型和工程协作，也理解 Harness Engineering，自己沉淀过 skill、sub-agent 协作、工具调用顺序和验收流程。看到岗位关注AI开发者工具、Agentic Workflow、代码生成或低代码平台，我能把 AI coding 从“能跑”推进到可控交付。"
+    },
+    {
+      "seq": 86,
+      "intent": "中",
+      "company": "深圳智子芯元科技",
+      "job": "高级AI产品经理（桌面智能体方向-C端）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 87,
+      "intent": "高",
+      "company": "雷特科技",
+      "job": "AIGC产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 88,
+      "intent": "中",
+      "company": "腾讯",
+      "job": "AIGC智能产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 89,
+      "intent": "高",
+      "company": "信诚未来",
+      "job": "AI-Agent产品专家（年终奖）",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我做过 AI 内容营销系统，也在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品。前者是自己从 0 到 1 搭营销 Agent，包含上下文工程、工具调用、意图识别和权限控制；看到岗位关注电商/增长场景里的 Agent 编排、工作流自动化和效果评估，想聊聊匹配度。"
+    },
+    {
+      "seq": 90,
+      "intent": "低",
+      "company": "深圳市方弘科技",
+      "job": "AIGC 产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AI图像/素材生成、内容生产链路和营销投放，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 91,
+      "intent": "中",
+      "company": "潮隐人工智能",
+      "job": "ai产品经理",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注跨境电商里的 AIGC 内容生产、营销增长和创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 92,
+      "intent": "中",
+      "company": "跨信通",
+      "job": "产品经理（履约与AI应用）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 93,
+      "intent": "中",
+      "company": "追一科技",
+      "job": "AI产品经理（英文好+AI项目经验）",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 94,
+      "intent": "高",
+      "company": "追一科技",
+      "job": "AI产品经理（英文好+AI项目经验）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AI图像/素材生成、内容生产链路和营销投放，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 95,
+      "intent": "低",
+      "company": "追一科技",
+      "job": "ai产品经理",
+      "category": "hardware",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我更匹配的是 AI 应用产品化、需求拆解、原型验证和跨团队推进。作品集里有 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历；看到岗位关注硬件/IoT场景里的AI应用落地、软硬件协同和跨团队推进，可以先聊聊是否需要偏应用层的 AI 产品能力。"
+    },
+    {
+      "seq": 96,
+      "intent": "低",
+      "company": "软牛科技集团",
+      "job": "影像产品经理(需提供作品集）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AIGC内容生产、营销增长、电商或创作者工具，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 97,
+      "intent": "中",
+      "company": "软牛科技集团",
+      "job": "高级产品经理（B端影像产品）",
+      "category": "marketing",
+      "preview20": "这是我的作品集网站，有AI内容营销系统：",
+      "greeting": "这是我的作品集网站，有AI内容营销系统：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 框架、上下文工程、工具调用、意图识别、权限控制、产品原型和客户需求沟通。看到岗位关注AI图像/素材生成、内容生产链路和营销投放，我的经历能直接对应 AI 营销/AIGC 内容生产和增长场景。"
+    },
+    {
+      "seq": 98,
+      "intent": "低",
+      "company": "湾驱人工智能",
+      "job": "AI产品经理",
+      "category": "general",
+      "preview20": "这是我的作品集网站，有AI产品项目：ht",
+      "greeting": "这是我的作品集网站，有AI产品项目：https://2young.xin/ 你好，我是洋。我做过 AI 教育、AI 学习伴侣、AI 内容营销系统和 Agent 产品经历，能从用户调研、需求拆解、AI 工作流、原型到指标迭代推进。看到岗位关注AI应用落地、原型验证、需求拆解和数据迭代，我的优势是把 AI 能力落成可验证的产品方案。"
+    },
+    {
+      "seq": 99,
+      "intent": "中",
+      "company": "幻影未来",
+      "job": "AI 产品经理（供应链与贸易合规）",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 100,
+      "intent": "低",
+      "company": "幻影未来",
+      "job": "AI产品经理",
+      "category": "rag",
+      "preview20": "这是我的作品集网站，有Agent和知识库",
+      "greeting": "这是我的作品集网站，有Agent和知识库项目：https://2young.xin/ 你好，我是洋。我做过 AI 学习伴侣和内容营销 Agent，涉及上下文工程、长期记忆、意图识别、工具调用和 Agent 产品性能测试。看到岗位关注知识库/RAG、Copilot、SaaS 或企业效率工具，我能从用户场景、知识/上下文结构、工作流和指标迭代一起推进。"
+    },
+    {
+      "seq": 101,
+      "intent": "中",
+      "company": "幻影未来",
+      "job": "高级Agent产品经理",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 102,
+      "intent": "中",
+      "company": "货拉拉科技",
+      "job": "AI产品运营",
+      "category": "agent",
+      "preview20": "这是我的作品集网站，有Agent产品经历",
+      "greeting": "这是我的作品集网站，有Agent产品经历：https://2young.xin/ 你好，我是洋。我在 KeploreAI 做过面向 AI 算法工程师项目复现/部署场景的 Agent 产品，也做过用户访谈、PMF 验证、Aha Moment 定义和 AI 对话入口优化。看到岗位关注Agent 编排、AI Native 工作流、工具调用和业务场景落地，我能把 Agent 场景、交互体验和评估指标一起推进。"
+    },
+    {
+      "seq": 103,
+      "intent": "中",
+      "company": "喜茶",
+      "job": "AI资深产品经理（知识库/RAG相关）-深圳",
+      "category": "retail",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 的上下文工程、工具调用、意图识别、权限控制和任务流程设计。看到岗位关注门店营运、智能点单、巡店、排班/库存或业务流程自动化，我想聊聊怎么把 AI 真正落到一线业务流程里。"
+    },
+    {
+      "seq": 104,
+      "intent": "高",
+      "company": "喜茶",
+      "job": "零售AI应用产品经理",
+      "category": "retail",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 的上下文工程、工具调用、意图识别、权限控制和任务流程设计。看到岗位关注门店营运、智能点单、巡店、排班/库存或业务流程自动化，我想聊聊怎么把 AI 真正落到一线业务流程里。"
+    },
+    {
+      "seq": 105,
+      "intent": "高",
+      "company": "喜茶",
+      "job": "AI应用产品策划",
+      "category": "retail",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 的上下文工程、工具调用、意图识别、权限控制和任务流程设计。看到岗位关注门店营运、智能点单、巡店、排班/库存或业务流程自动化，我想聊聊怎么把 AI 真正落到一线业务流程里。"
+    },
+    {
+      "seq": 106,
+      "intent": "中",
+      "company": "喜茶",
+      "job": "AI产品策划（中台方向）",
+      "category": "retail",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 的上下文工程、工具调用、意图识别、权限控制和任务流程设计。看到岗位关注门店营运、智能点单、巡店、排班/库存或业务流程自动化，我想聊聊怎么把 AI 真正落到一线业务流程里。"
+    },
+    {
+      "seq": 107,
+      "intent": "中",
+      "company": "喜茶",
+      "job": "AI产品负责人（Agent应用方向）",
+      "category": "retail",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我从 0 到 1 搭过 AI 内容营销系统，自己做过营销 Agent 的上下文工程、工具调用、意图识别、权限控制和任务流程设计。看到岗位关注门店营运、智能点单、巡店、排班/库存或业务流程自动化，我想聊聊怎么把 AI 真正落到一线业务流程里。"
+    },
+    {
+      "seq": 108,
+      "intent": "低",
+      "company": "鹏劳人力（外派微众银行）",
+      "job": "AI产品经理",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    },
+    {
+      "seq": 109,
+      "intent": "低",
+      "company": "微众银行",
+      "job": "AI数据产品经理",
+      "category": "finance",
+      "preview20": "这是我的作品集网站，有AI落地项目：ht",
+      "greeting": "这是我的作品集网站，有AI落地项目：https://2young.xin/ 你好，我是洋。我做过业务系统和数据分析，也做过 Agent/AI 产品原型，更强的是把复杂业务流程拆成可验证的产品方案、指标和工作流。看到岗位关注金融业务里的AI应用、数据产品、流程自动化或 Copilot，如果团队需要 AI 应用产品化视角，我想聊聊。"
+    }
+  ],
+  "version": "v4-evidence-library-user-confirmed"
+}

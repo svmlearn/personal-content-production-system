@@ -1,0 +1,78 @@
+{
+  "collectedAt": "2026-06-10 11:20 CST",
+  "purpose": "Company-first reverse search completed for the 19-company Feishu company pool; matching BOSS jobs were written into the original job pool.",
+  "feishu": {
+    "baseToken": "BzxLbGP1TaUDIcs7RKec7bwIn9b",
+    "companyPool": {
+      "tableName": "公司池",
+      "tableId": "tblyV8V8UzqT8wMN",
+      "viewId": "vewOYgf8o6",
+      "verifiedCount": 19,
+      "statusCounts": {
+        "有匹配岗位": 7,
+        "暂无匹配岗位": 10,
+        "官网投递优先": 1,
+        "待继续": 1
+      }
+    },
+    "jobPool": {
+      "tableName": "岗位池",
+      "tableId": "tbl2J8PrdS7lRuuq",
+      "viewId": "vew7iquz00",
+      "verifiedCountAfterThisBatch": 109,
+      "verifiedMaxSeqAfterThisBatch": 109,
+      "addedSeqRange": "93-109"
+    }
+  },
+  "jobPoolRowsAddedFromCompanyReverse": [
+    {"seq": 93, "company": "追一科技", "job": "AI产品经理（英文好+AI项目经验）", "salary": "15-30K", "intention": "中"},
+    {"seq": 94, "company": "追一科技", "job": "AI产品经理（英文好+AI项目经验）", "salary": "15-25K", "intention": "高"},
+    {"seq": 95, "company": "追一科技", "job": "ai产品经理", "salary": "11-20K", "intention": "低"},
+    {"seq": 96, "company": "软牛科技集团", "job": "影像产品经理(需提供作品集）", "salary": "8-12K", "intention": "低"},
+    {"seq": 97, "company": "软牛科技集团", "job": "高级产品经理（B端影像产品）", "salary": "20-40K", "intention": "中"},
+    {"seq": 98, "company": "湾驱人工智能", "job": "AI产品经理", "salary": "8-10K", "intention": "低"},
+    {"seq": 99, "company": "幻影未来", "job": "AI 产品经理（供应链与贸易合规）", "salary": "12-20K", "intention": "中"},
+    {"seq": 100, "company": "幻影未来", "job": "AI产品经理", "salary": "10-15K", "intention": "低"},
+    {"seq": 101, "company": "幻影未来", "job": "高级Agent产品经理", "salary": "30-45K", "intention": "中"},
+    {"seq": 102, "company": "货拉拉科技", "job": "AI产品运营", "salary": "15-20K·13薪", "intention": "中"},
+    {"seq": 103, "company": "喜茶", "job": "AI资深产品经理（知识库/RAG相关）-深圳", "salary": "20-40K·14薪", "intention": "中"},
+    {"seq": 104, "company": "喜茶", "job": "零售AI应用产品经理", "salary": "30-50K·14薪", "intention": "高"},
+    {"seq": 105, "company": "喜茶", "job": "AI应用产品策划", "salary": "30-50K·14薪", "intention": "高"},
+    {"seq": 106, "company": "喜茶", "job": "AI产品策划（中台方向）", "salary": "30-50K·13薪", "intention": "中"},
+    {"seq": 107, "company": "喜茶", "job": "AI产品负责人（Agent应用方向）", "salary": "40-60K·14薪", "intention": "中"},
+    {"seq": 108, "company": "鹏劳人力（外派微众银行）", "job": "AI产品经理", "salary": "10-14K", "intention": "低"},
+    {"seq": 109, "company": "微众银行", "job": "AI数据产品经理", "salary": "30-35K", "intention": "低"}
+  ],
+  "companyPoolFinalStatus": [
+    {"seq": 1, "company": "小鹅通", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 2, "company": "追一科技", "status": "有匹配岗位", "jobPoolSeqs": [93, 94, 95]},
+    {"seq": 3, "company": "软牛科技", "status": "有匹配岗位", "jobPoolSeqs": [96, 97]},
+    {"seq": 4, "company": "行云集团", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 5, "company": "inSai Hilight营赛", "status": "官网投递优先", "jobPoolSeqs": []},
+    {"seq": 6, "company": "湾驱人工智能", "status": "有匹配岗位", "jobPoolSeqs": [98]},
+    {"seq": 7, "company": "夸夸菁领", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 8, "company": "幻影未来", "status": "有匹配岗位", "jobPoolSeqs": [99, 100, 101]},
+    {"seq": 9, "company": "货拉拉", "status": "有匹配岗位", "jobPoolSeqs": [102]},
+    {"seq": 10, "company": "云网万店", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 11, "company": "KLOOK客路旅行", "status": "待继续", "jobPoolSeqs": []},
+    {"seq": 12, "company": "趣推", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 13, "company": "水杉智算", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 14, "company": "百麒晟", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 15, "company": "喜茶HEYTEA", "status": "有匹配岗位", "jobPoolSeqs": [103, 104, 105, 106, 107]},
+    {"seq": 16, "company": "微众银行", "status": "有匹配岗位", "jobPoolSeqs": [108, 109]},
+    {"seq": 17, "company": "大疆创新", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 18, "company": "荣耀终端", "status": "暂无匹配岗位", "jobPoolSeqs": []},
+    {"seq": 19, "company": "引望智能", "status": "暂无匹配岗位", "jobPoolSeqs": []}
+  ],
+  "screeningNotes": [
+    "喜茶公司名搜索首页可能漏掉AI岗位，需用“喜茶 AI产品经理 / 喜茶 AI 产品经理 / HEYTEA AI产品经理”二次搜索。",
+    "喜茶104零售AI应用产品经理、105 AI应用产品策划最值得定制投递。",
+    "微众108为外派岗位，109为金融数据治理/数据安全主线，均低优先级。",
+    "KLOOK没有写入岗位池；可后续通过官网岗位页继续查增长产品、AI旅行助手、内容工具方向。"
+  ],
+  "browserDiscipline": {
+    "bossDetailBatchSize": "4-5",
+    "bossTabsAfterCompletion": 0,
+    "note": "After writing and verification, all zhipin.com tabs opened for this task were closed through the CDP proxy."
+  }
+}

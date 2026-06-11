@@ -1,0 +1,148 @@
+{
+  "collectedAt": "2026-06-10 00:00 CST",
+  "purpose": "Company-first reverse search: write BOSS reverse-search results back to the Feishu company pool, then decide which leads should later enter the job pool.",
+  "feishu": {
+    "baseToken": "BzxLbGP1TaUDIcs7RKec7bwIn9b",
+    "companyPool": {
+      "tableName": "公司池",
+      "tableId": "tblyV8V8UzqT8wMN",
+      "viewId": "vewOYgf8o6",
+      "verifiedCount": 19,
+      "url": "https://my.feishu.cn/wiki/Fd5ow8skXiryp4kdQcScra0wnBg?table=tblyV8V8UzqT8wMN&view=vewOYgf8o6"
+    },
+    "jobPool": {
+      "tableName": "岗位池",
+      "tableId": "tbl2J8PrdS7lRuuq",
+      "verifiedCountAfterThisBatch": 92,
+      "verifiedMaxSeqAfterThisBatch": 92,
+      "note": "No job-pool detail rows were created in this company-first reverse-search batch."
+    }
+  },
+  "browserDiscipline": {
+    "batchSize": 5,
+    "bossTabsAfterBatch": 0,
+    "note": "CDP check found no remaining zhipin.com tabs after the batch."
+  },
+  "companies": [
+    {
+      "seq": 1,
+      "company": "小鹅通",
+      "companyPoolRecordId": "recvm6x59yiazI",
+      "bossReverseStatus": "暂无匹配岗位",
+      "bossVisibleLeads": [
+        {
+          "title": "Saas大客户销售（金融方向）",
+          "url": "https://www.zhipin.com/job_detail/b98b51128ec3d13a0nZ93Nu4EFVT.html",
+          "decision": "sales role; do not write to job pool"
+        },
+        {
+          "title": "客户经理（KA方向）",
+          "url": "https://www.zhipin.com/job_detail/3cf18b5b3061ff9e03J83ti8F1NZ.html",
+          "decision": "customer/sales role; do not write to job pool"
+        }
+      ],
+      "decision": "Company remains high-quality for creator SaaS/content marketing, but current BOSS visible roles are not AI/product roles. Keep in company pool and periodically recheck or use official/inner-referral path."
+    },
+    {
+      "seq": 2,
+      "company": "追一科技",
+      "companyPoolRecordId": "recvm6x59yNzEe",
+      "bossReverseStatus": "有匹配岗位",
+      "bossVisibleLeads": [
+        {
+          "title": "AI产品经理（英文好+AI项目经验）",
+          "salary": "15-30K",
+          "location": "深圳南山",
+          "recruiter": "陈女士 / 招聘经理",
+          "url": "https://www.zhipin.com/job_detail/7fdf22f2d7bd45a703F73924EVZT.html",
+          "fit": "中",
+          "decision": "Relevant B-side AI product role; voice/semantic AI wording mildly downgrades, but worth job-pool follow-up."
+        },
+        {
+          "title": "AI产品经理（英文好+AI项目经验）",
+          "salary": "15-25K",
+          "location": "深圳南山",
+          "recruiter": "刘云峰 / CTO",
+          "url": "https://www.zhipin.com/job_detail/07e16565311610550nR52tq8EVFR.html",
+          "fit": "高",
+          "decision": "Best lead in this batch: AI智能交互/协同分析/数字人, CTO在线, and close to AI Agent/workflow narrative."
+        },
+        {
+          "title": "ai产品经理",
+          "salary": "11-20K",
+          "location": "深圳南山",
+          "recruiter": "黄敏怡 / 人力资源专员 / 近半年活跃",
+          "url": "https://www.zhipin.com/job_detail/33b4aa84bc49d3f103N60tq-GFdU.html",
+          "fit": "低到中",
+          "decision": "Similar JD but lower salary and stale recruiter; keep as backup."
+        }
+      ],
+      "decision": "Write the CTO lead and 15-30K lead to job pool in the next job-detail batch; keep the low-salary/stale-recruiter lead as backup."
+    },
+    {
+      "seq": 3,
+      "company": "软牛科技",
+      "companyPoolRecordId": "recvm6x59y5xsE",
+      "bossReverseStatus": "有匹配岗位",
+      "bossVisibleLeads": [
+        {
+          "title": "影像产品经理(需提供作品集）",
+          "salary": "8-12K",
+          "location": "深圳宝安",
+          "recruiter": "邓女士 / 招聘专员 / 在线",
+          "url": "https://www.zhipin.com/job_detail/2b541da4dce9b1810nB929u1EVZY.html",
+          "fit": "中",
+          "decision": "AIGC/AI creative-tool direction is relevant, but low salary and photography/retouching portfolio requirements make it backup only."
+        },
+        {
+          "title": "高级产品经理（B端影像产品）",
+          "salary": "20-40K",
+          "location": "深圳宝安",
+          "recruiter": "何女士 / HRM / 刚刚活跃",
+          "url": "https://www.zhipin.com/job_detail/cb30ee8e0b0c3a3c03J42dy1ElFX.html",
+          "fit": "中",
+          "decision": "Best soft-牛 lead: B-end AI imaging product and good salary, but requires strong photo-retouching product/aesthetic/model-tool familiarity."
+        },
+        {
+          "title": "高级产品经理（影像）",
+          "salary": "20-40K",
+          "url": "https://www.zhipin.com/job_detail/aa32bca9ec396d8c0nR_2dy-FFBW.html",
+          "fit": "待详情",
+          "decision": "Visible on list but not detail-extracted in this batch."
+        }
+      ],
+      "decision": "Keep as AIGC/creative-tool backup. If writing to job pool, prioritize the B-end senior role; low-salary C-end role is secondary."
+    },
+    {
+      "seq": 4,
+      "company": "行云集团",
+      "companyPoolRecordId": "recvm6x59yYaJP",
+      "bossReverseStatus": "暂无匹配岗位",
+      "bossVisibleLeads": [
+        {
+          "title": "出海合规业务产品经理",
+          "url": "https://www.zhipin.com/job_detail/cc2c1201aab36e5a031z29S_ElVS.html",
+          "decision": "Product role but not AI/AIGC/Agent/content-growth enough for current target."
+        },
+        {
+          "title": "董事长助理 / PMO（印尼翻译、印尼人）",
+          "decision": "Not relevant."
+        }
+      ],
+      "decision": "Keep in company pool for cross-border ecommerce/SaaS quality, but no current BOSS job-pool write."
+    },
+    {
+      "seq": 5,
+      "company": "inSai Hilight营赛",
+      "companyPoolRecordId": "recvm6x59yQVBM",
+      "bossReverseStatus": "官网投递优先",
+      "bossVisibleLeads": [],
+      "decision": "BOSS search for 营赛 returned zero jobs. The company direction is highly relevant to AI-native ecommerce video and multi-agent marketing, so use official site, public account, founder/investor network, Maimai/LinkedIn, or cold outreach instead of job-pool entry."
+    }
+  ],
+  "nextRecommendedBatch": [
+    "Write selected 追一科技 and 软牛科技 roles into 岗位池 only after filling the original job-pool fields end to end.",
+    "Continue company-first BOSS reverse search with 湾驱人工智能、夸夸菁领、幻影未来、货拉拉、云网万店.",
+    "For companies with no BOSS match but high strategic fit, create a separate official-application/cold-outreach list later."
+  ]
+}
