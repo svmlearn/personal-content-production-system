@@ -12,6 +12,7 @@
   - 顶部导航从整条浅色块改为浮动透明玻璃胶囊，减少与页面主体的割裂感。
   - 在个人介绍前新增“AI 做有趣的事儿”态度开场页，用大字标题、滚动能力标签和 5 段职业主线表达个人 AI 产品观点。
   - 态度页说明文案改为从软件世界进入物理世界，以及从 `Prompt Engineering` 到 `Harness Engineering` 再到 `Loop Engineering`。
+  - 2026-06-12 后续调整：态度页底部从 5 张有框经历卡片改为 4 段无框文字路径，围绕 `KeploreAI / 智蛙面试 / 学习伴侣 & 内容系统 / FDE & AI Coding` 表达“AI 如何参与真实工作，以及 FDE 从 PRD 到真实运行应用”的主线。
   - 将项目区从 5 张悬赏海报替换为 5 张上一版风格的项目卡片：
     - 智蛙 AI 面试
     - AI 学习伴侣
@@ -53,6 +54,7 @@
   - 5 个项目详情弹窗均加载真实截图，主图与标题区域无重叠，缩略图数量为 5。
   - 自定义鼠标残留检查通过：无 `.voyage-cursor` 元素、无 `voyage-cursor-ready` class，`body` cursor 为 `auto`。
   - 字体 / 图标本地检查通过：页面无 `fonts.googleapis.com`、`fonts.gstatic.com`、`material-symbols` 残留；浏览器请求中 Google 字体请求为 0，SVG 图标数为 10，详情弹窗和项目导航图标尺寸正常。
+  - 态度页 4 段文字路径验证通过：桌面与移动端均为 4 段内容，无彩色节点、无卡片外框、无横向溢出；截图记录为 `/tmp/portfolio-attitude-four-desktop.png`、`/tmp/portfolio-attitude-four-mobile.png`。
 - 移动视口 `390x844` 验证：
   - 项目区 5 张卡片存在，当前卡片完整展示。
   - 页面无横向溢出。

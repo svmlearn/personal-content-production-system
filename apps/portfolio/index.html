@@ -252,10 +252,10 @@
             margin: 0 auto;
             border: 1px solid rgba(15, 23, 42, 0.1);
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 18px 48px rgba(44, 60, 105, 0.1);
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 18px 48px rgba(44, 60, 105, 0.12);
             padding: 0 12px 0 16px;
-            backdrop-filter: blur(18px) saturate(1.12);
+            backdrop-filter: blur(10px) saturate(1.02);
         }
         .site-brand {
             display: inline-flex;
@@ -882,16 +882,21 @@
             z-index: 1;
             grid-column: 1 / -1;
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: clamp(22px, 3vw, 42px);
             margin-top: clamp(18px, 3vw, 36px);
         }
+        .attitude-stages::before {
+            display: none;
+        }
         .attitude-stage {
+            position: relative;
             min-width: 0;
-            border: 1px solid rgba(15, 23, 42, 0.1);
-            border-radius: 8px;
-            background: rgba(252, 249, 241, 0.5);
-            padding: 18px;
+            border-top: 1px solid rgba(15, 23, 42, 0.16);
+            padding: 16px 0 0;
+        }
+        .attitude-stage::before {
+            display: none;
         }
         .attitude-stage span {
             color: #B91C1C;
@@ -901,17 +906,17 @@
             letter-spacing: 0.12em;
         }
         .attitude-stage h3 {
-            margin: 14px 0 0;
+            margin: 12px 0 0;
             color: #0F172A;
-            font-size: 18px;
+            font-size: 19px;
             line-height: 1.25;
             font-weight: 900;
         }
         .attitude-stage p {
             margin: 10px 0 0;
-            color: rgba(15, 23, 42, 0.64);
-            font-size: 14px;
-            line-height: 1.62;
+            color: rgba(15, 23, 42, 0.68);
+            font-size: 13px;
+            line-height: 1.72;
             font-weight: 700;
         }
         .project-showcase {
@@ -1375,14 +1380,14 @@
             place-items: stretch;
             padding: clamp(14px, 2.8vw, 40px);
             background:
-                radial-gradient(circle at 18% 16%, rgba(252, 211, 77, 0.28), transparent 30%),
-                radial-gradient(circle at 88% 82%, rgba(14, 165, 233, 0.2), transparent 34%),
-                rgba(15, 23, 42, 0.24);
+                radial-gradient(circle at 18% 16%, rgba(252, 211, 77, 0.14), transparent 30%),
+                radial-gradient(circle at 88% 82%, rgba(14, 165, 233, 0.16), transparent 34%),
+                rgba(15, 23, 42, 0.34);
             opacity: 0;
             pointer-events: none;
             visibility: hidden;
             transition: opacity 260ms ease, visibility 260ms ease;
-            backdrop-filter: blur(4px) saturate(1.05);
+            backdrop-filter: blur(8px) saturate(1.04);
         }
         .project-detail-overlay.is-open {
             opacity: 1;
@@ -1396,11 +1401,14 @@
             height: 100%;
             min-height: 0;
             overflow: hidden;
-            border: 3px solid #0F172A;
+            border: 2px solid rgba(15, 23, 42, 0.86);
+            border-radius: 8px;
             background:
-                linear-gradient(135deg, rgba(252, 249, 241, 0.78), rgba(246, 243, 235, 0.58)),
-                radial-gradient(circle at 24% 16%, rgba(252, 211, 77, 0.2), transparent 30%);
-            box-shadow: 18px 20px 0 rgba(15, 23, 42, 0.78);
+                linear-gradient(135deg, rgba(252, 249, 241, 0.72), rgba(248, 250, 252, 0.64)),
+                radial-gradient(circle at 24% 16%, rgba(252, 211, 77, 0.1), transparent 30%);
+            box-shadow:
+                10px 12px 0 rgba(15, 23, 42, 0.66),
+                0 34px 92px rgba(2, 6, 23, 0.28);
             transform: translateY(28px) scale(0.985);
             transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(14px) saturate(1.14);
@@ -1418,16 +1426,17 @@
             justify-content: center;
             width: 48px;
             height: 48px;
-            border: 2px solid rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(15, 23, 42, 0.22);
             border-radius: 999px;
-            background: rgba(252, 249, 241, 0.58);
+            background: rgba(255, 255, 255, 0.72);
             color: #0F172A;
             transition: transform 160ms ease, background 160ms ease;
             backdrop-filter: blur(8px);
         }
         .project-detail-close:hover {
-            background: rgba(252, 211, 77, 0.78);
-            transform: rotate(8deg) scale(1.04);
+            background: rgba(255, 255, 255, 0.92);
+            color: #B91C1C;
+            transform: rotate(5deg) scale(1.03);
         }
         .project-detail-close .site-icon,
         .detail-switch-button .site-icon {
@@ -1447,16 +1456,16 @@
             min-width: 0;
             overflow: hidden;
             background:
-                linear-gradient(180deg, color-mix(in srgb, var(--detail-accent) 30%, transparent) 0 46%, rgba(252, 249, 241, 0.38) 46% 100%),
-                radial-gradient(circle at 18% 20%, rgba(252, 249, 241, 0.42), transparent 30%);
+                linear-gradient(180deg, color-mix(in srgb, var(--detail-accent) 18%, transparent) 0 46%, rgba(248, 250, 252, 0.46) 46% 100%),
+                radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.46), transparent 30%);
         }
         .project-detail-visual::before {
             content: "";
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 20% 22%, rgba(252, 249, 241, 0.18), transparent 24%),
-                repeating-linear-gradient(90deg, rgba(252, 249, 241, 0.09) 0 1px, transparent 1px 56px);
+                radial-gradient(circle at 20% 22%, rgba(255, 255, 255, 0.16), transparent 24%),
+                repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.035) 0 1px, transparent 1px 56px);
             mix-blend-mode: screen;
             pointer-events: none;
         }
@@ -1491,7 +1500,7 @@
             min-width: 0;
             aspect-ratio: 16 / 10;
             transform: rotate(-0.6deg);
-            filter: drop-shadow(12px 14px 0 rgba(15, 23, 42, 0.34));
+            filter: drop-shadow(10px 12px 0 rgba(15, 23, 42, 0.24));
             transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         .project-detail-overlay.is-open .detail-poster-frame {
@@ -1502,15 +1511,16 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border: 4px solid #0F172A;
-            background: rgba(252, 249, 241, 0.88);
+            border: 3px solid rgba(15, 23, 42, 0.88);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9);
         }
         .detail-title-block {
             position: relative;
             z-index: 2;
             min-width: 0;
             color: #0F172A;
-            text-shadow: 3px 4px 0 rgba(252, 249, 241, 0.62);
+            text-shadow: 2px 3px 0 rgba(255, 255, 255, 0.64);
         }
         .detail-title-block p {
             margin-bottom: 12px;
@@ -1610,9 +1620,9 @@
             padding: clamp(32px, 4vw, 64px);
             color: #0F172A;
             background:
-                radial-gradient(circle at 86% 12%, rgba(252, 211, 77, 0.24), transparent 28%),
-                linear-gradient(135deg, rgba(252, 249, 241, 0.72), rgba(229, 226, 219, 0.54));
-            border-left: 2px solid rgba(15, 23, 42, 0.48);
+                radial-gradient(circle at 86% 12%, rgba(252, 211, 77, 0.1), transparent 28%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(248, 250, 252, 0.54));
+            border-left: 1px solid rgba(15, 23, 42, 0.24);
             backdrop-filter: blur(12px) saturate(1.08);
         }
         .detail-kicker {
@@ -1653,19 +1663,19 @@
             gap: 24px;
             width: min(100%, 560px);
             margin-top: 32px;
-            border: 4px solid #0F172A;
-            border-radius: 2px;
+            border: 2px solid #0F172A;
+            border-radius: 8px;
             background: #B91C1C;
             color: #FCF9F1;
-            padding: 22px 34px;
-            font-size: clamp(20px, 1.8vw, 30px);
+            padding: 18px 28px;
+            font-size: clamp(18px, 1.55vw, 24px);
             line-height: 1;
             font-weight: 900;
             letter-spacing: 0;
             text-shadow: none;
             box-shadow:
-                8px 8px 0 #0F172A,
-                12px 12px 0 rgba(15, 23, 42, 0.28);
+                6px 7px 0 #0F172A,
+                10px 10px 0 rgba(15, 23, 42, 0.22);
             transform: translate3d(0, 0, 0);
             transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
         }
@@ -1673,8 +1683,8 @@
             filter: brightness(1.08) saturate(1.04);
             transform: translate3d(3px, 3px, 0);
             box-shadow:
-                5px 5px 0 #0F172A,
-                8px 8px 0 rgba(15, 23, 42, 0.24);
+                4px 4px 0 #0F172A,
+                7px 7px 0 rgba(15, 23, 42, 0.2);
         }
         .detail-project-link:active {
             transform: translate3d(8px, 8px, 0);
@@ -1702,17 +1712,16 @@
         }
         .detail-route {
             display: grid;
-            grid-template-columns: repeat(5, minmax(120px, 1fr));
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             margin-top: 14px;
-            border: 2px solid rgba(15, 23, 42, 0.5);
-            overflow-x: auto;
-            box-shadow: 6px 7px 0 rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(15, 23, 42, 0.26);
+            box-shadow: 4px 5px 0 rgba(15, 23, 42, 0.44);
         }
         .detail-route-item {
-            min-width: 132px;
+            min-width: 0;
             border-right: 1px solid rgba(15, 23, 42, 0.2);
-            background: rgba(252, 249, 241, 0.42);
-            padding: 18px;
+            background: rgba(255, 255, 255, 0.46);
+            padding: 16px 14px;
         }
         .detail-route-item:last-child {
             border-right: 0;
@@ -1726,7 +1735,7 @@
             display: block;
             margin-top: 10px;
             color: #0F172A;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.35;
         }
         .detail-module-grid {
@@ -1736,11 +1745,11 @@
             margin-top: 16px;
         }
         .detail-module {
-            border: 2px solid rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(15, 23, 42, 0.22);
             border-radius: 8px;
-            background: rgba(252, 249, 241, 0.38);
+            background: rgba(255, 255, 255, 0.46);
             padding: 22px;
-            box-shadow: 5px 6px 0 rgba(15, 23, 42, 0.42);
+            box-shadow: 3px 4px 0 rgba(15, 23, 42, 0.26);
         }
         .detail-module span {
             color: color-mix(in srgb, var(--detail-accent) 72%, #0F172A);
@@ -1858,8 +1867,11 @@
                 grid-template-columns: 1fr;
                 gap: 8px;
             }
+            .attitude-stages::before {
+                display: none;
+            }
             .attitude-stage {
-                padding: 15px;
+                padding: 36px 15px 15px;
             }
             .attitude-stage h3 {
                 font-size: 17px;
@@ -2066,6 +2078,7 @@
             }
             .project-detail-canvas {
                 grid-template-columns: 1fr;
+                align-content: start;
                 height: 100dvh;
                 overflow: auto;
                 border: 0;
@@ -2074,13 +2087,19 @@
             .project-detail-close {
                 top: 14px;
                 right: 14px;
+                color: #FFFFFF;
                 background: rgba(15, 23, 42, 0.46);
             }
             .project-detail-visual {
+                grid-template-rows: auto auto auto;
+                height: auto;
                 min-height: auto;
+                overflow: visible;
             }
             .detail-topbar {
-                padding: 18px 20px 0;
+                gap: 14px;
+                padding: 18px 92px 0 20px;
+                font-size: 11px;
             }
             .detail-hero-grid {
                 grid-template-columns: 1fr;
@@ -2217,31 +2236,26 @@
 <p>AI 还可以怎样发展？从软件世界出发，通过录音豆、传感器、AI 眼镜进入物理世界；从 Prompt Engineering 到 Harness Engineering，再到 Loop Engineering。</p>
 <span class="attitude-stamp">MAKE AI INTERESTING →</span>
 </aside>
-<div class="attitude-stages" aria-label="AI 产品职业主线">
+<div class="attitude-stages" aria-label="AI 产品落地主线">
 <article class="attitude-stage">
-<span>01 / PM</span>
-<h3>先成为产品经理</h3>
-<p>从实习和产品训练开始，学会把模糊业务问题拆成目标、路径、指标和用户反馈。</p>
+<span>01 / KeploreAI</span>
+<h3>Agent 要围绕目标推进任务</h3>
+<p>在 KeploreAI，我第一次系统思考 Agent 产品：它不应该只是回答用户问题，而是要理解用户想完成的目标，把项目复现、环境配置、部署启动这些复杂步骤拆开，并持续推进到一个可验证的结果。</p>
 </article>
 <article class="attitude-stage">
-<span>02 / AGENT</span>
-<h3>追问 Agent 应该是什么</h3>
-<p>在 Keplore AI 阶段开始思考：为什么一些产品问题需要 Agent，而不是再多一个普通聊天框。</p>
+<span>02 / 智蛙面试</span>
+<h3>AI 工作流要复现人的隐性决策链路</h3>
+<p>在申论批改和面试场景里，真正难的不是让 AI 生成一段评语，而是把老师脑子里的判断过程拆出来：怎么标注、怎么打勾、怎么给分、怎么写评语、怎么形成报告，再用 AI Workflow 复现这一整套专业流程。</p>
 </article>
 <article class="attitude-stage">
-<span>03 / WORKFLOW</span>
-<h3>设计 AI 工作流</h3>
-<p>在智蛙面试里，把作答、批改、错题、复盘和指标串起来，让 AI 进入真实学习路径。</p>
+<span>03 / 学习伴侣 &amp; 内容系统</span>
+<h3>从 0 到 1 搭一套 AI 产品框架</h3>
+<p>在学习伴侣和内容系统里，我开始把 Context、Skill、Tools、Memory、Harness 这些能力组织成完整系统：上下文怎么拼接，Skill 怎么调度，工具什么时候调用，权限和校验怎么做，哪些结果需要人工确认，哪些经验要沉淀下来继续复用。</p>
 </article>
 <article class="attitude-stage">
-<span>04 / SYSTEM</span>
-<h3>把上下文变成生态</h3>
-<p>学习规划、推荐题目、错题沉淀和后续反馈不该割裂，它们应该共同塑造用户下一次行动。</p>
-</article>
-<article class="attitude-stage">
-<span>05 / BUILD</span>
-<h3>让方案落到代码</h3>
-<p>在 FDE 和 AI Coding 实践里，把需求拆解、Demo、验证、代码落地和复盘变成可交付流程。</p>
+<span>04 / FDE &amp; AI Coding</span>
+<h3>FDE：从PRD到真实运行的应用</h3>
+<p>在AI时代，用可运行demo替代PRD，AI产品经理本身完全有能力将业务流程、PRD 或画原型，直接变为在后端、数据库、服务器上可真实运行的应用。</p>
 </article>
 </div>
 </div>
