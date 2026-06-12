@@ -9,187 +9,206 @@
 <link href="https://fonts.loli.net" rel="preconnect"/>
 <link crossorigin="" href="https://gstatic.loli.net" rel="preconnect"/>
 <link href="https://fonts.loli.net/css2?family=Anybody:wght@400;700;800;900&amp;family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Configuration -->
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "secondary-container": "#ffc329",
-                      "outline": "#8f6f6d",
-                      "surface-container": "#f1eee6",
-                      "error": "#ba1a1a",
-                      "tertiary-container": "#5870c3",
-                      "on-primary-fixed": "#410004",
-                      "tertiary-fixed": "#dce1ff",
-                      "background": "#fcf9f1",
-                      "secondary-fixed-dim": "#f9bd22",
-                      "on-primary": "#ffffff",
-                      "straw-hat": "#FCD34D",
-                      "surface-bright": "#fcf9f1",
-                      "on-tertiary": "#ffffff",
-                      "on-secondary": "#ffffff",
-                      "tertiary-fixed-dim": "#b6c4ff",
-                      "rubber-red": "#B91C1C",
-                      "on-secondary-fixed": "#261a00",
-                      "surface-dim": "#dcdad2",
-                      "on-primary-fixed-variant": "#930013",
-                      "on-surface": "#1c1c17",
-                      "primary-container": "#da3437",
-                      "secondary": "#795900",
-                      "on-tertiary-fixed": "#00164e",
-                      "secondary-fixed": "#ffdf9f",
-                      "surface": "#fcf9f1",
-                      "surface-container-high": "#ebe8e0",
-                      "on-secondary-container": "#6f5100",
-                      "on-background": "#1c1c17",
-                      "surface-container-lowest": "#ffffff",
-                      "on-surface-variant": "#5b403e",
-                      "primary": "#b61722",
-                      "inverse-on-surface": "#f3f1e9",
-                      "parchment-dark": "#D9C5A3",
-                      "ocean-deep": "#0F172A",
-                      "primary-fixed-dim": "#ffb3ad",
-                      "on-secondary-fixed-variant": "#5c4300",
-                      "on-tertiary-fixed-variant": "#264191",
-                      "on-error-container": "#93000a",
-                      "surface-tint": "#b91a24",
-                      "on-primary-container": "#fffbff",
-                      "error-container": "#ffdad6",
-                      "inverse-primary": "#ffb3ad",
-                      "surface-container-highest": "#e5e2da",
-                      "tertiary": "#3e57a8",
-                      "primary-fixed": "#ffdad7",
-                      "on-error": "#ffffff",
-                      "on-tertiary-container": "#fffbff",
-                      "surface-variant": "#e5e2da",
-                      "inverse-surface": "#31312b",
-                      "surface-container-low": "#f6f3eb",
-                      "outline-variant": "#e4beba"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "margin-md": "40px",
-                      "margin-lg": "80px",
-                      "margin-sm": "16px",
-                      "base": "8px",
-                      "gutter": "24px",
-                      "section-gap": "120px"
-              },
-              "fontFamily": {
-                      "body-lg": [
-                              "inter"
-                      ],
-                      "caption": [
-                              "inter"
-                      ],
-                      "display-lg": [
-                              "anybody"
-                      ],
-                      "label-bold": [
-                              "spaceGrotesk"
-                      ],
-                      "body-md": [
-                              "inter"
-                      ],
-                      "headline-lg": [
-                              "anybody"
-                      ],
-                      "headline-xl": [
-                              "anybody"
-                      ],
-                      "display-lg-mobile": [
-                              "anybody"
-                      ]
-              },
-              "fontSize": {
-                      "body-lg": [
-                              "18px",
-                              {
-                                      "lineHeight": "28px",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "caption": [
-                              "12px",
-                              {
-                                      "lineHeight": "16px",
-                                      "fontWeight": "500"
-                              }
-                      ],
-                      "display-lg": [
-                              "84px",
-                              {
-                                      "lineHeight": "90px",
-                                      "letterSpacing": "-0.04em",
-                                      "fontWeight": "900"
-                              }
-                      ],
-                      "label-bold": [
-                              "14px",
-                              {
-                                      "lineHeight": "20px",
-                                      "letterSpacing": "0.1em",
-                                      "fontWeight": "700"
-                              }
-                      ],
-                      "body-md": [
-                              "16px",
-                              {
-                                      "lineHeight": "24px",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "headline-lg": [
-                              "32px",
-                              {
-                                      "lineHeight": "40px",
-                                      "fontWeight": "800"
-                              }
-                      ],
-                      "headline-xl": [
-                              "48px",
-                              {
-                                      "lineHeight": "56px",
-                                      "fontWeight": "800"
-                              }
-                      ],
-                      "display-lg-mobile": [
-                              "48px",
-                              {
-                                      "lineHeight": "52px",
-                                      "letterSpacing": "-0.02em",
-                                      "fontWeight": "900"
-                              }
-                      ]
-              }
-            }
-          }
-        }
-    </script>
+<!-- Tailwind CDN removed: this page defines the small utility subset it uses locally. -->
 <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        html {
+            color: #1c1c17;
+            background: #fcf9f1;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            margin: 0;
+        }
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+        button {
+            cursor: pointer;
+        }
+        img,
+        svg,
+        video,
+        canvas {
+            display: block;
+            max-width: 100%;
+        }
+        a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+        .relative {
+            position: relative;
+        }
+        .absolute {
+            position: absolute;
+        }
+        .hidden {
+            display: none;
+        }
+        .flex {
+            display: flex;
+        }
+        .inline-flex {
+            display: inline-flex;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .pointer-events-none {
+            pointer-events: none;
+        }
+        .inset-0 {
+            inset: 0;
+        }
+        .z-0 {
+            z-index: 0;
+        }
+        .z-10 {
+            z-index: 10;
+        }
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .w-full {
+            width: 100%;
+        }
+        [class~="max-w-[1440px]"] {
+            max-width: 1440px;
+        }
+        .min-h-screen {
+            min-height: 100vh;
+        }
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        .overflow-x-hidden {
+            overflow-x: hidden;
+        }
+        .bg-background {
+            background-color: #fcf9f1;
+        }
+        .text-on-background {
+            color: #1c1c17;
+        }
+        .text-ocean-deep {
+            color: #0F172A;
+        }
+        .font-body-md {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+        }
+        .font-spaceGrotesk {
+            font-family: "Space Grotesk", Inter, sans-serif;
+        }
+        .text-label-bold {
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        .px-margin-sm {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .py-section-gap {
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+        .pb-24 {
+            padding-bottom: 96px;
+        }
+        .pb-16 {
+            padding-bottom: 64px;
+        }
+        .px-5 {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .py-3 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        [class~="-mt-10"] {
+            margin-top: -40px;
+        }
+        .border-2 {
+            border-width: 2px;
+            border-style: solid;
+        }
+        .border-ocean-deep {
+            border-color: #0F172A;
+        }
+        [class~="bg-surface-container-low/80"] {
+            background-color: rgba(246, 243, 235, 0.8);
+        }
+        .backdrop-blur {
+            backdrop-filter: blur(8px);
+        }
+        [class~="shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]"] {
+            box-shadow: 4px 4px 0 0 rgba(15, 23, 42, 1);
+        }
+        .uppercase {
+            text-transform: uppercase;
+        }
+        .tracking-widest {
+            letter-spacing: 0.1em;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        @media (min-width: 768px) {
+            [class~="md:block"] {
+                display: block;
+            }
+            [class~="md:hidden"] {
+                display: none;
+            }
+            [class~="md:pb-0"] {
+                padding-bottom: 0;
+            }
+            [class~="md:px-margin-lg"] {
+                padding-left: 80px;
+                padding-right: 80px;
+            }
+        }
         /* Custom styles for parchment texture and block shadows to augment Tailwind */
         .bg-parchment-texture {
             background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
         }
         .wanted-poster-shadow {
-            box-shadow: 8px 8px 0px 0px theme('colors.ocean-deep');
+            box-shadow: 8px 8px 0px 0px #0F172A;
         }
         .straw-hat-btn {
-            box-shadow: 6px 6px 0px 0px theme('colors.ocean-deep');
+            box-shadow: 6px 6px 0px 0px #0F172A;
             transition: all 0.1s ease;
         }
         .straw-hat-btn:active {
             transform: translate(4px, 4px);
-            box-shadow: 2px 2px 0px 0px theme('colors.ocean-deep');
+            box-shadow: 2px 2px 0px 0px #0F172A;
         }
         .site-icon {
             display: inline-block;
@@ -448,7 +467,7 @@
             color: #0F172A;
             font-family: Anybody, Inter, sans-serif;
             font-size: clamp(56px, 7vw, 88px);
-            line-height: 0.98;
+            line-height: 1.08;
             font-weight: 900;
             letter-spacing: 0;
         }
@@ -734,6 +753,11 @@
         .mobile-bottom-nav .site-icon {
             font-size: 20px;
         }
+        @media (min-width: 768px) {
+            .mobile-bottom-nav {
+                display: none;
+            }
+        }
         .attitude-section {
             position: relative;
             z-index: 10;
@@ -818,7 +842,7 @@
             font-size: clamp(58px, 9.2vw, 138px);
             font-weight: 900;
             letter-spacing: 0;
-            line-height: 0.92;
+            line-height: 1.02;
         }
         .attitude-headline h2 span {
             display: block;
@@ -949,7 +973,7 @@
             margin: 0;
             font-family: Anybody, Inter, sans-serif;
             font-size: clamp(40px, 5vw, 72px);
-            line-height: 0.96;
+            line-height: 1.08;
             font-weight: 900;
             letter-spacing: 0;
         }
@@ -1054,16 +1078,20 @@
         }
         .portfolio-visual-title {
             position: absolute;
-            left: 17%;
-            right: 10%;
+            left: 11%;
+            right: 7%;
             top: 42%;
             z-index: 1;
             color: #101217;
             font-family: Anybody, Inter, sans-serif;
-            font-size: 44px;
+            max-width: 82%;
+            font-size: clamp(31px, 2.85vw, 40px);
             font-weight: 900;
             letter-spacing: 0;
-            line-height: 0.95;
+            line-height: 1.02;
+            overflow-wrap: normal;
+            word-break: normal;
+            text-wrap: balance;
         }
         .portfolio-chip {
             position: absolute;
@@ -1596,23 +1624,34 @@
         }
         .detail-quick-facts {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px 20px;
+            grid-template-columns: 1fr;
+            gap: 11px;
             color: #0F172A;
         }
         .detail-fact {
-            border-bottom: 2px solid rgba(15, 23, 42, 0.24);
-            padding-bottom: 10px;
+            display: grid;
+            grid-template-columns: 46px minmax(0, 1fr);
+            gap: 14px;
+            align-items: baseline;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.18);
+            padding-bottom: 9px;
+            min-width: 0;
         }
         .detail-fact dt {
             color: rgba(15, 23, 42, 0.58);
             font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 0.06em;
         }
         .detail-fact dd {
-            margin-top: 4px;
+            min-width: 0;
+            margin: 0;
+            font-size: clamp(15px, 1.05vw, 18px);
             font-weight: 900;
+            line-height: 1.35;
+            text-align: left;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
         }
         .project-detail-dossier {
             min-width: 0;
@@ -1785,6 +1824,28 @@
             to {
                 transform: translate3d(-50%, 0, 0);
             }
+        }
+        .motion-mask {
+            will-change: transform, opacity, clip-path;
+        }
+        .attitude-headline h2 span,
+        .resume-hero-title,
+        .project-showcase-copy h2,
+        .portfolio-visual-title {
+            transform-origin: left center;
+            will-change: transform, opacity, clip-path;
+        }
+        .attitude-shell,
+        .resume-hero-shell,
+        .portfolio-card-visual,
+        .detail-poster-frame {
+            transform: translateZ(0);
+            will-change: transform, opacity, clip-path;
+        }
+        .portfolio-card-copy > *,
+        .resume-agent-step,
+        .attitude-stage {
+            will-change: transform, opacity;
         }
         @media (prefers-reduced-motion: reduce) {
             .voyage-backdrop {
@@ -2127,7 +2188,7 @@
                 justify-content: center;
             }
             .detail-quick-facts {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
             .project-detail-dossier {
                 padding: 34px 20px 96px;
@@ -2498,6 +2559,8 @@ Yang Labs · Be the First to Build
 <span>联系</span>
 </a>
 </nav>
+<script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (() => {
     const carousel = document.querySelector("[data-project-carousel]");
@@ -2980,6 +3043,138 @@ Yang Labs · Be the First to Build
     });
 
     render();
+})();
+</script>
+<script>
+(() => {
+    const gsapInstance = window.gsap;
+    const scrollTrigger = window.ScrollTrigger;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!gsapInstance || !scrollTrigger || reduceMotion) return;
+
+    gsapInstance.registerPlugin(scrollTrigger);
+    gsapInstance.config({ nullTargetWarn: false });
+    gsapInstance.defaults({
+        ease: "expo.out",
+        force3D: true
+    });
+    scrollTrigger.defaults({
+        toggleActions: "play none none reverse"
+    });
+
+    const select = gsapInstance.utils.toArray;
+    const clipClosed = "inset(0 0 112% 0)";
+    const clipOpen = "inset(-14% -4% -22% -4%)";
+
+    function revealTitle(target, trigger) {
+        if (!target) return;
+        gsapInstance.fromTo(target, {
+            autoAlpha: 0,
+            clipPath: clipClosed,
+            yPercent: 110,
+            scaleX: 0.78,
+            transformOrigin: "left center"
+        }, {
+            autoAlpha: 1,
+            clipPath: clipOpen,
+            yPercent: 0,
+            scaleX: 1,
+            duration: 1.24,
+            scrollTrigger: {
+                trigger,
+                start: "top 72%"
+            }
+        });
+    }
+
+    function revealBlock(targets, trigger, options = {}) {
+        const elements = select(targets);
+        if (!elements.length) return;
+        gsapInstance.fromTo(elements, {
+            autoAlpha: 0,
+            y: options.y ?? 56,
+            clipPath: options.clip === false ? undefined : "inset(16% 0 0 0)"
+        }, {
+            autoAlpha: 1,
+            y: 0,
+            clipPath: options.clip === false ? undefined : clipOpen,
+            duration: options.duration ?? 0.96,
+            stagger: options.stagger ?? 0.12,
+            ease: options.ease || "expo.out",
+            scrollTrigger: {
+                trigger,
+                start: options.start || "top 74%"
+            }
+        });
+    }
+
+    function initScrollMotion() {
+        revealTitle(document.querySelector(".resume-hero-title"), ".resume-hero");
+        revealBlock(".resume-identity, .resume-profile", ".resume-hero", { y: 42, stagger: 0.1 });
+        revealBlock(".resume-agent-heading, .resume-agent-step", ".resume-agent-panel", { y: 44, stagger: 0.1, start: "top 78%" });
+
+        revealBlock(".project-showcase-copy .project-kicker", "#bounties", { y: 34, duration: 0.72, clip: false });
+        revealTitle(document.querySelector(".project-showcase-copy h2"), "#bounties");
+        revealBlock(".portfolio-card-visual", "#bounties", { y: 74, stagger: 0.16, duration: 1.08, start: "top 68%" });
+        revealBlock(".portfolio-card-copy > *", "#bounties", { y: 30, stagger: 0.055, duration: 0.76, start: "top 64%", clip: false });
+        revealBlock(".portfolio-nav-row", "#bounties", { y: 28, duration: 0.66, start: "top 56%", clip: false });
+
+        select(".portfolio-card").forEach((card) => {
+            const visual = card.querySelector(".portfolio-card-visual");
+            const visualTitle = card.querySelector(".portfolio-visual-title");
+            const chips = card.querySelectorAll(".portfolio-chip");
+            if (!visual) return;
+
+            gsapInstance.fromTo(visualTitle, {
+                autoAlpha: 0,
+                clipPath: clipClosed,
+                yPercent: 72,
+                scaleX: 0.82
+            }, {
+                autoAlpha: 1,
+                clipPath: clipOpen,
+                yPercent: 0,
+                scaleX: 1,
+                duration: 0.9,
+                scrollTrigger: {
+                    trigger: "#bounties",
+                    start: "top 62%"
+                }
+            });
+
+            gsapInstance.fromTo(chips, {
+                autoAlpha: 0,
+                y: 26,
+                rotate: -2
+            }, {
+                autoAlpha: 1,
+                y: 0,
+                rotate: (index) => index % 2 ? 3 : -2,
+                duration: 0.72,
+                stagger: 0.06,
+                scrollTrigger: {
+                    trigger: "#bounties",
+                    start: "top 58%"
+                }
+            });
+
+            gsapInstance.to(visual, {
+                yPercent: -5,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#bounties",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1.2
+                }
+            });
+        });
+    }
+
+    initScrollMotion();
+
+    window.addEventListener("load", () => scrollTrigger.refresh(), { once: true });
 })();
 </script>
 </body></html>
