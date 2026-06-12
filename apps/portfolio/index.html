@@ -5,13 +5,10 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Yang Labs | Be the first to build</title>
 <link href="data:image/svg+xml,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' rx='5' fill='%23fcf9f1'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23fcd34d' stroke='%230f172a' stroke-width='2'/%3E%3Cpath d='M6 19h20' stroke='%23b91c1c' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" rel="icon" type="image/svg+xml"/>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;700;800;900&amp;family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Domestic font mirror -->
+<link href="https://fonts.loli.net" rel="preconnect"/>
+<link crossorigin="" href="https://gstatic.loli.net" rel="preconnect"/>
+<link href="https://fonts.loli.net/css2?family=Anybody:wght@400;700;800;900&amp;family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Tailwind Configuration -->
@@ -194,6 +191,20 @@
             transform: translate(4px, 4px);
             box-shadow: 2px 2px 0px 0px theme('colors.ocean-deep');
         }
+        .site-icon {
+            display: inline-block;
+            flex: 0 0 auto;
+            width: 1em;
+            height: 1em;
+            color: currentColor;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vertical-align: -0.12em;
+            pointer-events: none;
+        }
         .wood-board-bg {
             background-color: #8B5A2B;
             background-image: radial-gradient(circle, transparent 20%, #8B5A2B 20%, #8B5A2B 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #8B5A2B 20%, #8B5A2B 80%, transparent 80%, transparent) 25px 25px, linear-gradient(#5C3A21 2px, transparent 2px) 0 -1px, linear-gradient(90deg, #5C3A21 2px, #8B5A2B 2px) -1px 0;
@@ -340,7 +351,7 @@
             background: rgba(185, 28, 28, 0.08);
             transform: translateY(-1px);
         }
-        .site-contact .material-symbols-outlined {
+        .site-contact .site-icon {
             font-size: 18px;
         }
         .resume-hero {
@@ -720,7 +731,7 @@
             background: #0F172A;
             color: #FFFFFF;
         }
-        .mobile-bottom-nav .material-symbols-outlined {
+        .mobile-bottom-nav .site-icon {
             font-size: 20px;
         }
         .attitude-section {
@@ -1150,7 +1161,7 @@
             background: rgba(255, 255, 255, 0.78);
             transform: translateY(-2px);
         }
-        .portfolio-nav-button .material-symbols-outlined {
+        .portfolio-nav-button .site-icon {
             font-size: 32px;
         }
         .mobile-nav-icon {
@@ -1418,6 +1429,10 @@
             background: rgba(252, 211, 77, 0.78);
             transform: rotate(8deg) scale(1.04);
         }
+        .project-detail-close .site-icon,
+        .detail-switch-button .site-icon {
+            font-size: 24px;
+        }
         .project-detail-close:focus-visible,
         .detail-thumb:focus-visible,
         .detail-project-link:focus-visible,
@@ -1665,16 +1680,16 @@
             transform: translate3d(8px, 8px, 0);
             box-shadow: 1px 1px 0 #0F172A;
         }
-        .detail-project-link .material-symbols-outlined {
+        .detail-project-link .site-icon {
             color: #FCF9F1;
             font-size: clamp(32px, 2.4vw, 42px);
             text-shadow: none;
             transition: transform 120ms ease;
         }
-        .detail-project-link:hover .material-symbols-outlined {
+        .detail-project-link:hover .site-icon {
             transform: translate3d(2px, 0, 0);
         }
-        .detail-project-link:active .material-symbols-outlined {
+        .detail-project-link:active .site-icon {
             transform: translate3d(0, 0, 0);
         }
         .detail-section-title {
@@ -2113,6 +2128,46 @@
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md relative overflow-x-hidden min-h-screen pb-24 md:pb-0 bg-parchment-texture">
+<svg aria-hidden="true" focusable="false" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+<symbol id="icon-mail" viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="14" rx="2"></rect>
+<path d="m3 7 9 6 9-6"></path>
+</symbol>
+<symbol id="icon-arrow-left" viewBox="0 0 24 24">
+<path d="M19 12H5"></path>
+<path d="m12 19-7-7 7-7"></path>
+</symbol>
+<symbol id="icon-arrow-right" viewBox="0 0 24 24">
+<path d="M5 12h14"></path>
+<path d="m12 5 7 7-7 7"></path>
+</symbol>
+<symbol id="icon-x" viewBox="0 0 24 24">
+<path d="M18 6 6 18"></path>
+<path d="m6 6 12 12"></path>
+</symbol>
+<symbol id="icon-chevron-left" viewBox="0 0 24 24">
+<path d="m15 18-6-6 6-6"></path>
+</symbol>
+<symbol id="icon-chevron-right" viewBox="0 0 24 24">
+<path d="m9 18 6-6-6-6"></path>
+</symbol>
+<symbol id="icon-external-link" viewBox="0 0 24 24">
+<path d="M15 3h6v6"></path>
+<path d="M10 14 21 3"></path>
+<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+</symbol>
+<symbol id="icon-home" viewBox="0 0 24 24">
+<path d="m3 11 9-8 9 8"></path>
+<path d="M5 10v10h14V10"></path>
+<path d="M9 20v-6h6v6"></path>
+</symbol>
+<symbol id="icon-grid" viewBox="0 0 24 24">
+<rect x="4" y="4" width="6" height="6" rx="1"></rect>
+<rect x="14" y="4" width="6" height="6" rx="1"></rect>
+<rect x="4" y="14" width="6" height="6" rx="1"></rect>
+<rect x="14" y="14" width="6" height="6" rx="1"></rect>
+</symbol>
+</svg>
 <!-- TopNavBar (Web) -->
 <header class="site-header hidden md:block">
 <div class="site-header-inner">
@@ -2128,7 +2183,7 @@
 <a href="#bounties">项目</a>
 </nav>
 <a class="site-contact" href="mailto:ywangyangw@163.com">
-<span aria-hidden="true" class="material-symbols-outlined">mail</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-mail"></use></svg>
 联系我
 </a>
 </div>
@@ -2347,10 +2402,10 @@
 </div>
 <div aria-label="项目卡片控制" class="portfolio-nav-row">
 <button aria-label="上一个项目" class="portfolio-nav-button" data-project-prev type="button">
-<span aria-hidden="true" class="material-symbols-outlined">arrow_back</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-arrow-left"></use></svg>
 </button>
 <button aria-label="下一个项目" class="portfolio-nav-button" data-project-next type="button">
-<span aria-hidden="true" class="material-symbols-outlined">arrow_forward</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-arrow-right"></use></svg>
 </button>
 </div>
 </div>
@@ -2367,7 +2422,7 @@ Yang Labs · Be the First to Build
 <div aria-hidden="true" aria-labelledby="project-detail-title" class="project-detail-overlay" data-project-detail role="dialog">
 <div class="project-detail-canvas">
 <button aria-label="关闭项目详情" class="project-detail-close" data-detail-close type="button">
-<span aria-hidden="true" class="material-symbols-outlined">close</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-x"></use></svg>
 </button>
 <div class="project-detail-visual">
 <div class="detail-topbar">
@@ -2388,10 +2443,10 @@ Yang Labs · Be the First to Build
 <div aria-label="切换项目详情" class="detail-thumb-list" data-detail-thumbs></div>
 <div class="detail-switch-row">
 <button aria-label="上一个项目详情" class="detail-switch-button" data-detail-prev type="button">
-<span aria-hidden="true" class="material-symbols-outlined">chevron_left</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-chevron-left"></use></svg>
 </button>
 <button aria-label="下一个项目详情" class="detail-switch-button" data-detail-next type="button">
-<span aria-hidden="true" class="material-symbols-outlined">chevron_right</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-chevron-right"></use></svg>
 </button>
 </div>
 </div>
@@ -2405,7 +2460,7 @@ Yang Labs · Be the First to Build
 <div class="detail-tag-list" data-detail-tags></div>
 <a class="detail-project-link" data-detail-link href="#" rel="noreferrer" target="_blank">
 <span data-detail-link-label>查看项目</span>
-<span aria-hidden="true" class="material-symbols-outlined">open_in_new</span>
+<svg aria-hidden="true" class="site-icon"><use href="#icon-external-link"></use></svg>
 </a>
 <p class="detail-section-title">Project Route</p>
 <div class="detail-route" data-detail-route></div>
@@ -2417,15 +2472,15 @@ Yang Labs · Be the First to Build
 <!-- BottomNavBar (Mobile) -->
 <nav aria-label="移动端导航" class="mobile-bottom-nav md:hidden">
 <a aria-current="page" href="#">
-<span class="material-symbols-outlined mobile-nav-icon" style="font-variation-settings: 'FILL' 1;">home</span>
+<svg aria-hidden="true" class="site-icon mobile-nav-icon"><use href="#icon-home"></use></svg>
 <span>首页</span>
 </a>
 <a href="#bounties">
-<span class="material-symbols-outlined mobile-nav-icon">grid_view</span>
+<svg aria-hidden="true" class="site-icon mobile-nav-icon"><use href="#icon-grid"></use></svg>
 <span>项目</span>
 </a>
 <a href="mailto:ywangyangw@163.com">
-<span class="material-symbols-outlined mobile-nav-icon">mail</span>
+<svg aria-hidden="true" class="site-icon mobile-nav-icon"><use href="#icon-mail"></use></svg>
 <span>联系</span>
 </a>
 </nav>

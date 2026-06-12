@@ -25,6 +25,7 @@
   - 详情左侧项目预览已从生成 SVG 占位图替换为 5 张真实项目截图，并调整为产品截图窗口比例，避免横图压住右侧项目标题。
   - 已移除旧自定义鼠标逻辑，恢复系统默认鼠标。
   - 移动底部导航增加图标容器约束，避免 Material Symbols 字体加载失败时用图标名撑破布局。
+  - 2026-06-12 本地后续调整：将 Google Fonts 改为 `fonts.loli.net / gstatic.loli.net` 国内镜像；移除 Material Symbols 外链，并把站内 10 个图标替换为内联 SVG sprite。
 - `apps/portfolio/assets/images/yang-ai-pm-avatar.png`
   - 从简历头像复制并压缩到约 255KB，供首屏使用。
 - `apps/portfolio/assets/images/project-screenshots/`
@@ -51,6 +52,7 @@
   - 页面无横向溢出。
   - 5 个项目详情弹窗均加载真实截图，主图与标题区域无重叠，缩略图数量为 5。
   - 自定义鼠标残留检查通过：无 `.voyage-cursor` 元素、无 `voyage-cursor-ready` class，`body` cursor 为 `auto`。
+  - 字体 / 图标本地检查通过：页面无 `fonts.googleapis.com`、`fonts.gstatic.com`、`material-symbols` 残留；浏览器请求中 Google 字体请求为 0，SVG 图标数为 10，详情弹窗和项目导航图标尺寸正常。
 - 移动视口 `390x844` 验证：
   - 项目区 5 张卡片存在，当前卡片完整展示。
   - 页面无横向溢出。
