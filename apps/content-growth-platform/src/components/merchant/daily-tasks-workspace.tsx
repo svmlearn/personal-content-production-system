@@ -46,7 +46,7 @@ export function DailyTasksWorkspace() {
     }
   }
 
-  async function startDifyWeekGeneration() {
+  async function startAiWeekGeneration() {
     if (!workspace) {
       return;
     }
@@ -73,15 +73,15 @@ export function DailyTasksWorkspace() {
         | null;
 
       if (!response.ok || !data?.batch) {
-        throw new Error(data?.error?.message ?? "Dify 批量生成任务创建失败");
+        throw new Error(data?.error?.message ?? "AI 批量生成任务创建失败");
       }
 
       setGenerationNotice(
-        `已创建 ${data.jobs?.length ?? data.batch.totalJobs} 个 Dify 生成任务，可刷新查看生成状态。`,
+        `已创建 ${data.jobs?.length ?? data.batch.totalJobs} 个 AI 生成任务，可刷新查看生成状态。`,
       );
       await loadWorkspace();
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Dify 批量生成任务创建失败");
+      setError(requestError instanceof Error ? requestError.message : "AI 批量生成任务创建失败");
     } finally {
       setGenerationBusy(false);
     }
@@ -148,7 +148,7 @@ export function DailyTasksWorkspace() {
           <button
             type="button"
             onClick={() => {
-              void startDifyWeekGeneration();
+              void startAiWeekGeneration();
             }}
             disabled={generationBusy}
             className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-[#0f766e] disabled:opacity-50"
@@ -367,10 +367,10 @@ function GenerationStatusBadge({
   }
 
   const labels: Record<NonNullable<typeof status>, string> = {
-    pending: "Dify 队列中",
-    running: "Dify 生成中",
-    succeeded: "Dify 已生成",
-    failed: "Dify 失败",
+    pending: "AI 队列中",
+    running: "AI 生成中",
+    succeeded: "AI 已生成",
+    failed: "AI 失败",
   };
 
   return (

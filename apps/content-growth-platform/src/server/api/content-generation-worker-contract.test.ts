@@ -18,6 +18,10 @@ const difyWorkflowClientSource = readFileSync(
   new URL("./dify-workflow-client.ts", import.meta.url),
   "utf8",
 );
+const langGraphWorkflowSource = readFileSync(
+  new URL("./langgraph-content-workflow.ts", import.meta.url),
+  "utf8",
+);
 
 test("content generation worker only drives the run-next single-job route", () => {
   assert.match(workerSource, /CONTENT_GENERATION_WORKER_RUN_ONCE/);
@@ -31,14 +35,22 @@ test("content generation worker only drives the run-next single-job route", () =
 test("run-next route remains worker-secret protected and processes at most one job", () => {
   assert.match(runNextRouteSource, /CONTENT_GENERATION_WORKER_SECRET/);
   assert.match(runNextRouteSource, /x-content-generation-worker-secret/);
-  assert.match(runNextRouteSource, /runNextDifyContentGenerationJob\(\)/);
+  assert.match(runNextRouteSource, /runNextContentGenerationJob\(\)/);
 });
 
-test("Dify transient failures are retryable while missing key is manual", () => {
-  assert.match(serviceSource, /isRetryableDifyContentGenerationError/);
+test("workflow transient failures are retryable while missing keys are manual", () => {
+  assert.match(serviceSource, /isRetryableContentGenerationError/);
   assert.match(serviceSource, /DIFY_API_KEY_MISSING/);
+  assert.match(serviceSource, /isMissingAiRuntimeKeyError/);
   assert.match(serviceSource, /failed_retryable|retryable/);
   assert.doesNotMatch(serviceSource, /retryable: false/);
+});
+
+test("content generation defaults new batches to LangGraph while retaining Dify fallback", () => {
+  assert.match(serviceSource, /defaultContentGenerationWorkflowProvider: ContentGenerationProvider = "langgraph"/);
+  assert.match(serviceSource, /CONTENT_GENERATION_WORKFLOW_PROVIDER/);
+  assert.match(serviceSource, /runLangGraphContentWorkflow/);
+  assert.match(serviceSource, /runDifyWorkflow/);
 });
 
 test("Dify workflow inputs are compacted before reaching Start node limits", () => {
@@ -57,4 +69,13 @@ test("Dify streaming waits for workflow terminal events instead of node status",
   assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "succeeded"/);
   assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "failed"/);
   assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "stopped"/);
+});
+
+test("LangGraph content workflow validates and repairs the shared final JSON contract", () => {
+  assert.match(langGraphWorkflowSource, /new StateGraph\(LangGraphContentState\)/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("draft_content"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("validate_content"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("repair_content"/);
+  assert.match(langGraphWorkflowSource, /parseDifyFinalJson/);
+  assert.match(langGraphWorkflowSource, /LANGGRAPH_MOCK_FINAL_RESULT_JSON/);
 });

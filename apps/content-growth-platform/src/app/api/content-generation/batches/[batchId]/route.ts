@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "@/lib/auth/current-user";
 import type { ContentGenerationJobDto } from "@/contracts/content-generation";
-import { getDifyContentGenerationBatchStatusForUser } from "@/server/api/content-generation-batch-service";
+import { getContentGenerationBatchStatusForUser } from "@/server/api/content-generation-batch-service";
 import { handleApiError } from "@/server/api/errors";
 
 export const runtime = "nodejs";
@@ -12,7 +12,7 @@ export async function GET(
   try {
     const user = await getAuthenticatedUser();
     const { batchId } = await params;
-    const result = await getDifyContentGenerationBatchStatusForUser({
+    const result = await getContentGenerationBatchStatusForUser({
       userId: user.id,
       batchId,
     });

@@ -331,7 +331,10 @@ export async function claimNextContentGenerationJob(input: {
       `
       update public.content_generation_jobs
       set status = 'running',
-          current_stage = 'calling_dify',
+          current_stage = case
+            when workflow_provider = 'langgraph' then 'calling_langgraph'
+            else 'calling_dify'
+          end,
           attempt_count = attempt_count + 1,
           started_at = coalesce(started_at, timezone('utc', now())),
           error_message = null,
@@ -571,7 +574,7 @@ function markLocalJobRunning(job: ContentGenerationJobDto): ContentGenerationJob
   const updated: ContentGenerationJobDto = {
     ...job,
     status: "running",
-    currentStage: "calling_dify",
+    currentStage: job.workflowProvider === "langgraph" ? "calling_langgraph" : "calling_dify",
     attemptCount: job.attemptCount + 1,
     errorMessage: null,
     startedAt: job.startedAt ?? now,

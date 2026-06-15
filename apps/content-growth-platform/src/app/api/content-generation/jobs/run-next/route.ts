@@ -1,5 +1,5 @@
 import { getAuthenticatedUser } from "@/lib/auth/current-user";
-import { runNextDifyContentGenerationJob } from "@/server/api/content-generation-batch-service";
+import { runNextContentGenerationJob } from "@/server/api/content-generation-batch-service";
 import { ApiError, handleApiError } from "@/server/api/errors";
 
 export const runtime = "nodejs";
@@ -8,7 +8,7 @@ export const maxDuration = 1200;
 export async function POST(request: Request) {
   try {
     await assertWorkerAccess(request);
-    const result = await runNextDifyContentGenerationJob();
+    const result = await runNextContentGenerationJob();
 
     return Response.json(result);
   } catch (error) {

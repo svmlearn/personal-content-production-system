@@ -3,6 +3,7 @@ import "server-only";
 import type {
   ContentGenerationBatchDto,
   ContentGenerationJobDto,
+  ContentGenerationProvider,
 } from "@/contracts/content-generation";
 import type { DailyContentTaskDto } from "@/contracts/daily-task";
 import type { ContentVariantDto } from "@/contracts/draft";
@@ -44,11 +45,13 @@ import {
   type DifyFinalJson,
 } from "@/server/api/dify-final-json-mapper";
 import { runDifyWorkflow } from "@/server/api/dify-workflow-client";
+import { AiRuntimeError } from "@/server/api/ai-runtime";
 import {
   getDailyContentWorkspaceForUser,
   upsertDailyContentTasksFromCalendarForUser,
 } from "@/server/api/daily-content-task-service";
 import { ApiError } from "@/server/api/errors";
+import { runLangGraphContentWorkflow } from "@/server/api/langgraph-content-workflow";
 import { getObjectStorageProvider } from "@/server/storage";
 
 type BatchMemberScope = "self" | "active_members";
@@ -68,17 +71,32 @@ type RunNextJobResult = {
   processed: boolean;
 };
 
-const defaultDifyWorkflowVersion = "v3.1";
-const difyInputMaxChars = 5800;
-
-export async function createDifyDailyTaskGenerationBatchForUser(input: {
+type CreateDailyTaskGenerationBatchInput = {
   userId: string;
   date?: string | null;
   days?: number;
   memberScope?: BatchMemberScope;
   extraRequirement?: string | null;
   consultationSessionId?: string | null;
-}): Promise<CreateBatchResult> {
+  workflowProvider?: ContentGenerationProvider | null;
+};
+
+type ContentWorkflowRunResult = {
+  finalResultJson: unknown;
+  workflowRunId?: string | null;
+  rawOutputs?: Record<string, unknown> | null;
+};
+
+const defaultContentGenerationWorkflowProvider: ContentGenerationProvider = "langgraph";
+const defaultDifyWorkflowVersion = "v3.1";
+const defaultLangGraphWorkflowVersion = "content-v1";
+const difyInputMaxChars = 5800;
+
+export async function createContentGenerationBatchForUser(
+  input: CreateDailyTaskGenerationBatchInput,
+): Promise<CreateBatchResult> {
+  const workflowProvider = resolveContentGenerationWorkflowProvider(input.workflowProvider);
+  const workflowVersion = getWorkflowVersion(workflowProvider);
   const workspace = await getOperationalMerchantWorkspaceByUserId(input.userId);
   const days = clampDays(input.days);
   const startDate = normalizeDate(input.date);
@@ -141,6 +159,8 @@ export async function createDifyDailyTaskGenerationBatchForUser(input: {
         defaultCta: workspace.merchantProfile.defaultCta,
         member,
         extraRequirement: input.extraRequirement,
+        workflowProvider,
+        workflowVersion,
       });
 
       jobs.push({
@@ -153,7 +173,8 @@ export async function createDifyDailyTaskGenerationBatchForUser(input: {
           member.userId,
           task.taskDate,
           calendarItemId ?? "daily-task",
-          getDifyWorkflowVersion(),
+          workflowProvider,
+          workflowVersion,
         ].join(":"),
         inputSnapshot,
       });
@@ -164,8 +185,8 @@ export async function createDifyDailyTaskGenerationBatchForUser(input: {
     merchantId: workspace.merchantProfile.id,
     createdByUserId: input.userId,
     source: consultationCalendar.length ? "consultation_calendar" : "daily_task",
-    workflowProvider: "dify",
-    workflowVersion: getDifyWorkflowVersion(),
+    workflowProvider,
+    workflowVersion,
     calendarSnapshot: {
       date: startDate,
       days,
@@ -239,7 +260,13 @@ export async function createDifyDailyTaskGenerationBatchForUser(input: {
   return result;
 }
 
-export async function getDifyContentGenerationBatchStatusForUser(input: {
+export async function createDifyDailyTaskGenerationBatchForUser(
+  input: Omit<CreateDailyTaskGenerationBatchInput, "workflowProvider">,
+): Promise<CreateBatchResult> {
+  return createContentGenerationBatchForUser({ ...input, workflowProvider: "dify" });
+}
+
+export async function getContentGenerationBatchStatusForUser(input: {
   userId: string;
   batchId: string;
 }): Promise<BatchStatusResult> {
@@ -262,8 +289,19 @@ export async function getDifyContentGenerationBatchStatusForUser(input: {
   };
 }
 
-export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResult> {
-  const job = await claimNextContentGenerationJob({ provider: "dify" });
+export async function getDifyContentGenerationBatchStatusForUser(input: {
+  userId: string;
+  batchId: string;
+}): Promise<BatchStatusResult> {
+  return getContentGenerationBatchStatusForUser(input);
+}
+
+export async function runNextContentGenerationJob(input: {
+  provider?: ContentGenerationProvider | null;
+} = {}): Promise<RunNextJobResult> {
+  const job = await claimNextContentGenerationJob({
+    provider: input.provider ?? undefined,
+  });
 
   if (!job) {
     return { job: null, processed: false };
@@ -284,10 +322,7 @@ export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResul
   }).catch(() => undefined);
 
   try {
-    const workflowResult = await runDifyWorkflow({
-      inputs: readDifyWorkflowInputs(job.inputSnapshot),
-      user: `member-${job.memberUserId}`,
-    });
+    const workflowResult = await runContentWorkflow(job);
     const finalJson = parseDifyFinalJson(workflowResult.finalResultJson);
     const generatedAt = new Date().toISOString();
     const articlePackage = mapDifyArticleToMemberPackage({
@@ -300,7 +335,7 @@ export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResul
       generatedAt,
       fallbackTitle: jobTitleFromSnapshot(job.inputSnapshot),
     });
-    const draftBundle = await createDifyDraftBundle({
+    const draftBundle = await createWorkflowDraftBundle({
       job,
       finalJson,
       rawOutputs: workflowResult.rawOutputs,
@@ -340,6 +375,7 @@ export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResul
       qualityReview: {
         status: finalJson.status,
         riskTerms: finalJson.quality.riskTerms,
+        workflowProvider: job.workflowProvider,
       },
       difyWorkflowRunId: workflowResult.workflowRunId ?? null,
       contentDraftId: draftBundle.draft.id,
@@ -349,8 +385,10 @@ export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResul
 
     return { job: updatedJob, processed: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Dify 生成任务失败。";
-    const retryable = isRetryableDifyContentGenerationError(error);
+    const message = error instanceof Error
+      ? error.message
+      : `${getWorkflowProviderLabel(job.workflowProvider)} 生成任务失败。`;
+    const retryable = isRetryableContentGenerationError(error, job.workflowProvider);
 
     await updateDailyContentTaskGeneratedContent({
       merchantId: job.merchantId,
@@ -376,13 +414,44 @@ export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResul
   }
 }
 
-function isRetryableDifyContentGenerationError(error: unknown) {
+export async function runNextDifyContentGenerationJob(): Promise<RunNextJobResult> {
+  return runNextContentGenerationJob({ provider: "dify" });
+}
+
+async function runContentWorkflow(
+  job: ContentGenerationJobDto,
+): Promise<ContentWorkflowRunResult> {
+  const inputs = readDifyWorkflowInputs(job.inputSnapshot);
+  const user = `member-${job.memberUserId}`;
+
+  if (job.workflowProvider === "langgraph") {
+    return runLangGraphContentWorkflow({ inputs, user });
+  }
+
+  return runDifyWorkflow({ inputs, user });
+}
+
+function isRetryableContentGenerationError(
+  error: unknown,
+  workflowProvider: ContentGenerationProvider,
+) {
+  if (workflowProvider === "langgraph" && isMissingAiRuntimeKeyError(error)) {
+    return false;
+  }
+
   if (error instanceof ApiError && error.code === "DIFY_API_KEY_MISSING") {
     return false;
   }
 
   const message = error instanceof Error ? error.message : String(error);
-  return !message.includes("DIFY_API_KEY_MISSING");
+  return !message.includes("DIFY_API_KEY_MISSING") && !message.includes("API key is not configured");
+}
+
+function isMissingAiRuntimeKeyError(error: unknown) {
+  return (
+    error instanceof AiRuntimeError &&
+    error.message.toLowerCase().includes("api key is not configured")
+  );
 }
 
 async function buildDifyJobInputSnapshot(input: {
@@ -392,6 +461,8 @@ async function buildDifyJobInputSnapshot(input: {
   defaultCta: string[];
   member: { userId: string; displayName?: string | null; role: string };
   extraRequirement?: string | null;
+  workflowProvider: ContentGenerationProvider;
+  workflowVersion: string;
 }) {
   const [imageAssets, videoAssetCapabilities] = await Promise.all([
     listImageAssetsForDify({
@@ -428,11 +499,20 @@ async function buildDifyJobInputSnapshot(input: {
   const difyViralReferences = viralReferences.map(compactKnowledgeRefForDify).slice(0, 8);
   const difyImageAssets = imageAssets.map(compactImageAssetForDify).slice(0, 8);
   const extraRequirement = input.extraRequirement?.trim() ?? "";
+  const workflowInputs = {
+    calendar_task_json: stringifyDifyJsonInput(difyCalendarTask),
+    viral_references_json: stringifyDifyJsonInput(difyViralReferences),
+    image_assets_json: stringifyDifyJsonInput(difyImageAssets),
+    fallback_knowledge_text: clampDifyInputText(fallbackKnowledgeText),
+    extra_requirement: extraRequirement,
+    member_profile_json: JSON.stringify(memberProfile),
+    account_profile_json: JSON.stringify(accountProfile),
+  };
 
   return {
     source: "daily_task",
-    workflowProvider: "dify",
-    workflowVersion: getDifyWorkflowVersion(),
+    workflowProvider: input.workflowProvider,
+    workflowVersion: input.workflowVersion,
     dailyTaskId: input.task.id,
     taskDate: input.task.taskDate,
     calendarTask,
@@ -444,15 +524,8 @@ async function buildDifyJobInputSnapshot(input: {
     fallbackKnowledgeText,
     extraRequirement,
     fallbackCta: input.defaultCta[0] ?? null,
-    difyInputs: {
-      calendar_task_json: stringifyDifyJsonInput(difyCalendarTask),
-      viral_references_json: stringifyDifyJsonInput(difyViralReferences),
-      image_assets_json: stringifyDifyJsonInput(difyImageAssets),
-      fallback_knowledge_text: clampDifyInputText(fallbackKnowledgeText),
-      extra_requirement: extraRequirement,
-      member_profile_json: JSON.stringify(memberProfile),
-      account_profile_json: JSON.stringify(accountProfile),
-    },
+    workflowInputs,
+    difyInputs: workflowInputs,
   };
 }
 
@@ -823,7 +896,7 @@ function formatVideoAssetCapabilityForFallbackText(
 }
 
 function readDifyWorkflowInputs(snapshot: Record<string, unknown>) {
-  const inputs = toRecord(snapshot.difyInputs);
+  const inputs = toRecord(snapshot.workflowInputs ?? snapshot.difyInputs);
 
   return {
     calendar_task_json: stringifyDifyInput(inputs.calendar_task_json ?? snapshot.calendarTask),
@@ -838,12 +911,14 @@ function readDifyWorkflowInputs(snapshot: Record<string, unknown>) {
   };
 }
 
-async function createDifyDraftBundle(input: {
+async function createWorkflowDraftBundle(input: {
   job: ContentGenerationJobDto;
   finalJson: DifyFinalJson;
   rawOutputs?: Record<string, unknown> | null;
 }) {
   const scriptText = formatVideoScriptText(input.finalJson);
+  const providerLabel = getWorkflowProviderLabel(input.job.workflowProvider);
+  const inputSnapshot = buildDraftInputSnapshot(input);
   const sourceItem = await createManualSourceItem({
     merchantId: input.job.merchantId,
     platform: "xiaohongshu",
@@ -851,7 +926,7 @@ async function createDifyDraftBundle(input: {
     bodyText: input.finalJson.article.copyText,
     scriptText,
     tracePayload: {
-      source: "dify",
+      source: input.job.workflowProvider,
       contentGenerationJobId: input.job.id,
       workflowProvider: input.job.workflowProvider,
       workflowVersion: input.job.workflowVersion,
@@ -863,16 +938,9 @@ async function createDifyDraftBundle(input: {
     createdByUserId: input.job.memberUserId,
     sourceItemId: sourceItem.id,
     workingTitle: input.finalJson.article.title,
-    rewriteGoal: "Dify 内容日历批量生成",
+    rewriteGoal: `${providerLabel} 内容日历批量生成`,
     status: "review_pending",
-    inputSnapshot: {
-      source: "dify_daily_task_generation",
-      contentGenerationJobId: input.job.id,
-      dailyTaskId: input.job.dailyTaskId,
-      taskDate: input.job.taskDate,
-      difyFinalJson: input.finalJson,
-      difyRawOutputs: input.rawOutputs ?? null,
-    },
+    inputSnapshot,
     variants: [
       {
         platform: "xiaohongshu",
@@ -897,6 +965,35 @@ async function createDifyDraftBundle(input: {
       },
     ],
   });
+}
+
+function buildDraftInputSnapshot(input: {
+  job: ContentGenerationJobDto;
+  finalJson: DifyFinalJson;
+  rawOutputs?: Record<string, unknown> | null;
+}) {
+  const snapshot: Record<string, unknown> = {
+    source: `${input.job.workflowProvider}_daily_task_generation`,
+    contentGenerationJobId: input.job.id,
+    dailyTaskId: input.job.dailyTaskId,
+    taskDate: input.job.taskDate,
+    workflowProvider: input.job.workflowProvider,
+    workflowVersion: input.job.workflowVersion,
+    workflowFinalJson: input.finalJson,
+    workflowRawOutputs: input.rawOutputs ?? null,
+  };
+
+  if (input.job.workflowProvider === "dify") {
+    snapshot.difyFinalJson = input.finalJson;
+    snapshot.difyRawOutputs = input.rawOutputs ?? null;
+  }
+
+  if (input.job.workflowProvider === "langgraph") {
+    snapshot.langgraphFinalJson = input.finalJson;
+    snapshot.langgraphRawOutputs = input.rawOutputs ?? null;
+  }
+
+  return snapshot;
 }
 
 function mapDifySceneToProductionScene(
@@ -1076,6 +1173,26 @@ function normalizeDate(value?: string | null) {
   return new Date().toISOString().slice(0, 10);
 }
 
-function getDifyWorkflowVersion() {
-  return process.env.DIFY_WORKFLOW_VERSION?.trim() || defaultDifyWorkflowVersion;
+function resolveContentGenerationWorkflowProvider(
+  value?: ContentGenerationProvider | string | null,
+): ContentGenerationProvider {
+  const raw = (value ?? process.env.CONTENT_GENERATION_WORKFLOW_PROVIDER)?.trim();
+
+  if (raw === "dify" || raw === "langgraph") {
+    return raw;
+  }
+
+  return defaultContentGenerationWorkflowProvider;
+}
+
+function getWorkflowVersion(provider: ContentGenerationProvider) {
+  if (provider === "dify") {
+    return process.env.DIFY_WORKFLOW_VERSION?.trim() || defaultDifyWorkflowVersion;
+  }
+
+  return process.env.LANGGRAPH_CONTENT_WORKFLOW_VERSION?.trim() || defaultLangGraphWorkflowVersion;
+}
+
+function getWorkflowProviderLabel(provider: ContentGenerationProvider) {
+  return provider === "langgraph" ? "LangGraph" : "Dify";
 }

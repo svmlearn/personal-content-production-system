@@ -1796,7 +1796,7 @@ async function getContentDraftBundle(draftId: string) {
     | null;
 
   if (!response.ok || !data?.draftBundle) {
-    throw new Error(data?.error?.message ?? "Dify 视频脚本草稿读取失败");
+    throw new Error(data?.error?.message ?? "内容日历视频脚本草稿读取失败");
   }
 
   return data.draftBundle;
@@ -1810,7 +1810,7 @@ function selectVideoVariantForEdit(
     const expectedVariant = bundle.variants.find((variant) => variant.id === expectedVariantId);
 
     if (!expectedVariant) {
-      throw new Error("Dify 视频脚本版本不存在，无法发起 AI 剪辑。");
+      throw new Error("内容日历视频脚本版本不存在，无法发起 AI 剪辑。");
     }
 
     return expectedVariant;

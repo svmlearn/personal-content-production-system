@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "@/lib/auth/current-user";
 import type { ContentGenerationJobDto } from "@/contracts/content-generation";
-import { createDifyDailyTaskGenerationBatchForUser } from "@/server/api/content-generation-batch-service";
+import { createContentGenerationBatchForUser } from "@/server/api/content-generation-batch-service";
 import { handleApiError } from "@/server/api/errors";
 import { createContentGenerationBatchSchema } from "@/server/api/schemas";
 
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   try {
     const user = await getAuthenticatedUser();
     const payload = createContentGenerationBatchSchema.parse(await request.json());
-    const result = await createDifyDailyTaskGenerationBatchForUser({
+    const result = await createContentGenerationBatchForUser({
       userId: user.id,
       date: payload.date,
       days: payload.days,

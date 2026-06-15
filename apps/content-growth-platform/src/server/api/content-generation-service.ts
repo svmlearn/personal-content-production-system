@@ -785,14 +785,14 @@ export async function runVideoWorkbenchScriptAgentForUser(input: {
 
   if (difyDailyTaskVideoDraft && dailyTask) {
     return {
-      assistantMessage: "已复用内容日历 Dify 生成的视频脚本草稿。",
+      assistantMessage: "已复用内容日历 AI 生成的视频脚本草稿。",
       draftBundle: difyDailyTaskVideoDraft.draftBundle,
       selectedVariant: difyDailyTaskVideoDraft.selectedVariant,
       toolApplied: true,
       toolMode: "create",
-      changeSummary: "复用 Dify daily task 视频脚本，未调用视频脚本制作 Agent。",
+      changeSummary: "复用内容日历 AI 生成的视频脚本，未调用视频脚本制作 Agent。",
       trace: {
-        mode: "dify_daily_task_reuse",
+        mode: "daily_task_ai_generation_reuse",
         dailyTaskId: dailyTask.id,
         contentDraftId: dailyTask.videoTask.contentDraftId,
         contentVariantId: dailyTask.videoTask.contentVariantId,
@@ -1181,7 +1181,7 @@ async function resolveDifyDailyTaskVideoDraftBundle(input: {
     throw new ApiError(
       409,
       "DIFY_VIDEO_SCRIPT_VARIANT_NOT_FOUND",
-      "Dify 视频脚本版本不存在，无法复用生成结果。",
+      "内容日历视频脚本版本不存在，无法复用生成结果。",
     );
   }
 
@@ -1189,7 +1189,7 @@ async function resolveDifyDailyTaskVideoDraftBundle(input: {
     throw new ApiError(
       409,
       "DIFY_VIDEO_SCRIPT_VARIANT_INVALID",
-      "Dify 写回的内容版本不是视频脚本，无法发起 AI 剪辑。",
+      "内容日历写回的内容版本不是视频脚本，无法发起 AI 剪辑。",
     );
   }
 
