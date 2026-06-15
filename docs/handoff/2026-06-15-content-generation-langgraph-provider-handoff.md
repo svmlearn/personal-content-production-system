@@ -6,7 +6,9 @@
 
 ## 当前状态
 
-已完成，待用户验收 / 待合并决策。
+已完成，并已按用户要求合并到本地 `main`、推送到 Gitee `origin/main`、部署到服务器 `/opt/personal-website`。
+
+GitHub `svmlearn/personal-content-production-system` 尚未推送完成：远端 `main` 与本地 `main` 是分叉历史且目录结构不同，普通 push 被拒绝。不要在未确认前 `--force` 覆盖 GitHub 远端。
 
 用户补充要求后已修正：上一版 LangGraph provider 只是简化 workflow，现在已按 Dify V3.1 YAML 把 LLM 节点的 system prompt / user prompt 原文抽出并接入 LangGraph 原节点名。
 
@@ -16,9 +18,12 @@
 - Worktree: `/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/content-langgraph-provider`
 - Base: `main` at `87b38c6`
 - Implementation commit: `85ef446dd4eb1d0365eb376f9ad0f34f4722642a`
-- Branch tip: 以交付时 `git rev-parse HEAD` 为准；commit hash 不能可靠写入自身提交内容。
-- Push: 未 push
-- Merge: 未 merge
+- Branch tip: `e2af3d4`
+- Main after merge: `e2af3d4`
+- Push:
+  - Gitee `origin/main`: 已推送 `87b38c6..e2af3d4`
+  - GitHub `github/main`: 未推送；远端为分叉历史，等待用户确认是否强制覆盖或改推新分支
+- Merge: 已在主工作区 fast-forward 到 `e2af3d4`
 
 ## 已完成内容
 
@@ -110,6 +115,29 @@ pnpm --dir apps/content-growth-platform build
 - video scene count：`11`
 - risk terms：`[]`
 
+正式部署验证：
+
+- Server: `ubuntu@43.129.207.237`
+- Server repo: `/opt/personal-website`
+- Deployed HEAD: `e2af3d4`
+- Deploy source: Gitee `origin/main`
+- Production env updated:
+  - `CONTENT_GENERATION_WORKFLOW_PROVIDER=langgraph`
+  - `LANGGRAPH_CONTENT_WORKFLOW_VERSION=content-v31-dify-node-parity`
+  - `LANGGRAPH_LLM_TIMEOUT_SECONDS=300`
+- Env backup: `/opt/personal-website/apps/content-growth-platform/.env.production.bak-20260616005409`
+- Build: `pnpm --dir apps/content-growth-platform build` passed
+- PM2:
+  - `content-growth-platform`: online
+  - `content-generation-worker`: online
+  - `pm2 save` completed
+- Worker runtime child process verified:
+  - `CONTENT_GENERATION_WORKFLOW_PROVIDER=langgraph`
+  - `LANGGRAPH_CONTENT_WORKFLOW_VERSION=content-v31-dify-node-parity`
+  - `LANGGRAPH_LLM_TIMEOUT_SECONDS=300`
+- `http://127.0.0.1:3001/api/health` returned HTTP `503`, with `app.status=ok` and `database.status=ok`; failure is existing OSS config issue because multiple `ALIYUN_OSS_*` values are empty in `.env.production`, not a LangGraph runtime failure.
+- Temporary smoke directory `/tmp/personal-website-langgraph-test` was removed; port `3011` confirmed free.
+
 lint 仍有两个既有 warning，不是本轮新增：
 
 - `scripts/migrate-factory-source-items-to-merchant-media.mjs` 的 `sourceItem` 未使用。
@@ -117,8 +145,8 @@ lint 仍有两个既有 warning，不是本轮新增：
 
 ## 未做 / 风险
 
-- 未在真实服务器创建测试 batch。
-- 未真实调用线上 LangGraph 内容生成，只做了编译、构建、契约测试。
+- 已在服务器真实调用 LangGraph 内容生成并跑通一个 smoke job；成功样本保留用于排查。
+- 正式 PM2 部署后未再额外创建第二个测试 batch，避免继续污染生产数据；部署前的服务器 smoke 已使用同一台服务器、同一个数据库和同一套模型 key。
 - LangGraph 现在是应用内 `StateGraph`，不是外部 LangGraph Platform 服务。
 - 真实生成质量取决于当前 `platform_settings.llm_runtime` 和 server env 中的模型 key。
 - 真实 smoke 显示 `scene_breakdown` 长 prompt 节点在默认 60s / 180s 下可能超时；部署时建议设置 `LANGGRAPH_LLM_TIMEOUT_SECONDS=300` 并重启 app / worker。
@@ -139,3 +167,22 @@ lint 仍有两个既有 warning，不是本轮新增：
 ```text
 CONTENT_GENERATION_WORKFLOW_PROVIDER=dify
 ```
+
+## GitHub 推送待确认
+
+已添加远端：
+
+```text
+github git@github.com:svmlearn/personal-content-production-system.git
+```
+
+执行普通 push 时被拒绝，因为 GitHub `main` 不是本地 `main` 的祖先。当前观察：
+
+- GitHub `main`: `2f17a60 Remove README screenshot note`
+- 本地 `main`: `e2af3d4`
+- 两边历史和目录布局明显不同，普通 merge 会产生大规模结构差异。
+
+可选收口方式：
+
+1. 若 GitHub 只是要作为当前项目镜像，执行 `git push github main --force-with-lease` 覆盖远端 `main`。
+2. 若要保留 GitHub 现有 `main`，执行 `git push github main:<new-branch>`，先把本地当前项目推成新分支。

@@ -157,6 +157,29 @@ pnpm --dir apps/content-growth-platform lint
 - 成功样本保留，用于后续线上排查和验收。
 - 临时 `3011` Next 服务已停止。
 
+### 正式部署补充
+
+用户随后要求合并、推送并替换服务器上的 Dify 链路。本轮已完成正式部署：
+
+- Server repo: `/opt/personal-website`
+- Deployed HEAD: `e2af3d4`
+- Main merge: `87b38c6 -> e2af3d4`
+- Gitee `origin/main`: pushed
+- Production build: passed
+- PM2 `content-growth-platform`: online
+- PM2 `content-generation-worker`: online
+- `.env.production` backup: `.env.production.bak-20260616005409`
+- Formal production env:
+  - `CONTENT_GENERATION_WORKFLOW_PROVIDER=langgraph`
+  - `LANGGRAPH_CONTENT_WORKFLOW_VERSION=content-v31-dify-node-parity`
+  - `LANGGRAPH_LLM_TIMEOUT_SECONDS=300`
+- Worker child process verified these LangGraph env values after PM2 restart.
+- Temporary `/tmp/personal-website-langgraph-test` directory was removed and port `3011` is free.
+
+Post-deploy health check returned HTTP `503` because OSS storage config is incomplete in production env; `app` and `database` were ok. The OSS health failure is separate from the LangGraph worker path.
+
+GitHub push to `svmlearn/personal-content-production-system` remains pending confirmation because remote `main` is a divergent history. Ordinary push was rejected; force push would overwrite the remote `main`.
+
 lint 仍只有两个既有 warning：
 
 - `scripts/migrate-factory-source-items-to-merchant-media.mjs` 的 `sourceItem` 未使用。

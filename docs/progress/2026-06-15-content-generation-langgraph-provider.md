@@ -98,6 +98,65 @@ pnpm --dir apps/content-growth-platform build
 - LangGraph 产出仍依赖当前平台 `llmRuntime` 和 `SILICONFLOW_API_KEY / LLM_API_KEY / OPENAI_API_KEY`。如果服务器缺少这些 key，LangGraph job 会失败并进入非重试 manual failure。
 - 当前 LangGraph 实现是应用内 graph，不是 LangGraph Platform / LangSmith 部署，不包含 durable checkpoint。
 
+## 正式部署记录
+
+用户确认后，本轮已把代码合并并部署到服务器。
+
+本地 / 远端代码状态：
+
+- Main: fast-forward from `87b38c6` to `e2af3d4`
+- Gitee `origin/main`: pushed `87b38c6..e2af3d4`
+- GitHub `github/main`: ordinary push rejected because remote `main` is a divergent history (`2f17a60`) with a different layout; do not force-push without explicit confirmation.
+
+服务器：
+
+- Host: `43.129.207.237`
+- Repo: `/opt/personal-website`
+- Deployed HEAD: `e2af3d4`
+- `git status --short`: clean after deploy
+
+执行动作：
+
+```bash
+git fetch origin main
+git merge --ff-only origin/main
+pnpm install --frozen-lockfile
+pnpm --dir apps/content-growth-platform build
+pm2 restart content-growth-platform --update-env
+pm2 restart content-generation-worker --update-env
+pm2 save
+```
+
+生产 env 更新：
+
+- `.env.production` 已备份到 `.env.production.bak-20260616005409`
+- `CONTENT_GENERATION_WORKFLOW_PROVIDER=langgraph`
+- `LANGGRAPH_CONTENT_WORKFLOW_VERSION=content-v31-dify-node-parity`
+- `LANGGRAPH_LLM_TIMEOUT_SECONDS=300`
+
+部署验证：
+
+- 生产构建通过。
+- PM2 `content-growth-platform` online。
+- PM2 `content-generation-worker` online。
+- worker 真实子进程已读取：
+  - `CONTENT_GENERATION_WORKFLOW_PROVIDER=langgraph`
+  - `LANGGRAPH_CONTENT_WORKFLOW_VERSION=content-v31-dify-node-parity`
+  - `LANGGRAPH_LLM_TIMEOUT_SECONDS=300`
+- PM2 日志无本轮重启后的新错误；worker 已进入 idle 轮询。
+- 临时 smoke 目录 `/tmp/personal-website-langgraph-test` 已删除，临时端口 `3011` 已释放。
+
+健康检查：
+
+```text
+GET http://127.0.0.1:3001/api/health -> HTTP 503
+app.status=ok
+database.status=ok
+storage.status=error
+```
+
+503 原因是生产 `.env.production` 里多个 `ALIYUN_OSS_*` 值为空，导致 OSS storage health 未配置；这不是本轮 LangGraph 迁移引入的问题。内容生成 worker 的 LangGraph provider 和模型 key 已验证进入真实 worker 子进程。
+
 ## 回滚路径
 
 短期回滚无需回代码：
