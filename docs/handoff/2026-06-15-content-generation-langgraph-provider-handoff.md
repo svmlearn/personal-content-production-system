@@ -8,7 +8,7 @@
 
 已完成，并已按用户要求合并到本地 `main`、推送到 Gitee `origin/main`、部署到服务器 `/opt/personal-website`。
 
-GitHub `svmlearn/personal-content-production-system` 尚未推送完成：远端 `main` 与本地 `main` 是分叉历史且目录结构不同，普通 push 被拒绝。不要在未确认前 `--force` 覆盖 GitHub 远端。
+GitHub `svmlearn/personal-content-production-system` 已安全推送到新分支 `codex/langgraph-content-provider`。远端 `main` 与本地 `main` 是分叉历史且目录结构不同，普通 push 被拒绝；不要在未确认前 `--force` 覆盖 GitHub `main`。
 
 用户补充要求后已修正：上一版 LangGraph provider 只是简化 workflow，现在已按 Dify V3.1 YAML 把 LLM 节点的 system prompt / user prompt 原文抽出并接入 LangGraph 原节点名。
 
@@ -22,7 +22,8 @@ GitHub `svmlearn/personal-content-production-system` 尚未推送完成：远端
 - Main after merge: `e2af3d4`
 - Push:
   - Gitee `origin/main`: 已推送 `87b38c6..e2af3d4`
-  - GitHub `github/main`: 未推送；远端为分叉历史，等待用户确认是否强制覆盖或改推新分支
+  - GitHub `codex/langgraph-content-provider`: 已推送
+  - GitHub `github/main`: 未覆盖；远端为分叉历史，等待用户确认是否强制覆盖
 - Merge: 已在主工作区 fast-forward 到 `e2af3d4`
 
 ## 已完成内容
@@ -168,7 +169,7 @@ lint 仍有两个既有 warning，不是本轮新增：
 CONTENT_GENERATION_WORKFLOW_PROVIDER=dify
 ```
 
-## GitHub 推送待确认
+## GitHub 推送状态
 
 已添加远端：
 
@@ -176,7 +177,7 @@ CONTENT_GENERATION_WORKFLOW_PROVIDER=dify
 github git@github.com:svmlearn/personal-content-production-system.git
 ```
 
-执行普通 push 时被拒绝，因为 GitHub `main` 不是本地 `main` 的祖先。当前观察：
+执行普通 push 到 `main` 时被拒绝，因为 GitHub `main` 不是本地 `main` 的祖先。当前观察：
 
 - GitHub `main`: `2f17a60 Remove README screenshot note`
 - 本地 `main`: `e2af3d4`
@@ -184,5 +185,5 @@ github git@github.com:svmlearn/personal-content-production-system.git
 
 可选收口方式：
 
-1. 若 GitHub 只是要作为当前项目镜像，执行 `git push github main --force-with-lease` 覆盖远端 `main`。
-2. 若要保留 GitHub 现有 `main`，执行 `git push github main:<new-branch>`，先把本地当前项目推成新分支。
+1. 已执行安全推送：`git push github main:codex/langgraph-content-provider`。
+2. 若 GitHub `main` 只是要作为当前项目镜像，再执行 `git push github main --force-with-lease` 覆盖远端 `main`。
