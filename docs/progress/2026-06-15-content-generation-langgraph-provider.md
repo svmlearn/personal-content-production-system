@@ -126,3 +126,36 @@ CONTENT_GENERATION_WORKFLOW_PROVIDER=dify
 6. `content_drafts.input_snapshot.workflowProvider`
 7. `content_drafts.input_snapshot.workflowFinalJson`
 8. 服务器 env：`CONTENT_GENERATION_WORKFLOW_PROVIDER`、`LANGGRAPH_CONTENT_WORKFLOW_VERSION`、`SILICONFLOW_API_KEY` / `LLM_API_KEY` / `OPENAI_API_KEY`
+
+## 后续修正：Dify V3.1 Prompt Parity
+
+用户随后明确要求：Dify 工作流里每个 LLM 节点的 system prompt / user prompt 必须原原本本保留到 LangGraph 节点中。
+
+因此，本记录中早期描述的简化 LangGraph 节点：
+
+- `draft_content`
+- `validate_content`
+- `repair_content`
+- `validate_repair`
+
+已经被替换，不再是当前实现。
+
+当前实现以 Dify V3.1 YAML 为来源，新增 `dify-v31-node-prompts.ts`，并把 LangGraph workflow 改成 Dify 原节点名：
+
+- `task_understanding`
+- `kb_project_knowledge`
+- `creative_strategy`
+- `title_cover`
+- `article_body`
+- `article_compiler`
+- `video_narrative`
+- `scene_breakdown`
+- `delivery_compiler`
+- `quality_reviewer`
+- `content_risk_rewriter`
+- `final_compiler`
+- `validate_final`
+
+详细记录见：
+
+- `docs/progress/2026-06-15-content-generation-langgraph-dify-prompt-parity.md`

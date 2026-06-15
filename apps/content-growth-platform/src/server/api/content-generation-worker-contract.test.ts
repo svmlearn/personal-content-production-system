@@ -22,6 +22,10 @@ const langGraphWorkflowSource = readFileSync(
   new URL("./langgraph-content-workflow.ts", import.meta.url),
   "utf8",
 );
+const difyPromptSource = readFileSync(
+  new URL("./dify-v31-node-prompts.ts", import.meta.url),
+  "utf8",
+);
 
 test("content generation worker only drives the run-next single-job route", () => {
   assert.match(workerSource, /CONTENT_GENERATION_WORKER_RUN_ONCE/);
@@ -71,11 +75,45 @@ test("Dify streaming waits for workflow terminal events instead of node status",
   assert.doesNotMatch(difyWorkflowClientSource, /input\.status === "stopped"/);
 });
 
-test("LangGraph content workflow validates and repairs the shared final JSON contract", () => {
+test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON contract", () => {
   assert.match(langGraphWorkflowSource, /new StateGraph\(LangGraphContentState\)/);
-  assert.match(langGraphWorkflowSource, /\.addNode\("draft_content"/);
-  assert.match(langGraphWorkflowSource, /\.addNode\("validate_content"/);
-  assert.match(langGraphWorkflowSource, /\.addNode\("repair_content"/);
+  assert.match(langGraphWorkflowSource, /difyV31NodePrompts/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("task_understanding"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("kb_project_knowledge"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("creative_strategy"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("title_cover"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("article_body"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("article_compiler"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("video_narrative"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("scene_breakdown"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("delivery_compiler"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("quality_reviewer"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("content_risk_rewriter"/);
+  assert.match(langGraphWorkflowSource, /\.addNode\("final_compiler"/);
   assert.match(langGraphWorkflowSource, /parseDifyFinalJson/);
   assert.match(langGraphWorkflowSource, /LANGGRAPH_MOCK_FINAL_RESULT_JSON/);
+  assert.doesNotMatch(langGraphWorkflowSource, /buildSystemPrompt/);
+  assert.doesNotMatch(langGraphWorkflowSource, /\.addNode\("draft_content"/);
+  assert.doesNotMatch(langGraphWorkflowSource, /\.addNode\("repair_content"/);
+});
+
+test("Dify V3.1 node prompts keep original system and user prompt ids", () => {
+  assert.match(difyPromptSource, /task-understanding-system/);
+  assert.match(difyPromptSource, /task-understanding-user/);
+  assert.match(difyPromptSource, /creative-strategy-system/);
+  assert.match(difyPromptSource, /creative-strategy-user/);
+  assert.match(difyPromptSource, /title-cover-system/);
+  assert.match(difyPromptSource, /title-cover-user/);
+  assert.match(difyPromptSource, /article-body-system/);
+  assert.match(difyPromptSource, /article-body-user/);
+  assert.match(difyPromptSource, /video-narrative-system/);
+  assert.match(difyPromptSource, /video-narrative-user/);
+  assert.match(difyPromptSource, /scene-breakdown-system/);
+  assert.match(difyPromptSource, /scene-breakdown-user/);
+  assert.match(difyPromptSource, /content-risk-rewriter-system/);
+  assert.match(difyPromptSource, /content-risk-rewriter-user/);
+  assert.match(difyPromptSource, /你是房地产内容生产工作流中的“任务理解节点”/);
+  assert.match(difyPromptSource, /你是短视频分镜编排师/);
+  assert.match(difyPromptSource, /\{\{#start\.calendar_task_json#\}\}/);
+  assert.match(difyPromptSource, /\{\{#creative_strategy\.text#\}\}/);
 });
