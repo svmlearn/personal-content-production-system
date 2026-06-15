@@ -13,7 +13,8 @@
 - Branch: `codex/content-langgraph-provider`
 - Worktree: `/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/content-langgraph-provider`
 - Base: `main` at `87b38c6`
-- Final commit: `480f4e7e10eb60a45e5b44247cb365a4e4ec7e97`
+- Implementation commit: `85ef446dd4eb1d0365eb376f9ad0f34f4722642a`
+- Branch tip: 以交付时 `git rev-parse HEAD` 为准；commit hash 不能可靠写入自身提交内容。
 - Push: 未 push
 - Merge: 未 merge
 
