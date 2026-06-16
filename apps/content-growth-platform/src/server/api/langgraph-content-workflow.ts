@@ -4,9 +4,18 @@ import { randomUUID } from "node:crypto";
 
 import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 
+import type {
+  KnowledgeRuntimeSettingsDto,
+  KnowledgeSearchMatchDto,
+} from "@/contracts/knowledge";
 import type { LlmRuntimeSettingsDto } from "@/contracts/platform-admin";
+import { searchKnowledgeChunks } from "@/lib/db/knowledge-repository";
 import { getPlatformSettings } from "@/lib/db/platform-admin-repository";
-import { createChatCompletion } from "@/server/api/ai-runtime";
+import {
+  createChatCompletion,
+  createEmbeddings,
+  getAiRuntimeApiKey,
+} from "@/server/api/ai-runtime";
 import { parseDifyFinalJson } from "@/server/api/dify-final-json-mapper";
 import { difyV31NodePrompts } from "@/server/api/dify-v31-node-prompts";
 import { ApiError } from "@/server/api/errors";
@@ -18,6 +27,12 @@ type LangGraphContentWorkflowRunResult = {
   finalResultJson: unknown;
   workflowRunId?: string | null;
   rawOutputs?: JsonRecord | null;
+};
+
+type KnowledgeQueryEmbeddingResult = {
+  embedding: number[] | null;
+  mode: "embedded" | "not_configured" | "failed" | "empty";
+  model?: string;
 };
 
 type PromptNodeResult = {
@@ -57,9 +72,12 @@ const riskNoteKeys = new Set(["riskNotes"]);
 const LangGraphContentState = Annotation.Root({
   inputs: Annotation<JsonRecord>,
   user: Annotation<string>,
+  merchantId: Annotation<string>,
   llmRuntime: Annotation<LlmRuntimeSettingsDto>,
+  knowledgeRuntime: Annotation<KnowledgeRuntimeSettingsDto>,
   taskUnderstandingText: Annotation<string | null>,
   taskUnderstandingJson: Annotation<JsonRecord | null>,
+  knowledgeRetrievalQuery: Annotation<string | null>,
   knowledgeRetrievalResult: Annotation<string | null>,
   creativeStrategyText: Annotation<string | null>,
   creativeStrategyJson: Annotation<JsonRecord | null>,
@@ -124,6 +142,7 @@ const langGraphContentWorkflow = new StateGraph(LangGraphContentState)
 export async function runLangGraphContentWorkflow(input: {
   inputs: JsonRecord;
   user: string;
+  merchantId: string;
 }): Promise<LangGraphContentWorkflowRunResult> {
   const mockResult = process.env.LANGGRAPH_MOCK_FINAL_RESULT_JSON;
 
@@ -142,14 +161,17 @@ export async function runLangGraphContentWorkflow(input: {
     };
   }
 
-  const { llmRuntime } = await getPlatformSettings();
+  const { llmRuntime, knowledgeRuntime } = await getPlatformSettings();
   const workflowRunId = `langgraph-${randomUUID()}`;
   const finalState = await langGraphContentWorkflow.invoke({
     inputs: input.inputs,
     user: input.user,
+    merchantId: input.merchantId,
     llmRuntime,
+    knowledgeRuntime,
     taskUnderstandingText: null,
     taskUnderstandingJson: null,
+    knowledgeRetrievalQuery: null,
     knowledgeRetrievalResult: null,
     creativeStrategyText: null,
     creativeStrategyJson: null,
@@ -213,22 +235,33 @@ async function taskUnderstandingNode(state: typeof LangGraphContentState.State) 
   };
 }
 
-function knowledgeRetrievalNode(state: typeof LangGraphContentState.State) {
-  const result = compactStrings([
-    stringifyPromptValue(state.inputs.fallback_knowledge_text),
-    state.taskUnderstandingText ? `任务理解检索信息：\n${state.taskUnderstandingText}` : "",
-    state.inputs.calendar_task_json
-      ? `原始内容日历任务：\n${stringifyPromptValue(state.inputs.calendar_task_json)}`
-      : "",
-  ]).join("\n\n");
+async function knowledgeRetrievalNode(state: typeof LangGraphContentState.State) {
+  const query = buildKnowledgeRetrievalQuery(state);
+  const topK = Math.min(Math.max(state.knowledgeRuntime.retrievalTopK, 1), 6);
+  const queryEmbedding = await embedKnowledgeRetrievalQuery(state, query);
+  const matches = await searchKnowledgeChunks({
+    merchantId: state.merchantId,
+    query,
+    limit: topK,
+    queryEmbedding: queryEmbedding.embedding,
+  });
+  const result = formatKnowledgeRetrievalMatches(matches);
 
   return {
-    knowledgeRetrievalResult: result || "无知识库检索结果。",
+    knowledgeRetrievalQuery: query,
+    knowledgeRetrievalResult: result,
     rawOutputs: {
       ...state.rawOutputs,
       kb_project_knowledge: {
-        type: "deterministic_knowledge_fallback",
-        result: result || "无知识库检索结果。",
+        type: "local_merchant_knowledge_rag",
+        strategy: "task_understanding_query_to_user_knowledge_base",
+        query,
+        topK,
+        embeddingMode: queryEmbedding.mode,
+        embeddingModel: queryEmbedding.model ?? state.knowledgeRuntime.embeddingModel,
+        matchCount: matches.length,
+        matches: matches.map(compactKnowledgeMatchForRawOutput),
+        result,
       },
     },
   };
@@ -479,6 +512,88 @@ function getLangGraphLlmRuntime(runtime: LlmRuntimeSettingsDto): LlmRuntimeSetti
   return {
     ...runtime,
     timeoutSeconds,
+  };
+}
+
+function buildKnowledgeRetrievalQuery(state: typeof LangGraphContentState.State) {
+  const taskUnderstanding = state.taskUnderstandingText?.trim();
+
+  if (taskUnderstanding) {
+    return clampText(taskUnderstanding, 8000);
+  }
+
+  return clampText(
+    compactStrings([
+      stringifyPromptValue(state.inputs.calendar_task_json),
+      stringifyPromptValue(state.inputs.extra_requirement),
+    ]).join("\n\n"),
+    8000,
+  );
+}
+
+async function embedKnowledgeRetrievalQuery(
+  state: typeof LangGraphContentState.State,
+  query: string,
+): Promise<KnowledgeQueryEmbeddingResult> {
+  if (!query.trim()) {
+    return { embedding: null, mode: "empty" };
+  }
+
+  if (!getAiRuntimeApiKey()) {
+    return { embedding: null, mode: "not_configured" };
+  }
+
+  try {
+    const result = await createEmbeddings({
+      runtime: getLangGraphLlmRuntime(state.llmRuntime),
+      knowledgeRuntime: state.knowledgeRuntime,
+      input: query,
+    });
+
+    return {
+      embedding: result.embeddings[0] ?? null,
+      mode: "embedded",
+      model: result.model,
+    };
+  } catch {
+    return { embedding: null, mode: "failed" };
+  }
+}
+
+function formatKnowledgeRetrievalMatches(matches: KnowledgeSearchMatchDto[]) {
+  if (matches.length === 0) {
+    return "无知识库检索结果。";
+  }
+
+  return matches
+    .map((match, index) => {
+      const scopeLabel = match.scope === "merchant" ? "用户知识库" : "平台知识库";
+      const sourceName = match.sourceName ? `来源：${match.sourceName}` : "";
+      const score = Number.isFinite(match.score) ? `匹配分：${match.score.toFixed(4)}` : "";
+
+      return compactStrings([
+        `【知识片段 ${index + 1}】${match.documentTitle}`,
+        `范围：${scopeLabel}`,
+        sourceName,
+        score,
+        `内容：${clampText(match.content, 900)}`,
+      ]).join("\n");
+    })
+    .join("\n\n");
+}
+
+function compactKnowledgeMatchForRawOutput(match: KnowledgeSearchMatchDto) {
+  return {
+    chunkId: match.chunkId,
+    documentId: match.documentId,
+    documentTitle: match.documentTitle,
+    sourceName: match.sourceName ?? null,
+    scope: match.scope,
+    merchantId: match.merchantId ?? null,
+    score: match.score,
+    chunkIndex: match.chunkIndex,
+    metadata: match.metadata,
+    contentPreview: clampText(match.content, 300),
   };
 }
 
@@ -1416,6 +1531,10 @@ function scrubRiskText(value: string) {
 
 function compactStrings(values: string[]) {
   return values.filter((value) => value.trim());
+}
+
+function clampText(value: string, maxChars: number) {
+  return value.length > maxChars ? `${value.slice(0, Math.max(0, maxChars - 3))}...` : value;
 }
 
 function getLangGraphContentWorkflowVersion() {

@@ -425,7 +425,7 @@ async function runContentWorkflow(
   const user = `member-${job.memberUserId}`;
 
   if (job.workflowProvider === "langgraph") {
-    return runLangGraphContentWorkflow({ inputs, user });
+    return runLangGraphContentWorkflow({ inputs, user, merchantId: job.merchantId });
   }
 
   return runDifyWorkflow({ inputs, user });

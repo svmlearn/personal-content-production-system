@@ -111,16 +111,30 @@ test("chunk replacement remains transactional and writes embedding_json", () => 
   ]);
 });
 
-test("search keeps PostgreSQL text scoring and no vector RPC fallback", () => {
+test("search uses embedding_json cosine scoring with PostgreSQL text fallback and no vector RPC", () => {
   assertFunctionBody("searchKnowledgeChunks", [
     "from public.knowledge_chunks",
     "order by document_id, chunk_index asc",
-    "const contentScore = scoreText(row.content, terms)",
-    "const titleScore = scoreText(document.title, terms) * 0.5",
+    "const semanticScore = scoreEmbedding(row.embedding_json, input.queryEmbedding)",
+    "const score = semanticScore ?? contentScore + titleScore",
+    "retrievalScoreMode: semanticScore === null ? \"lexical_text\" : \"embedding_json_cosine\"",
     "return rankKnowledgeMatches(matches, input.limit)",
   ]);
+  assertFunctionBody("scoreEmbedding", [
+    "if (!queryEmbedding?.length)",
+    "cosineSimilarity(embedding, queryEmbedding)",
+  ]);
+  assertFunctionBody("cosineSimilarity", [
+    "dot / (Math.sqrt(leftMagnitude) * Math.sqrt(rightMagnitude))",
+  ]);
+  assertFunctionBody("searchKnowledgeChunks", [
+    "const contentScore = scoreText(row.content, terms)",
+    "const titleScore = scoreText(document.title, terms) * 0.5",
+  ]);
+  assert.match(source, /"embedding_json"/);
   assert.match(source, /function rankKnowledgeMatches/);
   assert.match(source, /function scoreText/);
+  assert.doesNotMatch(source, /\.rpc\("match_knowledge_chunks"/);
 });
 
 test("stats helpers keep chunk count and latest job PostgreSQL paths", () => {

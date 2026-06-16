@@ -43,7 +43,7 @@ type KnowledgeChunkRow = {
   content: string;
   token_count: number;
   metadata: unknown;
-  embedding?: unknown;
+  embedding_json?: unknown;
   created_at: string | Date;
 };
 
@@ -621,7 +621,8 @@ export async function searchKnowledgeChunks(input: {
 
       const contentScore = scoreText(row.content, terms);
       const titleScore = scoreText(document.title, terms) * 0.5;
-      const score = contentScore + titleScore;
+      const semanticScore = scoreEmbedding(row.embedding_json, input.queryEmbedding);
+      const score = semanticScore ?? contentScore + titleScore;
 
       matches.push({
         chunkId: row.id,
@@ -633,7 +634,10 @@ export async function searchKnowledgeChunks(input: {
         content: row.content,
         score,
         chunkIndex: row.chunk_index,
-        metadata: toRecord(row.metadata),
+        metadata: {
+          ...toRecord(row.metadata),
+          retrievalScoreMode: semanticScore === null ? "lexical_text" : "embedding_json_cosine",
+        },
       });
     }
 
@@ -898,6 +902,57 @@ function scoreText(text: string, terms: string[]) {
   return terms.reduce((score, term) => score + countTermOccurrences(normalized, term), 0);
 }
 
+function scoreEmbedding(embeddingValue: unknown, queryEmbedding?: number[] | null) {
+  if (!queryEmbedding?.length) {
+    return null;
+  }
+
+  const embedding = toNumberArray(embeddingValue);
+
+  if (!embedding || embedding.length !== queryEmbedding.length) {
+    return null;
+  }
+
+  return cosineSimilarity(embedding, queryEmbedding);
+}
+
+function cosineSimilarity(left: number[], right: number[]) {
+  let dot = 0;
+  let leftMagnitude = 0;
+  let rightMagnitude = 0;
+
+  for (let index = 0; index < left.length; index += 1) {
+    const leftValue = left[index] ?? 0;
+    const rightValue = right[index] ?? 0;
+
+    dot += leftValue * rightValue;
+    leftMagnitude += leftValue * leftValue;
+    rightMagnitude += rightValue * rightValue;
+  }
+
+  if (leftMagnitude <= 0 || rightMagnitude <= 0) {
+    return null;
+  }
+
+  return dot / (Math.sqrt(leftMagnitude) * Math.sqrt(rightMagnitude));
+}
+
+function toNumberArray(value: unknown) {
+  const rawItems = Array.isArray(value)
+    ? value
+    : typeof value === "string"
+      ? value.replace(/^\{|\}$/g, "").split(",")
+      : null;
+
+  if (!rawItems) {
+    return null;
+  }
+
+  const numbers = rawItems.map((item) => (typeof item === "number" ? item : Number(item)));
+
+  return numbers.every(Number.isFinite) ? numbers : null;
+}
+
 function countTermOccurrences(text: string, term: string) {
   if (!term) {
     return 0;
@@ -951,6 +1006,7 @@ const knowledgeChunkSelect = [
   "content",
   "token_count",
   "metadata",
+  "embedding_json",
   "created_at",
 ].join(", ");
 

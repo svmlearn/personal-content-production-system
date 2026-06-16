@@ -54,6 +54,7 @@ test("content generation defaults new batches to LangGraph while retaining Dify 
   assert.match(serviceSource, /defaultContentGenerationWorkflowProvider: ContentGenerationProvider = "langgraph"/);
   assert.match(serviceSource, /CONTENT_GENERATION_WORKFLOW_PROVIDER/);
   assert.match(serviceSource, /runLangGraphContentWorkflow/);
+  assert.match(serviceSource, /merchantId: job\.merchantId/);
   assert.match(serviceSource, /runDifyWorkflow/);
 });
 
@@ -80,6 +81,11 @@ test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON co
   assert.match(langGraphWorkflowSource, /difyV31NodePrompts/);
   assert.match(langGraphWorkflowSource, /\.addNode\("task_understanding"/);
   assert.match(langGraphWorkflowSource, /\.addNode\("kb_project_knowledge"/);
+  assert.match(langGraphWorkflowSource, /searchKnowledgeChunks/);
+  assert.match(langGraphWorkflowSource, /createEmbeddings/);
+  assert.match(langGraphWorkflowSource, /task_understanding_query_to_user_knowledge_base/);
+  assert.match(langGraphWorkflowSource, /"task_understanding", "kb_project_knowledge"/);
+  assert.match(langGraphWorkflowSource, /"kb_project_knowledge", "creative_strategy"/);
   assert.match(langGraphWorkflowSource, /\.addNode\("creative_strategy"/);
   assert.match(langGraphWorkflowSource, /\.addNode\("title_cover"/);
   assert.match(langGraphWorkflowSource, /\.addNode\("article_body"/);
@@ -92,6 +98,7 @@ test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON co
   assert.match(langGraphWorkflowSource, /\.addNode\("final_compiler"/);
   assert.match(langGraphWorkflowSource, /parseDifyFinalJson/);
   assert.match(langGraphWorkflowSource, /LANGGRAPH_MOCK_FINAL_RESULT_JSON/);
+  assert.doesNotMatch(langGraphWorkflowSource, /deterministic_knowledge_fallback/);
   assert.doesNotMatch(langGraphWorkflowSource, /buildSystemPrompt/);
   assert.doesNotMatch(langGraphWorkflowSource, /\.addNode\("draft_content"/);
   assert.doesNotMatch(langGraphWorkflowSource, /\.addNode\("repair_content"/);
