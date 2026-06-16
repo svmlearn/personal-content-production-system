@@ -43,27 +43,20 @@ type PromptNodeResult = {
 };
 
 const riskTerms = [
-  "投资回报率高",
-  "租金回报高",
-  "收益稳定",
-  "稳赚",
-  "保值增值",
-  "闭眼买",
+  "保证效果",
+  "绝对有效",
+  "唯一首选",
+  "最低价",
+  "全网第一",
+  "100%成功",
+  "立即见效",
+  "官方认证",
+  "独家授权",
   "错过后悔",
-  "满租",
-  "租金区间",
-  "租金回报",
-  "投资属性",
-  "资产回报",
-  "低位价格",
-  "价格错位",
-  "收租",
-  "贴月供",
-  "租出去",
-  "保租",
-  "保回报",
+  "限时抢",
   "确定兑现",
-  "运营成熟验证",
+  "保结果",
+  "无风险",
 ] as const;
 
 const internalRiskListKeys = new Set(["mustAvoidClaims", "mustReviewBeforePublish"]);
@@ -807,7 +800,7 @@ function normalizeScene(sceneInput: JsonRecord, index: number) {
     subtitle,
     voiceover,
     title,
-    "中介面对镜头自然讲述项目要点",
+    "成员面对镜头自然讲述内容要点",
   );
   const requiresUserUpload =
     typeof sceneInput.requiresUserUpload === "boolean"
@@ -894,7 +887,7 @@ function buildQualityReview(input: {
   const missingInputs: string[] = [];
 
   if (hits.length) {
-    problems.push("公开成稿存在风险承诺类或价格趋势类表述");
+    problems.push("公开成稿存在高风险承诺类表述");
     redFlags.push(`命中风险词：${hits.join("、")}`);
   }
 
@@ -1106,7 +1099,7 @@ function buildCopyText(article: JsonRecord, articleTitle: string, coverCopy: str
     ? compactStrings([articleTitle, body]).join("\n\n")
     : firstNonEmpty(
         copyReadyText,
-        compactStrings([articleTitle, coverCopy, "适合先结合预算和实际需求了解。"]).join("\n\n"),
+        compactStrings([articleTitle, coverCopy, "适合先结合需求和实际情况了解。"]).join("\n\n"),
       );
 
   if (hashtagText && !text.includes(hashtagText)) {
@@ -1162,10 +1155,10 @@ function buildVideo(videoDelivery: {
             sceneType: "口播",
             title: "开场说明",
             purpose: "用口播交代本条内容的核心看点",
-            taskDescription: "中介面对镜头自然说明项目内容看点",
-            visualDescription: "中介面对镜头半身口播，背景选择项目现场或售楼处",
-            voiceover: "今天用一个克制的角度，讲讲这个项目适合谁先了解。",
-            subtitle: "这个项目适合谁先了解？",
+            taskDescription: "成员面对镜头自然说明内容看点",
+            visualDescription: "成员面对镜头半身口播，背景选择服务现场、产品场景或工作环境",
+            voiceover: "今天用一个克制的角度，讲讲这件事适合谁先了解。",
+            subtitle: "这件事适合谁先了解？",
           },
           0,
         ),
@@ -1175,7 +1168,7 @@ function buildVideo(videoDelivery: {
     storyOutline: firstNonEmpty(
       workerDelivery.storyOutline,
       narrative.storyOutline,
-      "围绕项目生活便利、空间使用和预算友好度展开。",
+      "围绕核心卖点、真实使用场景和用户顾虑展开。",
     ),
     estimatedDuration: firstNonEmpty(workerDelivery.estimatedDuration, narrative.estimatedDuration, "45s"),
     bgm: firstNonEmpty(workerDelivery.bgm, narrative.bgmDirection, "轻快生活感背景音乐"),
@@ -1256,11 +1249,11 @@ function markRepairIfNeeded(quality: JsonRecord) {
     ...quality,
     scores,
     problems: asList(quality.problems).filter(
-      (item) => !["风险承诺", "价格趋势", "命中风险词"].some((keyword) => String(item).includes(keyword)),
+      (item) => !["高风险承诺", "风险承诺", "命中风险词"].some((keyword) => String(item).includes(keyword)),
     ),
     redFlags: asList(quality.redFlags).filter((item) => !String(item).includes("命中风险词")),
     revisionSuggestions: asList(quality.revisionSuggestions).filter(
-      (item) => !["风险承诺", "价格趋势", "命中风险词"].some((keyword) => String(item).includes(keyword)),
+      (item) => !["高风险承诺", "风险承诺", "命中风险词"].some((keyword) => String(item).includes(keyword)),
     ),
     missingInputs: asList(quality.missingInputs),
   };

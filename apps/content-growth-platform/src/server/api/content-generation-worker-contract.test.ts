@@ -22,6 +22,10 @@ const langGraphWorkflowSource = readFileSync(
   new URL("./langgraph-content-workflow.ts", import.meta.url),
   "utf8",
 );
+const difyFinalJsonMapperSource = readFileSync(
+  new URL("./dify-final-json-mapper.ts", import.meta.url),
+  "utf8",
+);
 const difyPromptSource = readFileSync(
   new URL("./dify-v31-node-prompts.ts", import.meta.url),
   "utf8",
@@ -118,7 +122,7 @@ test("LangGraph article compiler accepts actual Dify title and body field varian
   assert.match(langGraphWorkflowSource, /block\.imageBrief/);
 });
 
-test("Dify V3.1 node prompts keep original system and user prompt ids", () => {
+test("Dify V3.1 node prompts keep ids while using generic content framing", () => {
   assert.match(difyPromptSource, /task-understanding-system/);
   assert.match(difyPromptSource, /task-understanding-user/);
   assert.match(difyPromptSource, /creative-strategy-system/);
@@ -133,8 +137,18 @@ test("Dify V3.1 node prompts keep original system and user prompt ids", () => {
   assert.match(difyPromptSource, /scene-breakdown-user/);
   assert.match(difyPromptSource, /content-risk-rewriter-system/);
   assert.match(difyPromptSource, /content-risk-rewriter-user/);
-  assert.match(difyPromptSource, /你是房地产内容生产工作流中的“任务理解节点”/);
+  assert.match(difyPromptSource, /你是内容生产工作流中的“任务理解节点”/);
   assert.match(difyPromptSource, /你是短视频分镜编排师/);
   assert.match(difyPromptSource, /\{\{#start\.calendar_task_json#\}\}/);
   assert.match(difyPromptSource, /\{\{#creative_strategy\.text#\}\}/);
+});
+
+test("LangGraph content workflow runtime avoids hard-coded real-estate fallback language", () => {
+  const hardCodedRealEstateTerms =
+    /房地产|房产|楼盘|楼栋|户型|样板间|沙盘|售楼处|中介|买房|看房|刚需|小区|地铁|学区|租金|业主|开发商|空间动线|项目实景|带看|月供|首付|满租|保值|增值|收租/;
+
+  assert.doesNotMatch(difyPromptSource, hardCodedRealEstateTerms);
+  assert.doesNotMatch(langGraphWorkflowSource, hardCodedRealEstateTerms);
+  assert.doesNotMatch(serviceSource, hardCodedRealEstateTerms);
+  assert.doesNotMatch(difyFinalJsonMapperSource, hardCodedRealEstateTerms);
 });

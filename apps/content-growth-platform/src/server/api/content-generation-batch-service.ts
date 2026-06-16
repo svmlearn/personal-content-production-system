@@ -850,7 +850,7 @@ function buildFallbackKnowledgeText(input: {
     `主题：${input.task.theme}`,
     `图文任务：${input.task.articleTask.title}。${input.task.articleTask.summary}`,
     `视频任务：${input.task.videoTask.title}。${input.task.videoTask.summary}`,
-    "视频画面生成原则：把日历素材提示、视频素材能力和成员可补拍方式作为画面边界；未在知识库或素材能力中出现的客户签约、客户访谈、政策文件、价格收益数据、老业主反馈等，不要写成确定已有素材或确定事实。",
+    "视频画面生成原则：把日历素材提示、视频素材能力和成员可补拍方式作为画面边界；未在知识库或素材能力中出现的签约结果、用户访谈、政策文件、价格/效果数据、真实反馈等，不要写成确定已有素材或确定事实。",
     ...input.task.knowledgeRefs.map(formatKnowledgeRefForFallbackText),
     ...(input.videoAssetCapabilities ?? []).map(formatVideoAssetCapabilityForFallbackText),
   ]
@@ -1126,7 +1126,7 @@ function extractHashtags(text: string): string[] {
 }
 
 function readFallbackCta(snapshot: Record<string, unknown>) {
-  return readString(snapshot.fallbackCta) ?? "想了解具体户型和看房安排，可以私信我。";
+  return readString(snapshot.fallbackCta) ?? "想了解详细资料和执行清单，可以私信我。";
 }
 
 function jobTitleFromSnapshot(snapshot: Record<string, unknown>) {

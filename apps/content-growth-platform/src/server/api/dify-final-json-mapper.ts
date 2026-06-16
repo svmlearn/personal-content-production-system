@@ -135,7 +135,7 @@ export function mapDifyArticleToMemberPackage(input: {
     title: article.title,
     body: article.copyText,
     hashtags: extractHashtags(article.copyText),
-    cta: input.fallbackCta?.trim() || "想了解具体户型和看房安排，可以私信我。",
+    cta: input.fallbackCta?.trim() || "想了解详细资料和执行清单，可以私信我。",
     coverText: article.coverCopy,
     imageAssets: article.images.map((image, index) => ({
       id: `${normalizeIdSegment(image.role || "image")}-${index + 1}`,
