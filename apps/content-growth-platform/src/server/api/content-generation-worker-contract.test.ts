@@ -104,6 +104,19 @@ test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON co
   assert.doesNotMatch(langGraphWorkflowSource, /\.addNode\("repair_content"/);
 });
 
+test("LangGraph article compiler accepts actual Dify title and body field variants", () => {
+  assert.match(langGraphWorkflowSource, /articleBody\.blocks/);
+  assert.match(langGraphWorkflowSource, /articleBody\.contentBlocks/);
+  assert.match(langGraphWorkflowSource, /titleCover\.bestTitle/);
+  assert.match(langGraphWorkflowSource, /titleCover\.selectedTitle/);
+  assert.match(langGraphWorkflowSource, /titleCover\.bestCoverCopy/);
+  assert.match(langGraphWorkflowSource, /titleCover\.selectedCoverCopy/);
+  assert.match(langGraphWorkflowSource, /item\.title/);
+  assert.match(langGraphWorkflowSource, /item\.text/);
+  assert.match(langGraphWorkflowSource, /image\.description/);
+  assert.match(langGraphWorkflowSource, /block\.imageBrief/);
+});
+
 test("Dify V3.1 node prompts keep original system and user prompt ids", () => {
   assert.match(difyPromptSource, /task-understanding-system/);
   assert.match(difyPromptSource, /task-understanding-user/);

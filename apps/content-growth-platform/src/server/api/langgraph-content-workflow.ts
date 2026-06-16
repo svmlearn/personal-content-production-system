@@ -657,16 +657,33 @@ function renderDifyPromptTemplate(template: string, variables: Record<string, st
 function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unknown) {
   const titleCover = toRecord(titleCoverInput);
   const articleBody = toRecord(articleBodyInput);
-  const blocks = toRecordArray(articleBody.contentBlocks);
+  const blocks = toRecordArray(firstNonEmptyValue(articleBody.contentBlocks, articleBody.blocks));
   const hashtags = normalizeHashtags(asList(articleBody.hashtags));
   const cta = readString(articleBody.cta);
+  const titleItems = toRecordArray(titleCover.titles);
+  const titleTexts = titleItems
+    .map((item) => firstNonEmpty(item.text, item.title))
+    .filter(Boolean);
+  const selectedTitle = firstNonEmpty(titleCover.selectedTitle, titleCover.bestTitle, titleTexts[0]);
+  const coverCopyOptions = toRecordArray(titleCover.coverCopyOptions);
+  const firstCoverCopy = firstNonEmpty(
+    coverCopyOptions[0]?.coverCopy,
+    coverCopyOptions[0]?.text,
+    coverCopyOptions[0]?.copy,
+  );
+  const coverCopy = firstNonEmpty(titleCover.selectedCoverCopy, titleCover.bestCoverCopy, firstCoverCopy);
+  const selectedTitleReason = firstNonEmpty(
+    titleCover.selectedTitleReason,
+    titleCover.bestTitleReason,
+    titleItems.find((item) => firstNonEmpty(item.text, item.title) === selectedTitle)?.reason,
+  );
   const bodyText = blocks
     .map((block) => readString(block.text))
     .filter(Boolean)
     .join("\n\n");
   const hashtagText = hashtags.join(" ");
   const copyReadyText = compactStrings([
-    readString(titleCover.selectedTitle),
+    selectedTitle,
     bodyText,
     hashtagText,
   ]).join("\n\n");
@@ -674,7 +691,10 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
   const imageBriefs: string[] = [];
 
   blocks.forEach((block, index) => {
-    const imageMatch = toRecord(block.imageMatch);
+    const image = toRecord(block.image);
+    const imageMatch = hasKeys(toRecord(block.imageMatch))
+      ? toRecord(block.imageMatch)
+      : toRecord(image.imageMatch ?? image.assetMatch ?? image.asset);
 
     if (hasKeys(imageMatch)) {
       imageMatches.push({
@@ -687,21 +707,24 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
       });
     }
 
-    const imageBrief = readString(block.imageBrief);
+    const imageBrief = firstNonEmpty(
+      block.imageBrief,
+      block.imageDescription,
+      image.description,
+      image.brief,
+      image.prompt,
+    );
 
     if (imageBrief) {
       imageBriefs.push(imageBrief);
     }
   });
 
-  const titleItems = toRecordArray(titleCover.titles);
-  const titleTexts = titleItems.map((item) => readString(item.text)).filter(Boolean);
-
   return {
     articlePackage: {
       titles: titleTexts,
-      selectedTitle: readString(titleCover.selectedTitle),
-      coverCopy: readString(titleCover.selectedCoverCopy),
+      selectedTitle,
+      coverCopy,
       body: bodyText,
       contentBlocks: blocks,
       hashtags,
@@ -713,8 +736,8 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
     },
     titleStrategy: {
       titles: titleItems,
-      selectedTitleReason: readString(titleCover.selectedTitleReason),
-      coverCopyOptions: asList(titleCover.coverCopyOptions),
+      selectedTitleReason,
+      coverCopyOptions,
       hookAngle: readString(titleCover.hookAngle),
     },
   };
@@ -1060,7 +1083,9 @@ function compileFinalJson(input: {
 function buildArticleTitle(article: JsonRecord) {
   const titleCandidates = [
     article.selectedTitle,
+    article.bestTitle,
     ...toRecordArray(article.titles).map((item) => item.text),
+    ...toRecordArray(article.titles).map((item) => item.title),
     ...asList(article.titles),
     article.coverCopy,
   ];
@@ -1480,6 +1505,20 @@ function firstNonEmpty(...values: unknown[]) {
   }
 
   return "";
+}
+
+function firstNonEmptyValue(...values: unknown[]) {
+  return values.find((value) => {
+    if (typeof value === "string") {
+      return stripThink(value).trim().length > 0;
+    }
+
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+
+    return value !== null && value !== undefined;
+  });
 }
 
 function readNumber(value: unknown, fallback: number) {
