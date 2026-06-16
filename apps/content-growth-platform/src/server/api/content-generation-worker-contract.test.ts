@@ -112,6 +112,8 @@ test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON co
 test("LangGraph article compiler accepts actual Dify title and body field variants", () => {
   assert.match(langGraphWorkflowSource, /articleBody\.blocks/);
   assert.match(langGraphWorkflowSource, /articleBody\.contentBlocks/);
+  assert.match(langGraphWorkflowSource, /articleBody\.text/);
+  assert.match(langGraphWorkflowSource, /articleBody\.images/);
   assert.match(langGraphWorkflowSource, /titleCover\.bestTitle/);
   assert.match(langGraphWorkflowSource, /titleCover\.selectedTitle/);
   assert.match(langGraphWorkflowSource, /titleCover\.bestCoverCopy/);

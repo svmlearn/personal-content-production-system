@@ -651,12 +651,21 @@ function renderDifyPromptTemplate(template: string, variables: Record<string, st
 function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unknown) {
   const titleCover = toRecord(titleCoverInput);
   const articleBody = toRecord(articleBodyInput);
-  const blocks: JsonRecord[] = toRecordArray(firstNonEmptyValue(articleBody.contentBlocks, articleBody.blocks)).map(
-    (block) => ({
-      ...block,
-      text: firstNonEmpty(block.text, block.content, block.body, block.copy, block.description),
-    }),
+  const bodyFallback = firstNonEmpty(
+    articleBody.body,
+    articleBody.text,
+    articleBody.content,
+    articleBody.copy,
+    articleBody.markdown,
   );
+  const rawBlocks = toRecordArray(firstNonEmptyValue(articleBody.contentBlocks, articleBody.blocks));
+  const blocks: JsonRecord[] = (
+    rawBlocks.length ? rawBlocks : bodyFallback ? [{ blockNo: 1, text: bodyFallback }] : []
+  ).map((block) => ({
+    ...block,
+    text: firstNonEmpty(block.text, block.content, block.body, block.copy, block.description),
+  }));
+  const rootImages = toRecordArray(articleBody.images);
   const hashtags = normalizeHashtags(asList(articleBody.hashtags));
   const ctaRecord = toRecord(articleBody.cta);
   const cta = firstNonEmpty(articleBody.cta, ctaRecord.content, ctaRecord.text, ctaRecord.copy);
@@ -677,10 +686,13 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
     titleCover.bestTitleReason,
     titleItems.find((item) => firstNonEmpty(item.text, item.title) === selectedTitle)?.reason,
   );
-  const bodyText = blocks
+  const bodyText = firstNonEmpty(
+    blocks
     .map((block) => readString(block.text))
     .filter(Boolean)
-    .join("\n\n");
+      .join("\n\n"),
+    bodyFallback,
+  );
   const hashtagText = hashtags.join(" ");
   const copyReadyText = compactStrings([
     selectedTitle,
@@ -690,7 +702,17 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
   const imageMatches: JsonRecord[] = [];
   const imageBriefs: string[] = [];
 
-  blocks.forEach((block, index) => {
+  const imageContainers: JsonRecord[] = rawBlocks.length
+    ? blocks
+    : [
+        ...blocks,
+        ...rootImages.map((image, index) => ({
+          blockNo: index + 1,
+          image,
+        })),
+      ];
+
+  imageContainers.forEach((block, index) => {
     const image = toRecord(block.image);
     const imageMatch = hasKeys(toRecord(block.imageMatch))
       ? toRecord(block.imageMatch)
