@@ -106,11 +106,53 @@ lint 仍只有两个既有 warning：
 - `scripts/migrate-factory-source-items-to-merchant-media.mjs` 的 `sourceItem` 未使用。
 - `src/server/api/video-job-payload.ts` 的 `buildMissingVideoAssetHints` 未使用。
 
+## 正式部署记录
+
+代码与数据库已部署：
+
+- Commit: `677e51a`
+- Gitee `origin/main`: 已推送
+- GitHub 安全分支：
+  - `codex/langgraph-content-provider`: 已更新
+  - `codex/content-pgvector-rag`: 已推送
+- GitHub `main`: 未强推覆盖
+- Server repo: `/opt/personal-website`
+- Server deployed HEAD: `677e51a`
+- Server build: `pnpm --dir apps/content-growth-platform build` passed
+- PM2:
+  - `content-growth-platform`: online
+  - `content-generation-worker`: online
+- `pm2 save`: completed
+
+部署后再次执行 updated migration，结果：
+
+- `vector 0.8.2` installed
+- `knowledge_chunks.embedding vector` exists
+- `idx_knowledge_chunks_embedding_hnsw` exists
+- `public.match_knowledge_chunks(...)` exists
+- `public.sync_knowledge_chunk_embedding()` exists
+- `trg_sync_knowledge_chunk_embedding` exists
+
+无污染数据库 smoke：
+
+```text
+BEGIN
+insert temp indexed knowledge document
+insert temp chunk with 1536-dim embedding_json
+trigger_filled_embedding = true
+embedding_dims = 1536
+match_knowledge_chunks match_count = 1
+max_score = 1
+ROLLBACK
+```
+
+这确认了后续 ingestion 写入 `embedding_json` 后，数据库会同步写入 `embedding vector(1536)`，并且 pgvector match 函数能查到。
+
 ## 半成功与未覆盖范围
 
 - 当前线上已有 chunks 的 `embedding_json` 为空，因此安装 pgvector 后还没有历史向量可回填。
 - 后续新上传或 retry ingestion 的知识文档，如果 embedding 成功，会由 trigger 同步写入 `embedding vector`。
-- 本轮安装了 pgvector 并准备代码切换，但最终部署验证需在本提交合并部署后完成。
+- `postgresql-server-dev-14` 安装时升级了 `libssl3`；`needrestart` 建议后续可重启 Postgres / nginx / ssh 等服务加载新库。本轮没有重启这些系统服务，只重启了应用 PM2 进程。
 
 ## 后续排查入口
 
