@@ -118,8 +118,12 @@ test("LangGraph article compiler accepts actual Dify title and body field varian
   assert.match(langGraphWorkflowSource, /titleCover\.selectedCoverCopy/);
   assert.match(langGraphWorkflowSource, /item\.title/);
   assert.match(langGraphWorkflowSource, /item\.text/);
+  assert.match(langGraphWorkflowSource, /block\.content/);
+  assert.match(langGraphWorkflowSource, /block\.body/);
+  assert.match(langGraphWorkflowSource, /block\.copy/);
   assert.match(langGraphWorkflowSource, /image\.description/);
   assert.match(langGraphWorkflowSource, /block\.imageBrief/);
+  assert.match(langGraphWorkflowSource, /readString\(image\.assetId\)/);
 });
 
 test("Dify V3.1 node prompts keep ids while using generic content framing", () => {

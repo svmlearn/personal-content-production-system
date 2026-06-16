@@ -651,9 +651,15 @@ function renderDifyPromptTemplate(template: string, variables: Record<string, st
 function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unknown) {
   const titleCover = toRecord(titleCoverInput);
   const articleBody = toRecord(articleBodyInput);
-  const blocks = toRecordArray(firstNonEmptyValue(articleBody.contentBlocks, articleBody.blocks));
+  const blocks: JsonRecord[] = toRecordArray(firstNonEmptyValue(articleBody.contentBlocks, articleBody.blocks)).map(
+    (block) => ({
+      ...block,
+      text: firstNonEmpty(block.text, block.content, block.body, block.copy, block.description),
+    }),
+  );
   const hashtags = normalizeHashtags(asList(articleBody.hashtags));
-  const cta = readString(articleBody.cta);
+  const ctaRecord = toRecord(articleBody.cta);
+  const cta = firstNonEmpty(articleBody.cta, ctaRecord.content, ctaRecord.text, ctaRecord.copy);
   const titleItems = toRecordArray(titleCover.titles);
   const titleTexts = titleItems
     .map((item) => firstNonEmpty(item.text, item.title))
@@ -688,7 +694,9 @@ function compileArticlePackage(titleCoverInput: unknown, articleBodyInput: unkno
     const image = toRecord(block.image);
     const imageMatch = hasKeys(toRecord(block.imageMatch))
       ? toRecord(block.imageMatch)
-      : toRecord(image.imageMatch ?? image.assetMatch ?? image.asset);
+      : hasKeys(image) && readString(image.assetId)
+        ? image
+        : toRecord(image.imageMatch ?? image.assetMatch ?? image.asset);
 
     if (hasKeys(imageMatch)) {
       imageMatches.push({
