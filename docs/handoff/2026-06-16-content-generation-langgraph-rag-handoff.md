@@ -6,15 +6,21 @@
 
 ## 当前状态
 
-已完成代码修复和本地验证，待合并 / 部署决策。
+已完成代码修复、本地验证、合并、推送和服务器部署。
 
 ## Branch / Worktree
 
 - Branch: `codex/content-langgraph-rag`
 - Worktree: `/Users/wy/Desktop/个人IP/个人网站搭建-worktrees/content-langgraph-rag`
 - Base: `main` at `0bd4b22`
-- Push: 未 push
-- Merge: 未 merge
+- Commit: `51f5e1e`
+- Push:
+  - Gitee `origin/main`: 已推送
+  - GitHub `codex/langgraph-content-provider`: 已更新
+  - GitHub `codex/content-langgraph-rag`: 已推送
+  - GitHub `main`: 未强推覆盖
+- Merge: 已 fast-forward 到本地 `main`
+- Deploy: 已部署到服务器 `/opt/personal-website`
 
 ## 已完成内容
 
@@ -70,17 +76,33 @@ lint 仍只有两个既有 warning：
 
 ## 未做 / 风险
 
-- 未在服务器正式 PM2 环境再次创建真实 batch。
+- 未在服务器正式 PM2 环境再次创建真实 batch，避免继续污染生产数据。
 - 如果商户没有 indexed 文档，LangGraph RAG 会返回 `无知识库检索结果。`，后续仍依赖 `start.fallback_knowledge_text`。
 - 如果 embedding API 失败，会降级 text scoring，不会让内容生成整体失败。
 - 本轮没有改变知识库上传/切片/入库流程。
 
+## 部署验证
+
+- Server deployed HEAD: `51f5e1e`
+- `pnpm install --frozen-lockfile`: passed
+- `pnpm --dir apps/content-growth-platform build`: passed
+- PM2 `content-growth-platform`: online
+- PM2 `content-generation-worker`: online
+- `pm2 save`: completed
+
+服务器知识库数据：
+
+- indexed docs: 6
+- indexed merchant docs: 0
+- indexed platform docs: 6
+- chunks: 18
+- chunks with `embedding_json`: 0
+
+因此当前线上可以检索平台知识库；商户上传知识库和 embedding cosine 需要等用户知识文档完成 indexed/embedded 后才能真实命中验证。
+
 ## 下一步建议
 
-1. 合并到 `main`。
-2. 推送远端。
-3. 部署服务器。
-4. 用有 indexed 用户知识库的商户跑一个生成 smoke，检查：
+1. 用有 indexed 用户知识库的商户跑一个生成 smoke，检查：
    - `rawOutputs.kb_project_knowledge.type=local_merchant_knowledge_rag`
    - `rawOutputs.kb_project_knowledge.matchCount > 0`
    - `rawOutputs.kb_project_knowledge.embeddingMode=embedded`

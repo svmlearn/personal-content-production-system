@@ -100,10 +100,50 @@ pnpm --dir apps/content-growth-platform build
 
 ## 半成功与未覆盖范围
 
-- 本轮已修复 LangGraph 代码路径，但尚未在服务器正式 PM2 环境再次创建真实生成 batch。
+- 本轮已修复 LangGraph 代码路径，并已部署到服务器正式 PM2 环境；没有再次创建真实生成 batch，避免继续污染生产数据。
 - 如果某个商户没有 indexed 知识文档，`kb_project_knowledge.result` 会是 `无知识库检索结果。`，后续 prompt 仍会看到独立的 `start.fallback_knowledge_text`。
 - 如果 embedding API 失败，LangGraph 会降级使用 `searchKnowledgeChunks` 的文本评分 fallback，避免内容生成整体失败。
 - 这仍不是 pgvector / LangGraph Platform 检索；是复用本项目 self-hosted `embedding_json` 和 PostgreSQL rows 的应用层 RAG。
+
+## 正式部署记录
+
+代码已合并并部署：
+
+- Main / deployed commit: `51f5e1e`
+- Gitee `origin/main`: 已推送
+- GitHub 安全分支：
+  - `codex/langgraph-content-provider`: 已更新到 `51f5e1e`
+  - `codex/content-langgraph-rag`: 已推送到 `51f5e1e`
+- GitHub `main`: 未强推，仍保持远端原分叉历史
+- Server repo: `/opt/personal-website`
+- Server deployed HEAD: `51f5e1e`
+- PM2:
+  - `content-growth-platform`: online
+  - `content-generation-worker`: online
+- Server build: `pnpm --dir apps/content-growth-platform build` passed
+- `pm2 save`: completed
+
+服务器知识库数据检查：
+
+```json
+{
+  "docs": {
+    "indexed_total": 6,
+    "indexed_merchant": 0,
+    "indexed_platform": 6
+  },
+  "chunks": {
+    "chunks_total": 18,
+    "chunks_with_embedding": 0
+  }
+}
+```
+
+结论：
+
+- 线上当前有 indexed 平台知识库，可被 LangGraph RAG 节点纳入检索。
+- 线上当前没有 indexed 商户知识库文档，因此暂时没有用户上传知识库命中可验证。
+- 线上当前 chunk 没有 `embedding_json`，所以会走 text scoring fallback；后续新上传 / retry ingestion 且 embedding 成功后，会自动使用 `embedding_json` cosine scoring。
 
 ## 回滚路径
 
