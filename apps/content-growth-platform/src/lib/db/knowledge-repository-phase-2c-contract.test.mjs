@@ -111,14 +111,25 @@ test("chunk replacement remains transactional and writes embedding_json", () => 
   ]);
 });
 
-test("search uses embedding_json cosine scoring with PostgreSQL text fallback and no vector RPC", () => {
+test("search uses pgvector first, then embedding_json cosine and PostgreSQL text fallback", () => {
   assertFunctionBody("searchKnowledgeChunks", [
+    "searchKnowledgeChunksWithPgvector",
+    "if (pgvectorMatches.length > 0)",
     "from public.knowledge_chunks",
     "order by document_id, chunk_index asc",
     "const semanticScore = scoreEmbedding(row.embedding_json, input.queryEmbedding)",
     "const score = semanticScore ?? contentScore + titleScore",
     "retrievalScoreMode: semanticScore === null ? \"lexical_text\" : \"embedding_json_cosine\"",
     "return rankKnowledgeMatches(matches, input.limit)",
+  ]);
+  assertFunctionBody("searchKnowledgeChunksWithPgvector", [
+    "from public.match_knowledge_chunks($1::vector, $2::integer, $3::uuid[])",
+    "retrievalScoreMode: \"pgvector_cosine\"",
+    "return []",
+  ]);
+  assertFunctionBody("formatPgvectorLiteral", [
+    "embedding.every(Number.isFinite)",
+    "return `[${embedding.join(\",\")}]`",
   ]);
   assertFunctionBody("scoreEmbedding", [
     "if (!queryEmbedding?.length)",
@@ -135,6 +146,19 @@ test("search uses embedding_json cosine scoring with PostgreSQL text fallback an
   assert.match(source, /function rankKnowledgeMatches/);
   assert.match(source, /function scoreText/);
   assert.doesNotMatch(source, /\.rpc\("match_knowledge_chunks"/);
+});
+
+test("pgvector migration syncs embedding_json into vector column", () => {
+  const migrationSource = readFileSync(
+    new URL("../../../db/migrations/202605160002_selfhost_pgvector_optional.sql", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(migrationSource, /create extension if not exists vector/);
+  assert.match(migrationSource, /add column if not exists embedding vector\(1536\)/);
+  assert.match(migrationSource, /sync_knowledge_chunk_embedding/);
+  assert.match(migrationSource, /before insert or update of embedding_json/);
+  assert.match(migrationSource, /public\.match_knowledge_chunks/);
 });
 
 test("stats helpers keep chunk count and latest job PostgreSQL paths", () => {

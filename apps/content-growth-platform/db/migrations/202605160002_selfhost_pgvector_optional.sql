@@ -39,6 +39,27 @@ begin
       return;
   end;
 
+  execute $function$
+    create or replace function public.sync_knowledge_chunk_embedding()
+    returns trigger
+    language plpgsql
+    as $sql$
+    begin
+      if new.embedding_json is null then
+        new.embedding = null;
+      else
+        new.embedding = replace(replace(new.embedding_json::text, '{', '['), '}', ']')::vector;
+      end if;
+
+      return new;
+    end;
+    $sql$;
+  $function$;
+
+  execute 'drop trigger if exists trg_sync_knowledge_chunk_embedding on public.knowledge_chunks';
+  execute 'create trigger trg_sync_knowledge_chunk_embedding before insert or update of embedding_json on public.knowledge_chunks for each row execute function public.sync_knowledge_chunk_embedding()';
+  execute 'update public.knowledge_chunks set embedding_json = embedding_json where embedding_json is not null and embedding is null';
+
   begin
     execute 'create index if not exists idx_knowledge_chunks_embedding_hnsw on public.knowledge_chunks using hnsw (embedding vector_cosine_ops) where embedding is not null';
   exception

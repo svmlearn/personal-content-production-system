@@ -47,6 +47,10 @@ type KnowledgeChunkRow = {
   created_at: string | Date;
 };
 
+type KnowledgePgvectorMatchRow = KnowledgeChunkRow & {
+  score: number | string | null;
+};
+
 type KnowledgeIngestionJobRow = {
   id: string;
   document_id: string | null;
@@ -601,6 +605,17 @@ export async function searchKnowledgeChunks(input: {
   }
 
   try {
+    const pgvectorMatches = await searchKnowledgeChunksWithPgvector({
+      documentIds,
+      documentById,
+      queryEmbedding: input.queryEmbedding,
+      limit: input.limit,
+    });
+
+    if (pgvectorMatches.length > 0) {
+      return pgvectorMatches;
+    }
+
     const result = await queryAppDb<KnowledgeChunkRow>(
       `
       select ${knowledgeChunkSelect}
@@ -644,6 +659,66 @@ export async function searchKnowledgeChunks(input: {
     return rankKnowledgeMatches(matches, input.limit);
   } catch (error) {
     throw mapPostgresError(error, "KNOWLEDGE_SEARCH_FAILED");
+  }
+}
+
+async function searchKnowledgeChunksWithPgvector(input: {
+  documentIds: string[];
+  documentById: Map<string, KnowledgeDocumentWithStatsDto>;
+  queryEmbedding?: number[] | null;
+  limit: number;
+}): Promise<KnowledgeSearchMatchDto[]> {
+  const queryVector = formatPgvectorLiteral(input.queryEmbedding);
+
+  if (!queryVector || input.limit <= 0) {
+    return [];
+  }
+
+  try {
+    const result = await queryAppDb<KnowledgePgvectorMatchRow>(
+      `
+      select
+        id,
+        document_id,
+        chunk_index,
+        content,
+        token_count,
+        metadata,
+        null::double precision[] as embedding_json,
+        created_at,
+        score
+      from public.match_knowledge_chunks($1::vector, $2::integer, $3::uuid[])
+      `,
+      [queryVector, input.limit, input.documentIds],
+    );
+
+    return result.rows.flatMap((row) => {
+      const document = input.documentById.get(row.document_id);
+
+      if (!document) {
+        return [];
+      }
+
+      return [
+        {
+          chunkId: row.id,
+          documentId: document.id,
+          documentTitle: document.title,
+          sourceName: document.sourceName,
+          scope: document.scope,
+          merchantId: document.merchantId,
+          content: row.content,
+          score: readFiniteNumber(row.score) ?? 0,
+          chunkIndex: row.chunk_index,
+          metadata: {
+            ...toRecord(row.metadata),
+            retrievalScoreMode: "pgvector_cosine",
+          },
+        },
+      ];
+    });
+  } catch {
+    return [];
   }
 }
 
@@ -914,6 +989,28 @@ function scoreEmbedding(embeddingValue: unknown, queryEmbedding?: number[] | nul
   }
 
   return cosineSimilarity(embedding, queryEmbedding);
+}
+
+function formatPgvectorLiteral(embedding?: number[] | null) {
+  if (!embedding?.length || !embedding.every(Number.isFinite)) {
+    return null;
+  }
+
+  return `[${embedding.join(",")}]`;
+}
+
+function readFiniteNumber(value: unknown) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number(value);
+
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  return null;
 }
 
 function cosineSimilarity(left: number[], right: number[]) {
