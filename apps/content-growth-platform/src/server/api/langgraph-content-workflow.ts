@@ -237,7 +237,8 @@ async function taskUnderstandingNode(state: typeof LangGraphContentState.State) 
 
 async function knowledgeRetrievalNode(state: typeof LangGraphContentState.State) {
   const query = buildKnowledgeRetrievalQuery(state);
-  const topK = Math.min(Math.max(state.knowledgeRuntime.retrievalTopK, 1), 6);
+  // Dify V3.1 kb_project_knowledge hard-codes top_k: 6.
+  const topK = 6;
   const queryEmbedding = await embedKnowledgeRetrievalQuery(state, query);
   const matches = await searchKnowledgeChunks({
     merchantId: state.merchantId,

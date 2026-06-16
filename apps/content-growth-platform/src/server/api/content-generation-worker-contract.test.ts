@@ -84,6 +84,7 @@ test("LangGraph content workflow preserves Dify V3.1 LLM nodes and final JSON co
   assert.match(langGraphWorkflowSource, /searchKnowledgeChunks/);
   assert.match(langGraphWorkflowSource, /createEmbeddings/);
   assert.match(langGraphWorkflowSource, /task_understanding_query_to_user_knowledge_base/);
+  assert.match(langGraphWorkflowSource, /const topK = 6/);
   assert.match(langGraphWorkflowSource, /"task_understanding", "kb_project_knowledge"/);
   assert.match(langGraphWorkflowSource, /"kb_project_knowledge", "creative_strategy"/);
   assert.match(langGraphWorkflowSource, /\.addNode\("creative_strategy"/);
