@@ -1419,13 +1419,20 @@ async function dispatchConsultationTool(
   }
 
   if (call.toolName === "update_strategy_snapshot") {
-    const assetEdit = await resolveStrategyAssetEditorPatch({
-      state,
-      fallback: buildStrategyAssetSnapshotPatch({
-        ...state.strategySnapshot,
-        strategyMarkdown: state.strategyMarkdown,
-      }),
-    });
+    const directPatch = resolveStrategyAssetPatchFromToolArgs(call.args);
+    const assetEdit = directPatch
+      ? guardResolvedStrategyAssetEdit({
+          state,
+          patch: directPatch,
+          source: "direct_tool_patch",
+        })
+      : await resolveStrategyAssetEditorPatch({
+          state,
+          fallback: buildStrategyAssetSnapshotPatch({
+            ...state.strategySnapshot,
+            strategyMarkdown: state.strategyMarkdown,
+          }),
+        });
     const strategyWriteApplied = assetEdit.guard.allowed && assetEdit.patch.changedFields.length > 0;
     const strategySnapshot = strategyWriteApplied
       ? buildStrategySnapshot({
@@ -1446,7 +1453,7 @@ async function dispatchConsultationTool(
       toolName: call.toolName,
       status: strategyWriteApplied ? "completed" : "skipped",
       summary: strategyWriteApplied
-        ? `策略资产 Editor 已更新：${summarizeStrategyAssetEdit(assetEdit.patch)}。`
+        ? `策略资产已更新：${summarizeStrategyAssetEdit(assetEdit.patch)}。`
         : assetEdit.guard.summary,
       payload: {
         strategyAssetSnapshot: splitStrategyState.strategyAssetSnapshot,
@@ -2300,6 +2307,7 @@ function buildPhaseRuntimeRules(phase: ConsultationModelMessagePhase) {
       ...sharedRules,
       "你正在运行 native_tool_calling_loop_v1：工具必须通过 API tools 字段返回结构化 tool_calls，不要在正文里输出工具 JSON。",
       "写入类工具仍要在信息足够后再调用。",
+      "当用户明确要求更新右侧策略资产时，调用 update_strategy_snapshot，并传入 changedFields 与 patch；patch 只包含本轮要修改的 positioning/coreSellingPoints/targetAudiences/keyScenes/strategyTags/strategyMarkdown 字段。",
       "不要先写日历再补查依据。在调用 update_content_calendar 前，应先判断当前知识库和素材能力依据是否足够。",
       "当用户要求生成、补充或调整内容日历、营销日历、团队选题、本周图文/视频任务时，优先考虑调用 update_content_calendar，并传入可执行的 calendar 条目。",
       "如果当前日历已经生成过团队内容，修改前必须提醒用户后续团队内容可能需要重新生成，并确认是否继续。",
@@ -2313,6 +2321,8 @@ function buildPhaseRuntimeRules(phase: ConsultationModelMessagePhase) {
     "你必须只输出 JSON object，不要输出 Markdown、表格、解释文本或代码块。",
     "当你要调用工具时，输出：{\"action\":\"tool_use\",\"tool_use\":{\"name\":\"工具名\",\"input\":{...}},\"reason\":\"一句中文理由\"}。",
     "当你认为已经足够回答用户时，输出：{\"action\":\"final\",\"finalResponse\":\"给用户看的中文自然语言回复\"}。",
+    "JSON tool_use 参数最小契约：调用 update_strategy_snapshot 时，input 可包含 changedFields 与 patch；patch 只包含本轮要修改的 positioning/coreSellingPoints/targetAudiences/keyScenes/strategyTags/strategyMarkdown 字段。",
+    "update_strategy_snapshot 的空 input {} 仅用于你需要让 runtime 内部 Editor 从上下文推断修改时；如果你已经知道具体要改什么，应传结构化 patch。",
     "JSON tool_use 参数最小契约：调用 update_content_calendar 时，input 里必须包含 calendar 数组；每项至少包含 dayLabel、contentType、title、summary。",
     "JSON 工具循环中，业务结果以前序 tool_result 消息为准；只有 status=completed 才能说已更新。",
     "写入类工具仍要在信息足够后再调用。",
@@ -3110,24 +3120,67 @@ function formatStrategyAssetEditorSchemaError(error: z.ZodError) {
   return details || "工具 arguments 不符合 update_strategy_asset_editor schema。";
 }
 
+function resolveStrategyAssetPatchFromToolArgs(
+  args: Record<string, unknown>,
+): StrategyAssetEditorPatch | null {
+  const strategyPatch = readRecordValue(args.strategyPatch);
+
+  if (!strategyPatch) {
+    return null;
+  }
+
+  const changedFields = uniqueFieldKeys(
+    strategyAssetFieldKeys.filter((field) => hasOwn(strategyPatch, field)),
+  );
+
+  if (changedFields.length === 0) {
+    return null;
+  }
+
+  return buildStrategyAssetSnapshotPatch(strategyPatch, changedFields);
+}
+
 function buildStrategyAssetSnapshotPatch(
-  strategyAsset: Pick<
-    StrategySnapshotDto,
-    "positioning" | "coreSellingPoints" | "targetAudiences" | "keyScenes" | "strategyTags"
-  > & {
-    strategyMarkdown?: string | null;
-  },
+  strategyAsset: unknown,
   changedFields: StrategyAssetFieldKey[] = [],
 ): StrategyAssetEditorPatch {
+  const record = readRecordValue(strategyAsset) ?? {};
+
   return {
-    positioning: cleanModelStrategyText(strategyAsset.positioning) ?? undefined,
-    coreSellingPoints: cleanModelStrategyList(strategyAsset.coreSellingPoints),
-    targetAudiences: cleanModelStrategyList(strategyAsset.targetAudiences),
-    keyScenes: cleanModelStrategyList(strategyAsset.keyScenes),
-    strategyTags: cleanModelStrategyList(strategyAsset.strategyTags),
-    strategyMarkdown: cleanModelStrategyMarkdown(strategyAsset.strategyMarkdown) ?? undefined,
+    positioning: hasOwn(record, "positioning")
+      ? cleanModelStrategyText(readStringOrNull(record.positioning)) ?? undefined
+      : undefined,
+    coreSellingPoints: hasOwn(record, "coreSellingPoints")
+      ? cleanModelStrategyList(record.coreSellingPoints)
+      : undefined,
+    targetAudiences: hasOwn(record, "targetAudiences")
+      ? cleanModelStrategyList(record.targetAudiences)
+      : undefined,
+    keyScenes: hasOwn(record, "keyScenes")
+      ? cleanModelStrategyList(record.keyScenes)
+      : undefined,
+    strategyTags: hasOwn(record, "strategyTags")
+      ? cleanModelStrategyList(record.strategyTags)
+      : undefined,
+    strategyMarkdown: hasOwn(record, "strategyMarkdown")
+      ? cleanModelStrategyMarkdown(readStringOrNull(record.strategyMarkdown)) ?? undefined
+      : undefined,
     changedFields: uniqueFieldKeys(changedFields),
   };
+}
+
+function readRecordValue(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function hasOwn(record: Record<string, unknown>, key: string) {
+  return Object.prototype.hasOwnProperty.call(record, key);
+}
+
+function readStringOrNull(value: unknown) {
+  return typeof value === "string" ? value : null;
 }
 
 function mergeEditedStrategyList(input: {

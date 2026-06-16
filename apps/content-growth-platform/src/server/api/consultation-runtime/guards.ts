@@ -22,6 +22,7 @@ export type StrategyAssetGuardPatch = {
 
 export type StrategyAssetGuardSource =
   | "llm_tool"
+  | "direct_tool_patch"
   | "fallback_no_key"
   | "tool_not_called"
   | "validation_failed"

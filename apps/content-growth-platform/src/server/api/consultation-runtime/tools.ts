@@ -68,14 +68,6 @@ const merchantRoundArgsSchema = z
   })
   .strict();
 
-const emptyToolParameters = {
-  type: "object",
-  additionalProperties: false,
-  properties: {},
-};
-
-const emptyToolArgsSchema = z.object({}).strict();
-
 const contentCalendarItemParameters = {
   type: "object",
   additionalProperties: false,
@@ -124,6 +116,78 @@ const updateContentCalendarParameters = {
   required: ["calendar"],
 };
 
+const strategySnapshotFieldKeys = [
+  "positioning",
+  "coreSellingPoints",
+  "targetAudiences",
+  "keyScenes",
+  "strategyTags",
+  "strategyMarkdown",
+] as const;
+
+type StrategySnapshotFieldKey = (typeof strategySnapshotFieldKeys)[number];
+
+const strategySnapshotPatchFieldParameters = {
+  positioning: {
+    type: "string",
+    maxLength: 500,
+    description: "账号、品牌、项目或服务的当前定位。只写干净业务正文。",
+  },
+  coreSellingPoints: {
+    type: "array",
+    maxItems: 8,
+    items: { type: "string", minLength: 1, maxLength: 120 },
+    description: "核心卖点列表。传入完整的新列表；省略则保持不变。",
+  },
+  targetAudiences: {
+    type: "array",
+    maxItems: 10,
+    items: { type: "string", minLength: 1, maxLength: 120 },
+    description: "目标客群列表。传入完整的新列表；省略则保持不变。",
+  },
+  keyScenes: {
+    type: "array",
+    maxItems: 8,
+    items: { type: "string", minLength: 1, maxLength: 120 },
+    description: "关键使用、决策、转化或内容场景列表。传入完整的新列表；省略则保持不变。",
+  },
+  strategyTags: {
+    type: "array",
+    maxItems: 12,
+    items: { type: "string", minLength: 1, maxLength: 80 },
+    description: "内部检索和聚合用策略标签，不是小红书话题标签。传入完整的新列表；省略则保持不变。",
+  },
+  strategyMarkdown: {
+    type: "string",
+    maxLength: 24000,
+    description: "右侧策略资产完整 Markdown 文档。需要更新主文档时传入；省略则由 runtime 按结构化字段同步生成。",
+  },
+};
+
+const updateStrategySnapshotParameters = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    changedFields: {
+      type: "array",
+      items: {
+        type: "string",
+        enum: strategySnapshotFieldKeys,
+      },
+      description:
+        "可选。声明本轮想改的字段；省略时 runtime 会从 patch 或顶层字段自动推断。",
+    },
+    patch: {
+      type: "object",
+      additionalProperties: false,
+      properties: strategySnapshotPatchFieldParameters,
+      description:
+        "推荐使用。只传本轮要修改的字段；未传字段保持当前策略资产不变。",
+    },
+    ...strategySnapshotPatchFieldParameters,
+  },
+};
+
 const retrieveKnowledgeArgsSchema = z
   .object({
     query: z.string().trim().min(1).optional(),
@@ -147,6 +211,24 @@ const contentCalendarItemArgsSchema = z
 const updateContentCalendarArgsSchema = z
   .object({
     calendar: z.array(contentCalendarItemArgsSchema).min(1).max(14),
+  })
+  .strict();
+
+const strategySnapshotPatchArgsSchema = z
+  .object({
+    positioning: z.string().trim().max(500).optional(),
+    coreSellingPoints: z.array(z.string().trim().min(1).max(120)).max(8).optional(),
+    targetAudiences: z.array(z.string().trim().min(1).max(120)).max(10).optional(),
+    keyScenes: z.array(z.string().trim().min(1).max(120)).max(8).optional(),
+    strategyTags: z.array(z.string().trim().min(1).max(80)).max(12).optional(),
+    strategyMarkdown: z.string().trim().max(24000).optional(),
+  })
+  .strict();
+
+const updateStrategySnapshotArgsSchema = strategySnapshotPatchArgsSchema
+  .extend({
+    changedFields: z.array(z.enum(strategySnapshotFieldKeys)).optional(),
+    patch: strategySnapshotPatchArgsSchema.optional(),
   })
   .strict();
 
@@ -411,10 +493,10 @@ export function getConsultationRuntimeToolRegistry(): ConsultationRuntimeToolDef
     {
       key: "update_strategy_snapshot",
       label: "编辑策略资产",
-      purpose: "把定位、核心卖点、目标客群、关键场景、策略标签和策略正文作为一个整体资产编辑。",
+      purpose: "把定位、核心卖点、目标客群、关键场景、策略标签和策略正文作为可校验 patch 写入右侧策略资产。",
       writes: "右侧策略资产整体文档",
-      parameters: emptyToolParameters,
-      validate: validateEmptyToolArgs("update_strategy_snapshot"),
+      parameters: updateStrategySnapshotParameters,
+      validate: validateUpdateStrategySnapshotArgs,
     },
     {
       key: "update_content_calendar",
@@ -493,7 +575,9 @@ function buildRuntimeToolDescription(
   if (tool.key === "update_strategy_snapshot") {
     return [
       base,
-      "arguments 必须是空对象 {}；当前商家、会话状态、最新策略资产和最近对话由 runtime 注入，策略资产正文由内部 Editor 根据上下文改写。",
+      "推荐 arguments：{changedFields:[...], patch:{positioning?, coreSellingPoints?, targetAudiences?, keyScenes?, strategyTags?, strategyMarkdown?}}。",
+      "patch 只传本轮要改的字段，未传字段保持不变；runtime 会校验字段名、类型、长度和写入意图。",
+      "兼容直接把 positioning/coreSellingPoints 等字段放在顶层；空对象 {} 仍表示让内部 Editor 根据上下文推断修改。",
     ].join(" ");
   }
 
@@ -717,23 +801,6 @@ function validateMerchantRoundArgs(toolName: ConsultationAgentToolKey) {
   };
 }
 
-function validateEmptyToolArgs(toolName: ConsultationAgentToolKey) {
-  return (
-    args: unknown,
-  ):
-    | { ok: true; args: Record<string, unknown> }
-    | { ok: false; error: string } => {
-    const parsed = emptyToolArgsSchema.safeParse(args);
-
-    return parsed.success
-      ? {
-          ok: true,
-          args: {},
-        }
-      : { ok: false, error: formatSchemaError(toolName, parsed.error) };
-  };
-}
-
 function validateUpdateContentCalendarArgs(
   args: unknown,
   state: ConsultationAgentLoopState,
@@ -751,6 +818,69 @@ function validateUpdateContentCalendarArgs(
         },
       }
     : { ok: false, error: formatSchemaError("update_content_calendar", parsed.error) };
+}
+
+function validateUpdateStrategySnapshotArgs(
+  args: unknown,
+  state: ConsultationAgentLoopState,
+):
+  | { ok: true; args: Record<string, unknown> }
+  | { ok: false; error: string } {
+  const parsed = updateStrategySnapshotArgsSchema.safeParse(args);
+
+  if (!parsed.success) {
+    return { ok: false, error: formatSchemaError("update_strategy_snapshot", parsed.error) };
+  }
+
+  const strategyPatch = mergeStrategySnapshotPatchArgs(parsed.data);
+  const changedFields = getProvidedStrategySnapshotPatchFields(strategyPatch);
+
+  if (changedFields.length === 0) {
+    return {
+      ok: true,
+      args: buildConsultationToolArgs("update_strategy_snapshot", state),
+    };
+  }
+
+  return {
+    ok: true,
+    args: {
+      ...buildConsultationToolArgs("update_strategy_snapshot", state),
+      strategyPatch,
+      changedFields,
+      strategyPatchSource: "tool_arguments",
+    },
+  };
+}
+
+function mergeStrategySnapshotPatchArgs(
+  args: z.infer<typeof updateStrategySnapshotArgsSchema>,
+) {
+  const strategyPatch: Record<string, unknown> = {};
+  const directArgs = args as Record<string, unknown>;
+  const nestedPatch = (args.patch ?? {}) as Record<string, unknown>;
+
+  for (const field of strategySnapshotFieldKeys) {
+    if (hasOwn(nestedPatch, field)) {
+      strategyPatch[field] = nestedPatch[field];
+    }
+
+    if (hasOwn(directArgs, field)) {
+      strategyPatch[field] = directArgs[field];
+    }
+  }
+
+  return strategyPatch;
+}
+
+function getProvidedStrategySnapshotPatchFields(
+  patch: Record<string, unknown>,
+): StrategySnapshotFieldKey[] {
+  return strategySnapshotFieldKeys.filter((field) => hasOwn(patch, field));
+}
+
+function hasOwn(record: Record<string, unknown>, key: string) {
+  return Object.prototype.hasOwnProperty.call(record, key);
 }
 
 function parseToolArguments(value: string):

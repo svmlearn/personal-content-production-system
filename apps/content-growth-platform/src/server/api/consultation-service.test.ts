@@ -1038,11 +1038,13 @@ test("consultation runtime surfaces native tool call rejections as failed tool f
 });
 
 test("consultation native write tools keep strict schemas and positive argument descriptions", () => {
-  assert.match(consultationRuntimeSource, /emptyToolArgsSchema[\s\S]*?\.strict\(\)/);
+  assert.match(consultationRuntimeSource, /strategySnapshotPatchArgsSchema[\s\S]*?\.strict\(\)/);
+  assert.match(consultationRuntimeSource, /updateStrategySnapshotArgsSchema[\s\S]*?\.strict\(\)/);
   assert.match(consultationRuntimeSource, /contentCalendarItemArgsSchema[\s\S]*?\.strict\(\)/);
   assert.match(consultationRuntimeSource, /updateContentCalendarArgsSchema[\s\S]*?\.strict\(\)/);
   assert.doesNotMatch(consultationRuntimeSource, /\.strip\(/);
-  assert.match(consultationRuntimeSource, /arguments 必须是空对象 \{\}/);
+  assert.match(consultationRuntimeSource, /patch 只传本轮要改的字段/);
+  assert.match(consultationRuntimeSource, /空对象 \{\} 仍表示让内部 Editor 根据上下文推断修改/);
   assert.match(consultationRuntimeSource, /arguments 只包含必填 calendar 数组/);
   assert.match(consultationRuntimeSource, /calendar: z\.array\(contentCalendarItemArgsSchema\)\.min\(1\)\.max\(14\)/);
   assert.doesNotMatch(consultationRuntimeSource, /不要把 currentSuggestion、strategyTags/);
@@ -1078,23 +1080,48 @@ test("consultation write tool argument validation returns concrete failure reaso
 
   const strategyResult = parseNativeConsultationToolCall(
     {
-      id: "tool-strategy-extra-args",
+      id: "tool-strategy-direct-patch",
       type: "function",
       function: {
         name: "update_strategy_snapshot",
-        arguments: JSON.stringify({ strategyMarkdown: "模型不应把策略正文塞进工具参数" }),
+        arguments: JSON.stringify({
+          positioning: "考公教培账号，帮助应届生和在职备考人群做高效备考规划",
+          coreSellingPoints: ["真题拆解", "岗位选择建议", "备考节奏规划"],
+        }),
       },
     },
     state,
   );
 
-  if (strategyResult.ok) {
-    assert.fail("update_strategy_snapshot should reject unexpected model arguments");
+  if (!strategyResult.ok) {
+    assert.fail(`update_strategy_snapshot should accept direct strategy patch: ${strategyResult.error}`);
   }
 
-  assert.equal(strategyResult.rawToolName, "update_strategy_snapshot");
-  assert.match(strategyResult.error, /update_strategy_snapshot failed/);
-  assert.match(strategyResult.error, /An unexpected parameter `strategyMarkdown` was provided/);
+  assert.equal(strategyResult.call.toolName, "update_strategy_snapshot");
+  assert.deepEqual(strategyResult.call.args.changedFields, ["positioning", "coreSellingPoints"]);
+  assert.deepEqual(strategyResult.call.args.strategyPatch, {
+    positioning: "考公教培账号，帮助应届生和在职备考人群做高效备考规划",
+    coreSellingPoints: ["真题拆解", "岗位选择建议", "备考节奏规划"],
+  });
+
+  const invalidStrategyResult = parseNativeConsultationToolCall(
+    {
+      id: "tool-strategy-invalid-field",
+      type: "function",
+      function: {
+        name: "update_strategy_snapshot",
+        arguments: JSON.stringify({ currentSuggestion: "不应通过外层工具写旧字段" }),
+      },
+    },
+    state,
+  );
+
+  if (invalidStrategyResult.ok) {
+    assert.fail("update_strategy_snapshot should reject unknown strategy fields");
+  }
+
+  assert.equal(invalidStrategyResult.rawToolName, "update_strategy_snapshot");
+  assert.match(invalidStrategyResult.error, /An unexpected parameter `currentSuggestion` was provided/);
 
   const calendarResult = parseNativeConsultationToolCall(
     {
@@ -1370,6 +1397,7 @@ test("strategy asset editor returns validation errors as tool results and retrie
 test("strategy asset editor uses guardrails before writing merchant assets", () => {
   assert.match(consultationServiceAndRuntimeSource, /guardStrategyAssetEditorPatch/);
   assert.match(consultationServiceAndRuntimeSource, /StrategyAssetGuardDecision/);
+  assert.match(consultationServiceAndRuntimeSource, /source: "direct_tool_patch"/);
   assert.match(consultationServiceAndRuntimeSource, /source: "tool_not_called"/);
   assert.match(consultationServiceAndRuntimeSource, /source: "validation_failed"/);
   assert.match(consultationServiceAndRuntimeSource, /source: "runtime_error"/);
